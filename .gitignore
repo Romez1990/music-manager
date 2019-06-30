@@ -1,0 +1,13 @@
+# PyCharm
+.idea
+
+# Python
+__pycache__
+
+# Build
+build
+dist
+*.spec
+
+# Environment
+.env
