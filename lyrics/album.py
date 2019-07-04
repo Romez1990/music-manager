@@ -13,6 +13,17 @@ def process(dir, browser=None):
 def handler(browser, path):
     if path.endswith('.mp3') and os.path.isfile(path):
         song = Song(path)
-        url = find_lyrics(song.artist(), song.title())
-        lyrics = browser.get_lyrics(url)
+        artist = song.artist()
+        title = song.title()
+        url = find_lyrics(artist, title)
+        if url is None:
+            browser.open('https://genius.com')
+            print('We can\'t find the lyrics for this song:')
+            print(f'\tArtist: {artist}')
+            print(f'\tTitle: {title}')
+            print('Find the page for this song in the browser')
+            os.system('pause')
+            lyrics = browser.get_lyrics()
+        else:
+            lyrics = browser.get_lyrics(url)
         song.write_lyrics(lyrics)

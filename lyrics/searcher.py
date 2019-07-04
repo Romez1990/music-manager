@@ -9,5 +9,8 @@ def find_lyrics(artist, title):
     url = f'https://api.genius.com/search?access_token={token}&q={quote(search_request)}'
     res = requests.get(url)
     data = res.json()
-    path = data['response']['hits'][0]['result']['path']
-    return 'https://genius.com' + path
+    try:
+        path = data['response']['hits'][0]['result']['path']
+        return 'https://genius.com' + path
+    except Exception:
+        return None

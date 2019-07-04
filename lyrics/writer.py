@@ -15,8 +15,9 @@ class Song:
         return self.song.tag.title
     
     def write_lyrics(self, lyrics):
-        lyrics = Song.process_lyrics(lyrics)
-        self.song.tag.lyrics.set(lyrics)
+        if lyrics is not None:
+            lyrics = Song.process_lyrics(lyrics)
+            self.song.tag.lyrics.set(lyrics)
     
     @staticmethod
     def process_lyrics(text):

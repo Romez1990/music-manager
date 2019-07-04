@@ -11,11 +11,18 @@ class Browser:
     def __del__(self):
         self.browser.quit()
     
-    def get_lyrics(self, url):
+    def get_lyrics(self, url=None):
+        if url is not None:
+            self.browser.get(url)
+        try:
+            lyrics_element = self.browser.find_element_by_css_selector('.lyrics section p')
+            lyrics = lyrics_element.text
+            return lyrics
+        except Exception:
+            return None
+    
+    def open(self, url):
         self.browser.get(url)
-        lyrics_element = self.browser.find_element_by_css_selector('.lyrics section p')
-        lyrics = lyrics_element.text
-        return lyrics
     
     @staticmethod
     def exists(browser):
