@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>finding_lyrics_modal</class>
+    <widget class="QDialog" name="finding_lyrics_modal">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>362</width>
+                <height>161</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Dialog</string>
+        </property>
+        <property name="modal">
+            <bool>true</bool>
+        </property>
+        <widget class="QDialogButtonBox" name="button_box">
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>122</y>
+                    <width>341</width>
+                    <height>32</height>
+                </rect>
+            </property>
+            <property name="font">
+                <font>
+                    <kerning>true</kerning>
+                </font>
+            </property>
+            <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="standardButtons">
+                <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+            </property>
+        </widget>
+        <widget class="QLabel" name="message_label">
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>10</y>
+                    <width>381</width>
+                    <height>111</height>
+                </rect>
+            </property>
+            <property name="font">
+                <font>
+                    <pointsize>11</pointsize>
+                </font>
+            </property>
+            <property name="text">
+                <string>We can not find the lyrics for this song:
+                    Artist:
+                    Title:
+                    Find the page for this song in the browser
+                    and press OK once you have found
+                    or press Cancel to do not find lytics for this song
+                </string>
+            </property>
+            <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+            <property name="wordWrap">
+                <bool>true</bool>
+            </property>
+        </widget>
+    </widget>
+    <resources/>
+    <connections>
+        <connection>
+            <sender>button_box</sender>
+            <signal>accepted()</signal>
+            <receiver>finding_lyrics_modal</receiver>
+            <slot>accept()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>248</x>
+                    <y>254</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>157</x>
+                    <y>274</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>button_box</sender>
+            <signal>rejected()</signal>
+            <receiver>finding_lyrics_modal</receiver>
+            <slot>reject()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>316</x>
+                    <y>260</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>286</x>
+                    <y>274</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
+</ui>
