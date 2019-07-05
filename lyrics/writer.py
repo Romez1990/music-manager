@@ -12,6 +12,9 @@ class Song:
     def artist(self):
         return self.tags['TPE1'].text[0]
     
+    def album(self):
+        return self.tags['TALB'].text[0]
+    
     def title(self):
         return self.tags['TIT2'].text[0]
     
