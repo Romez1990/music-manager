@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from windows.settings_window_ui import Ui_settings_window
 from configuration import Config
+import os
 
 
 class SettingsWindow(QDialog, Ui_settings_window):
@@ -13,6 +14,7 @@ class SettingsWindow(QDialog, Ui_settings_window):
         self.minimize_check_box.setChecked(self.config.getboolean('browser', 'minimize'))
         self.api_token_line_edit.setText(self.config.get('genius', 'api_token'))
         
+        self.driver_line_edit.textChanged.connect(self.check_driver_existence)
         self.driver_browse_push_button.clicked.connect(self.browse_driver)
         
         def set_driver():
@@ -34,6 +36,12 @@ class SettingsWindow(QDialog, Ui_settings_window):
         self.cancel_push_button.clicked.connect(self.close)
         
         self.errors = {}
+    
+    def check_driver_existence(self):
+        path = self.driver_line_edit.text()
+        exists = os.path.exists(path)
+        self.errors['driver'] = not exists
+        self.check_errors()
     
     def browse_driver(self):
         path = QFileDialog.getOpenFileName(self, 'Open browser driver', self.driver_line_edit.text(), 'Executable files (*.exe)')
