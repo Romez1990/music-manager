@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 from windows.main_window_ui import Ui_main_window
+from windows.settings_window import SettingsWindow
 from lyrics import album, band, compilation
 import os
 
@@ -12,6 +13,12 @@ class MainWindow(QMainWindow, Ui_main_window):
         self.path_line_edit.textChanged.connect(self.check_existence)
         self.browse_push_button.clicked.connect(self.browse)
         self.start_push_button.clicked.connect(self.start)
+        self.start_action.setShortcut('Return')
+        self.start_action.triggered.connect(self.start)
+        self.settings_action.setShortcut('Ctrl+Alt+S')
+        self.settings_action.triggered.connect(self.settings_action_triggered)
+        self.quit_action.setShortcuts(['Ctrl+Q', 'Ctrl+F4'])
+        self.quit_action.triggered.connect(self.close)
     
     def check_existence(self):
         path = self.path_line_edit.text()
@@ -32,3 +39,7 @@ class MainWindow(QMainWindow, Ui_main_window):
         path = self.path_line_edit.text()
         current_mode(path)
         QMessageBox.information(self, 'Complete', 'Processing complete')
+    
+    def settings_action_triggered(self):
+        settings_window = SettingsWindow(self)
+        settings_window.exec_()
