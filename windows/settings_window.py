@@ -32,10 +32,18 @@ class SettingsWindow(QDialog, Ui_settings_window):
         
         self.ok_push_button.clicked.connect(self.save_and_close)
         self.cancel_push_button.clicked.connect(self.close)
+        
+        self.errors = {}
     
     def browse_driver(self):
         path = QFileDialog.getOpenFileName(self, 'Open browser driver', self.driver_line_edit.text(), 'Executable files (*.exe)')
         self.driver_line_edit.setText(path[0])
+    
+    def check_errors(self):
+        there_are_errors = False
+        for error in self.errors.values():
+            there_are_errors |= error
+        self.ok_push_button.setEnabled(not there_are_errors)
     
     def save_and_close(self):
         self.config.save()
