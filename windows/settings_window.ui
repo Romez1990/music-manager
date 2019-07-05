@@ -6,8 +6,8 @@
             <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>512</width>
-                <height>206</height>
+                <width>561</width>
+                <height>214</height>
             </rect>
         </property>
         <property name="windowTitle">
@@ -16,8 +16,8 @@
         <widget class="QPushButton" name="ok_push_button">
             <property name="geometry">
                 <rect>
-                    <x>340</x>
-                    <y>170</y>
+                    <x>390</x>
+                    <y>180</y>
                     <width>75</width>
                     <height>23</height>
                 </rect>
@@ -29,8 +29,8 @@
         <widget class="QPushButton" name="cancel_push_button">
             <property name="geometry">
                 <rect>
-                    <x>420</x>
-                    <y>170</y>
+                    <x>470</x>
+                    <y>180</y>
                     <width>75</width>
                     <height>23</height>
                 </rect>
@@ -44,8 +44,8 @@
                 <rect>
                     <x>10</x>
                     <y>10</y>
-                    <width>489</width>
-                    <height>81</height>
+                    <width>541</width>
+                    <height>92</height>
                 </rect>
             </property>
             <property name="font">
@@ -66,15 +66,6 @@
                         </property>
                         <property name="text">
                             <string>Driver</string>
-                        </property>
-                    </widget>
-                </item>
-                <item row="0" column="1">
-                    <widget class="QLineEdit" name="driver_line_edit">
-                        <property name="font">
-                            <font>
-                                <pointsize>11</pointsize>
-                            </font>
                         </property>
                     </widget>
                 </item>
@@ -102,14 +93,34 @@
                         </property>
                     </widget>
                 </item>
+                <item row="0" column="1">
+                    <layout class="QHBoxLayout" name="driver_horizontal_layout">
+                        <item>
+                            <widget class="QLineEdit" name="driver_line_edit">
+                                <property name="font">
+                                    <font>
+                                        <pointsize>11</pointsize>
+                                    </font>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="QPushButton" name="driver_browse_push_button">
+                                <property name="text">
+                                    <string>Browse</string>
+                                </property>
+                            </widget>
+                        </item>
+                    </layout>
+                </item>
             </layout>
         </widget>
         <widget class="QGroupBox" name="genius_group_box">
             <property name="geometry">
                 <rect>
                     <x>10</x>
-                    <y>100</y>
-                    <width>489</width>
+                    <y>110</y>
+                    <width>541</width>
                     <height>61</height>
                 </rect>
             </property>
@@ -149,7 +160,6 @@
     <tabstops>
         <tabstop>ok_push_button</tabstop>
         <tabstop>cancel_push_button</tabstop>
-        <tabstop>driver_line_edit</tabstop>
         <tabstop>minimize_check_box</tabstop>
         <tabstop>api_token_line_edit</tabstop>
     </tabstops>
