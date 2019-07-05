@@ -31,8 +31,10 @@ class Processor:
             if url is None:
                 self.browser.open('https://genius.com')
                 self.browser.maximize()
-                self.error_handlers['lyrics_not_found'](artist, album, title)
-                lyrics = self.browser.get_lyrics()
+                if self.error_handlers['lyrics_not_found'](artist, album, title):
+                    lyrics = self.browser.get_lyrics()
+                else:
+                    lyrics = None
             else:
                 lyrics = self.browser.get_lyrics(url)
             song.write_lyrics(lyrics)

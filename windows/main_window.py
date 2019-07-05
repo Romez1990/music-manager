@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 from windows.main_window_ui import Ui_main_window
 from windows.settings_window import SettingsWindow
+from windows.finding_lyrics_modal import FindingLyricsModal
 from lyrics.processor import Processor, Mode
 import os
 
@@ -42,12 +43,9 @@ class MainWindow(QMainWindow, Ui_main_window):
         QMessageBox.information(self, 'Complete', 'Processing complete')
     
     def lyrics_not_found(self, artist, album, title):
-        print('Sorry, lyrics for this song not found:')
-        print(f'\tArtist: {artist}')
-        print(f'\tAlbum: {album}')
-        print(f'\tTitle: {title}')
-        print('Find the page for this song in the browser')
-        os.system('pause')
+        finding_lyrics_modal = FindingLyricsModal(self, artist, album, title)
+        res = finding_lyrics_modal.exec_()
+        return bool(res)
     
     def settings_action_triggered(self):
         settings_window = SettingsWindow(self)
