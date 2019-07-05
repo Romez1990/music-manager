@@ -27,9 +27,3 @@ class Browser:
     
     def maximize(self):
         self.browser.maximize_window()
-    
-    @staticmethod
-    def exists(browser):
-        if browser is None:
-            browser = Browser()
-        return browser

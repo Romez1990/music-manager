@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 from windows.main_window_ui import Ui_main_window
 from windows.settings_window import SettingsWindow
-from lyrics import album, band, compilation
+from lyrics.processor import Processor, Mode
 import os
 
 
@@ -30,15 +30,24 @@ class MainWindow(QMainWindow, Ui_main_window):
         self.path_line_edit.setText(path)
     
     def start(self):
-        current_mode = None
-        modes = [('album', album.process), ('band', band.process), ('compilation', compilation.process)]
-        for mode in modes:
-            if mode[0] == self.mode_combo_box.currentText().lower():
-                current_mode = mode[1]
-                break
         path = self.path_line_edit.text()
-        current_mode(path)
+        mode = Mode(self.mode_combo_box.currentIndex())
+        flags = {}
+        error_handlers = {
+            'lyrics_not_found': self.lyrics_not_found
+        }
+        processor = Processor(flags, error_handlers)
+        processor.process(path, mode)
+        del processor
         QMessageBox.information(self, 'Complete', 'Processing complete')
+    
+    def lyrics_not_found(self, artist, album, title):
+        print('Sorry, lyrics for this song not found:')
+        print(f'\tArtist: {artist}')
+        print(f'\tAlbum: {album}')
+        print(f'\tTitle: {title}')
+        print('Find the page for this song in the browser')
+        os.system('pause')
     
     def settings_action_triggered(self):
         settings_window = SettingsWindow(self)
