@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from configuration import Config
 
 
@@ -19,7 +20,7 @@ class Browser:
             lyrics_element = self.browser.find_element_by_css_selector('.lyrics section p')
             lyrics = lyrics_element.text
             return lyrics
-        except Exception:
+        except NoSuchElementException:
             return None
     
     def open(self, url):

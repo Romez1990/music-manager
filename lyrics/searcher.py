@@ -13,5 +13,5 @@ def find_lyrics(artist, title):
     try:
         path = data['response']['hits'][0]['result']['path']
         return 'https://genius.com' + path
-    except Exception:
+    except(KeyError, IndexError):
         return None
