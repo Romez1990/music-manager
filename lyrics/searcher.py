@@ -1,10 +1,11 @@
-from os import getenv
+from configuration import Config
 from urllib.parse import quote
 import requests
 
 
 def find_lyrics(artist, title):
-    token = getenv('API_TOKEN')
+    config = Config()
+    token = config.get('genius', 'api_token')
     search_request = artist + ' ' + title
     url = f'https://api.genius.com/search?access_token={token}&q={quote(search_request)}'
     res = requests.get(url)

@@ -9,5 +9,5 @@ build
 dist
 *.spec
 
-# Environment
-.env
+# Configuration
+/config.cfg

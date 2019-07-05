@@ -1,11 +1,12 @@
-from os import getenv
 from selenium import webdriver
+from configuration import Config
 
 
 class Browser:
     def __init__(self):
-        self.browser = webdriver.Chrome(getenv('DRIVER'))
-        if getenv('MINIMIZE_BROWSER').lower() in ('yes', 'true', '1'):
+        config = Config()
+        self.browser = webdriver.Chrome(config.get('browser', 'driver'))
+        if config.getboolean('browser', 'minimize'):
             self.browser.minimize_window()
     
     def __del__(self):
