@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>settings_window</class>
+    <widget class="QDialog" name="settings_window">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>512</width>
+                <height>206</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Dialog</string>
+        </property>
+        <widget class="QPushButton" name="ok_push_button">
+            <property name="geometry">
+                <rect>
+                    <x>340</x>
+                    <y>170</y>
+                    <width>75</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>OK</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" name="cancel_push_button">
+            <property name="geometry">
+                <rect>
+                    <x>420</x>
+                    <y>170</y>
+                    <width>75</width>
+                    <height>23</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Cancel</string>
+            </property>
+        </widget>
+        <widget class="QGroupBox" name="browser_group_box">
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>10</y>
+                    <width>489</width>
+                    <height>81</height>
+                </rect>
+            </property>
+            <property name="font">
+                <font>
+                    <pointsize>10</pointsize>
+                </font>
+            </property>
+            <property name="title">
+                <string>Browser</string>
+            </property>
+            <layout class="QFormLayout" name="formLayout">
+                <item row="0" column="0">
+                    <widget class="QLabel" name="driver_label">
+                        <property name="font">
+                            <font>
+                                <pointsize>11</pointsize>
+                            </font>
+                        </property>
+                        <property name="text">
+                            <string>Driver</string>
+                        </property>
+                    </widget>
+                </item>
+                <item row="0" column="1">
+                    <widget class="QLineEdit" name="driver_line_edit">
+                        <property name="font">
+                            <font>
+                                <pointsize>11</pointsize>
+                            </font>
+                        </property>
+                    </widget>
+                </item>
+                <item row="1" column="0">
+                    <widget class="QLabel" name="minimize_label">
+                        <property name="font">
+                            <font>
+                                <pointsize>11</pointsize>
+                            </font>
+                        </property>
+                        <property name="text">
+                            <string>Minimize</string>
+                        </property>
+                    </widget>
+                </item>
+                <item row="1" column="1">
+                    <widget class="QCheckBox" name="minimize_check_box">
+                        <property name="font">
+                            <font>
+                                <pointsize>11</pointsize>
+                            </font>
+                        </property>
+                        <property name="text">
+                            <string/>
+                        </property>
+                    </widget>
+                </item>
+            </layout>
+        </widget>
+        <widget class="QGroupBox" name="genius_group_box">
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>100</y>
+                    <width>489</width>
+                    <height>61</height>
+                </rect>
+            </property>
+            <property name="font">
+                <font>
+                    <pointsize>10</pointsize>
+                </font>
+            </property>
+            <property name="title">
+                <string>Genius</string>
+            </property>
+            <layout class="QFormLayout" name="formLayout_2">
+                <item row="0" column="0">
+                    <widget class="QLabel" name="api_token_label">
+                        <property name="font">
+                            <font>
+                                <pointsize>11</pointsize>
+                            </font>
+                        </property>
+                        <property name="text">
+                            <string>API token</string>
+                        </property>
+                    </widget>
+                </item>
+                <item row="0" column="1">
+                    <widget class="QLineEdit" name="api_token_line_edit">
+                        <property name="font">
+                            <font>
+                                <pointsize>11</pointsize>
+                            </font>
+                        </property>
+                    </widget>
+                </item>
+            </layout>
+        </widget>
+    </widget>
+    <tabstops>
+        <tabstop>ok_push_button</tabstop>
+        <tabstop>cancel_push_button</tabstop>
+        <tabstop>driver_line_edit</tabstop>
+        <tabstop>minimize_check_box</tabstop>
+        <tabstop>api_token_line_edit</tabstop>
+    </tabstops>
+    <resources/>
+    <connections/>
+</ui>

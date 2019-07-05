@@ -1,0 +1,92 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'settings_window.ui'
+#
+# Created by: PyQt5 UI code generator 5.12.2
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+
+class Ui_settings_window(object):
+    def setupUi(self, settings_window):
+        settings_window.setObjectName("settings_window")
+        settings_window.resize(512, 206)
+        self.ok_push_button = QtWidgets.QPushButton(settings_window)
+        self.ok_push_button.setGeometry(QtCore.QRect(340, 170, 75, 23))
+        self.ok_push_button.setObjectName("ok_push_button")
+        self.cancel_push_button = QtWidgets.QPushButton(settings_window)
+        self.cancel_push_button.setGeometry(QtCore.QRect(420, 170, 75, 23))
+        self.cancel_push_button.setObjectName("cancel_push_button")
+        self.browser_group_box = QtWidgets.QGroupBox(settings_window)
+        self.browser_group_box.setGeometry(QtCore.QRect(10, 10, 489, 81))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.browser_group_box.setFont(font)
+        self.browser_group_box.setObjectName("browser_group_box")
+        self.formLayout = QtWidgets.QFormLayout(self.browser_group_box)
+        self.formLayout.setObjectName("formLayout")
+        self.driver_label = QtWidgets.QLabel(self.browser_group_box)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.driver_label.setFont(font)
+        self.driver_label.setObjectName("driver_label")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.driver_label)
+        self.driver_line_edit = QtWidgets.QLineEdit(self.browser_group_box)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.driver_line_edit.setFont(font)
+        self.driver_line_edit.setObjectName("driver_line_edit")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.driver_line_edit)
+        self.minimize_label = QtWidgets.QLabel(self.browser_group_box)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.minimize_label.setFont(font)
+        self.minimize_label.setObjectName("minimize_label")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.minimize_label)
+        self.minimize_check_box = QtWidgets.QCheckBox(self.browser_group_box)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.minimize_check_box.setFont(font)
+        self.minimize_check_box.setText("")
+        self.minimize_check_box.setObjectName("minimize_check_box")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.minimize_check_box)
+        self.genius_group_box = QtWidgets.QGroupBox(settings_window)
+        self.genius_group_box.setGeometry(QtCore.QRect(10, 100, 489, 61))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.genius_group_box.setFont(font)
+        self.genius_group_box.setObjectName("genius_group_box")
+        self.formLayout_2 = QtWidgets.QFormLayout(self.genius_group_box)
+        self.formLayout_2.setObjectName("formLayout_2")
+        self.api_token_label = QtWidgets.QLabel(self.genius_group_box)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.api_token_label.setFont(font)
+        self.api_token_label.setObjectName("api_token_label")
+        self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.api_token_label)
+        self.api_token_line_edit = QtWidgets.QLineEdit(self.genius_group_box)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.api_token_line_edit.setFont(font)
+        self.api_token_line_edit.setObjectName("api_token_line_edit")
+        self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.api_token_line_edit)
+        
+        self.retranslateUi(settings_window)
+        QtCore.QMetaObject.connectSlotsByName(settings_window)
+        settings_window.setTabOrder(self.ok_push_button, self.cancel_push_button)
+        settings_window.setTabOrder(self.cancel_push_button, self.driver_line_edit)
+        settings_window.setTabOrder(self.driver_line_edit, self.minimize_check_box)
+        settings_window.setTabOrder(self.minimize_check_box, self.api_token_line_edit)
+    
+    def retranslateUi(self, settings_window):
+        _translate = QtCore.QCoreApplication.translate
+        settings_window.setWindowTitle(_translate("settings_window", "Dialog"))
+        self.ok_push_button.setText(_translate("settings_window", "OK"))
+        self.cancel_push_button.setText(_translate("settings_window", "Cancel"))
+        self.browser_group_box.setTitle(_translate("settings_window", "Browser"))
+        self.driver_label.setText(_translate("settings_window", "Driver"))
+        self.minimize_label.setText(_translate("settings_window", "Minimize"))
+        self.genius_group_box.setTitle(_translate("settings_window", "Genius"))
+        self.api_token_label.setText(_translate("settings_window", "API token"))
