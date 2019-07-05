@@ -19,6 +19,7 @@ def handler(browser, path):
         url = find_lyrics(artist, title)
         if url is None:
             browser.open('https://genius.com')
+            browser.maximize()
             print('We can\'t find the lyrics for this song:')
             print(f'\tArtist: {artist}')
             print(f'\tAlbum: {album}')

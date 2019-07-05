@@ -25,6 +25,9 @@ class Browser:
     def open(self, url):
         self.browser.get(url)
     
+    def maximize(self):
+        self.browser.maximize_window()
+    
     @staticmethod
     def exists(browser):
         if browser is None:
