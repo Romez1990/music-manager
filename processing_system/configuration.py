@@ -15,20 +15,21 @@ class Config:
             if path.exists(self.config_path):
                 Config._config.read(self.config_path)
             else:
-                option_defaults = {
-                    'browser': {
-                        'driver':   r'C:\Program Files (x86)\Chrome Driver\Chrome Driver.exe',
-                        'minimize': True
-                    },
-                    'genius':  {
-                        'api_token': ''
-                    }
-                }
-                for section in option_defaults.keys():
-                    for option in option_defaults[section].keys():
-                        value = option_defaults[section][option]
-                        self.set_option_default(section, option, str(value))
-                self.save()
+                self.set_configuration_default()
+    
+    def set_configuration_default(self):
+        from processing_system.configuration_default import configuration_default
+        for section in configuration_default.keys():
+            for option in configuration_default[section].keys():
+                value = configuration_default[section][option]
+                self.set_option_default(section, option, str(value))
+        self.save()
+    
+    def get(self, section, option):
+        return Config._config.get(section, option)
+    
+    def getboolean(self, section, option):
+        return Config._config.getboolean(section, option)
     
     def set_option(self, section, option, value):
         if not Config._config.has_section(section):
@@ -44,9 +45,3 @@ class Config:
             os.makedirs(self.config_dir_path)
         file = open(self.config_path, 'w')
         Config._config.write(file)
-    
-    def get(self, section, option):
-        return Config._config.get(section, option)
-    
-    def getboolean(self, section, option):
-        return Config._config.getboolean(section, option)
