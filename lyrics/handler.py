@@ -28,7 +28,8 @@ class Handler:
         artist = song.artist()
         album = song.album()
         title = song.title()
-        url = find_lyrics(artist, title)
+        search_request = artist + ' ' + title
+        url = find_lyrics(search_request)
         if url is None:
             self.browser.open('https://genius.com')
             self.browser.maximize()
