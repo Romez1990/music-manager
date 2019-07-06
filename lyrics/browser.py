@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from configuration import Config
+from processing_system.configuration import Config
 
 
 class Browser:

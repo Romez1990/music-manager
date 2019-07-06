@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from windows.settings_window_ui import Ui_settings_window
-from configuration import Config
+from processing_system.configuration import Config
 import os
 
 

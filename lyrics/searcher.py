@@ -1,4 +1,4 @@
-from configuration import Config
+from processing_system.configuration import Config
 from urllib.parse import quote
 import requests
 
