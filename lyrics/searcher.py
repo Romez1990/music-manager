@@ -11,6 +11,6 @@ def find_lyrics(search_request):
     data = res.json()
     try:
         path = data['response']['hits'][0]['result']['path']
-        return 'https://genius.com' + path
     except(KeyError, IndexError):
         return None
+    return 'https://genius.com' + path

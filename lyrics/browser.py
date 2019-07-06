@@ -18,10 +18,10 @@ class Browser:
             self.browser.get(url)
         try:
             lyrics_element = self.browser.find_element_by_css_selector('.lyrics section p')
-            lyrics = lyrics_element.text
-            return lyrics
         except NoSuchElementException:
             return None
+        lyrics = lyrics_element.text
+        return lyrics
     
     def open(self, url):
         self.browser.get(url)
