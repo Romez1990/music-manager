@@ -32,6 +32,14 @@ class Handler:
         search_request = artist + ' ' + title
         url = find_lyrics(search_request)
         if url is None:
+            try:
+                parentheses_index = search_request.index('(')
+            except ValueError:
+                pass
+            else:
+                search_request_without_parentheses = search_request[:parentheses_index]
+                url = find_lyrics(search_request_without_parentheses)
+        if url is None:
             lyrics = self.lyrics_not_found(search_request, artist, album, title)
         else:
             lyrics = self.browser.get_lyrics(url)
