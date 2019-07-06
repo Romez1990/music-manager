@@ -1,27 +1,27 @@
 import configparser
 from os import path
 
-path_to_config = 'config.cfg'
-option_defaults = {
-    'browser': {
-        'driver':   r'C:\Program Files (x86)\Chrome Driver\Chrome Driver.exe',
-        'minimize': True
-    },
-    'genius':  {
-        'api_token': ''
-    }
-}
-
 
 class Config:
     _config = None
     
     def __init__(self):
         if not Config._config:
+            self.config_path = 'config.cfg'
+            
             Config._config = configparser.ConfigParser()
-            if path.exists(path_to_config):
-                Config._config.read(path_to_config)
+            if path.exists(self.config_path):
+                Config._config.read(self.config_path)
             else:
+                option_defaults = {
+                    'browser': {
+                        'driver':   r'C:\Program Files (x86)\Chrome Driver\Chrome Driver.exe',
+                        'minimize': True
+                    },
+                    'genius':  {
+                        'api_token': ''
+                    }
+                }
                 for section in option_defaults.keys():
                     for option in option_defaults[section].keys():
                         value = option_defaults[section][option]
@@ -38,7 +38,7 @@ class Config:
             self.set_option(section, option, value)
     
     def save(self):
-        with open(path_to_config, 'w') as file:
+        with open(self.config_path, 'w') as file:
             Config._config.write(file)
     
     def get(self, section, option):
