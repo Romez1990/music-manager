@@ -38,6 +38,7 @@ class MainWindow(QMainWindow, Ui_main_window):
         self.path_line_edit.setText(path)
     
     def start(self):
+        self.start_push_button.setEnabled(False)
         path = self.path_line_edit.text()
         mode = Mode(self.mode_combo_box.currentIndex())
         flags = {Flag.lyrics}
@@ -47,6 +48,7 @@ class MainWindow(QMainWindow, Ui_main_window):
         processor = Processor(error_handlers)
         processor.process(path, mode, flags)
         del processor
+        self.start_push_button.setEnabled(True)
         QMessageBox.information(self, 'Complete', 'Processing complete')
     
     def lyrics_not_found(self, artist, album, title):
