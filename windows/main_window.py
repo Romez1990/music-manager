@@ -12,16 +12,21 @@ class MainWindow(QMainWindow, Ui_main_window):
     def __init__(self, parent=None, *args, **kwargs):
         QMainWindow.__init__(self)
         self.setupUi(self)
-        
+        self.connect_signals()
+        self.set_shortcuts()
+    
+    def connect_signals(self):
         self.path_line_edit.textChanged.connect(self.check_existence)
         self.browse_push_button.clicked.connect(self.browse)
         self.start_push_button.clicked.connect(self.start)
-        self.start_action.setShortcut('Return')
         self.start_action.triggered.connect(self.start)
-        self.settings_action.setShortcut('Ctrl+Alt+S')
         self.settings_action.triggered.connect(self.settings_action_triggered)
-        self.quit_action.setShortcuts(['Ctrl+Q', 'Ctrl+F4'])
         self.quit_action.triggered.connect(self.close)
+    
+    def set_shortcuts(self):
+        self.start_action.setShortcut('Return')
+        self.settings_action.setShortcut('Ctrl+Alt+S')
+        self.quit_action.setShortcuts(['Ctrl+Q', 'Ctrl+F4'])
     
     def check_existence(self):
         path = self.path_line_edit.text()
