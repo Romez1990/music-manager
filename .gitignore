@@ -8,6 +8,3 @@ __pycache__
 build
 dist
 *.spec
-
-# Configuration
-/config.cfg

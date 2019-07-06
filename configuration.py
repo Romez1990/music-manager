@@ -1,4 +1,5 @@
 import configparser
+import os
 from os import path
 
 
@@ -7,7 +8,8 @@ class Config:
     
     def __init__(self):
         if not Config._config:
-            self.config_path = 'config.cfg'
+            self.config_dir_path = path.expandvars(r'%APPDATA%\Music Manager')
+            self.config_path = path.join(self.config_dir_path, 'config.cfg')
             
             Config._config = configparser.ConfigParser()
             if path.exists(self.config_path):
@@ -38,8 +40,10 @@ class Config:
             self.set_option(section, option, value)
     
     def save(self):
-        with open(self.config_path, 'w') as file:
-            Config._config.write(file)
+        if not path.exists(self.config_dir_path):
+            os.makedirs(self.config_dir_path)
+        file = open(self.config_path, 'w')
+        Config._config.write(file)
     
     def get(self, section, option):
         return Config._config.get(section, option)
