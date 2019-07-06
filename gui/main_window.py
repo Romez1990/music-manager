@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
-from windows.main_window_ui import Ui_main_window
-from windows.settings_window import SettingsWindow
-from windows.finding_lyrics_modal import FindingLyricsModal
+from gui.main_window_ui import Ui_main_window
+from gui.settings_window import SettingsWindow
+from gui.finding_lyrics_modal import FindingLyricsModal
 from processing_system.processor import Processor
 from processing_system.mode import Mode
 from processing_system.flags import Flag

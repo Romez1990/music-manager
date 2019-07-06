@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QDialog
-from windows.finding_lyrics_modal_ui import Ui_finding_lyrics_modal
+from gui.finding_lyrics_modal_ui import Ui_finding_lyrics_modal
 
 
 class FindingLyricsModal(QDialog, Ui_finding_lyrics_modal):
