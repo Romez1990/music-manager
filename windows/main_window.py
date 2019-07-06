@@ -2,7 +2,9 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 from windows.main_window_ui import Ui_main_window
 from windows.settings_window import SettingsWindow
 from windows.finding_lyrics_modal import FindingLyricsModal
-from lyrics.processor import Processor, Mode
+from processing_system.processor import Processor
+from processing_system.mode import Mode
+from processing_system.flags import Flag
 import os
 
 
@@ -33,12 +35,12 @@ class MainWindow(QMainWindow, Ui_main_window):
     def start(self):
         path = self.path_line_edit.text()
         mode = Mode(self.mode_combo_box.currentIndex())
-        flags = {}
+        flags = {Flag.lyrics}
         error_handlers = {
             'lyrics_not_found': self.lyrics_not_found
         }
-        processor = Processor(flags, error_handlers)
-        processor.process(path, mode)
+        processor = Processor(error_handlers)
+        processor.process(path, mode, flags)
         del processor
         QMessageBox.information(self, 'Complete', 'Processing complete')
     
