@@ -31,12 +31,15 @@ class Handler:
         search_request = artist + ' ' + title
         url = find_lyrics(search_request)
         if url is None:
-            self.browser.open('https://genius.com')
-            self.browser.maximize()
-            if self.error_handlers['lyrics_not_found'](artist, album, title):
-                lyrics = self.browser.get_lyrics()
-            else:
-                lyrics = None
+            lyrics = self.lyrics_not_found(artist, album, title)
         else:
             lyrics = self.browser.get_lyrics(url)
         song.write_lyrics(lyrics)
+    
+    def lyrics_not_found(self, artist, album, title):
+        self.browser.open('https://genius.com')
+        self.browser.maximize()
+        if self.error_handlers['lyrics_not_found'](artist, album, title):
+            return self.browser.get_lyrics()
+        else:
+            return None
