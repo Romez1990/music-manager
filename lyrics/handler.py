@@ -1,6 +1,7 @@
 from lyrics.browser import Browser
 from lyrics.writer import Song
 from lyrics.searcher import find_lyrics
+from urllib.parse import quote
 
 
 class Handler:
@@ -31,13 +32,13 @@ class Handler:
         search_request = artist + ' ' + title
         url = find_lyrics(search_request)
         if url is None:
-            lyrics = self.lyrics_not_found(artist, album, title)
+            lyrics = self.lyrics_not_found(search_request, artist, album, title)
         else:
             lyrics = self.browser.get_lyrics(url)
         song.write_lyrics(lyrics)
     
-    def lyrics_not_found(self, artist, album, title):
-        self.browser.open('https://genius.com')
+    def lyrics_not_found(self, search_request, artist, album, title):
+        self.browser.open(f'https://genius.com/search?q={quote(search_request)}')
         self.browser.maximize()
         if self.error_handlers['lyrics_not_found'](artist, album, title):
             return self.browser.get_lyrics()
