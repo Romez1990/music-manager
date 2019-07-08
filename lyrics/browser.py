@@ -8,7 +8,9 @@ class Browser:
         config = Config()
         self.browser = webdriver.Chrome(config.get('browser', 'driver'))
         if config.getboolean('browser', 'minimize'):
-            self.browser.minimize_window()
+            self.minimize()
+        else:
+            self.maximize()
     
     def __del__(self):
         self.browser.quit()
@@ -26,5 +28,11 @@ class Browser:
     def open(self, url):
         self.browser.get(url)
     
+    def minimize(self):
+        self.browser.minimize_window()
+    
     def maximize(self):
         self.browser.maximize_window()
+    
+    def focus(self):
+        self.browser.switch_to.window(self.browser.current_window_handle)

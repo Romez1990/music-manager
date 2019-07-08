@@ -47,6 +47,7 @@ class Handler:
     
     def lyrics_not_found(self, search_request, artist, album, title):
         self.browser.open(f'https://genius.com/search?q={quote(search_request)}')
+        self.browser.focus()
         self.browser.maximize()
         if self.error_handlers['lyrics_not_found'](artist, album, title):
             return self.browser.get_lyrics()
