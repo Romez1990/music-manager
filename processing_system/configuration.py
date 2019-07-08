@@ -1,16 +1,19 @@
 import configparser
-import os
-from os import path
+from sys import platform
+from os import path, getenv, makedirs
 
 
 class Config:
     _config = None
     
     def __init__(self):
+        if platform == 'win32':
+            self.config_dir_path = path.join(getenv('APPDATA'), 'Music Manager')
+        else:
+            self.config_dir_path = path.join(getenv('HOME'), '.config', 'music-manager')
+        self.config_path = path.join(self.config_dir_path, 'config.cfg')
+        
         if not Config._config:
-            self.config_dir_path = path.expandvars(r'%APPDATA%\Music Manager')
-            self.config_path = path.join(self.config_dir_path, 'config.cfg')
-            
             Config._config = configparser.ConfigParser()
             if path.exists(self.config_path):
                 Config._config.read(self.config_path)
@@ -42,6 +45,6 @@ class Config:
     
     def save(self):
         if not path.exists(self.config_dir_path):
-            os.makedirs(self.config_dir_path)
+            makedirs(self.config_dir_path)
         file = open(self.config_path, 'w')
         Config._config.write(file)
