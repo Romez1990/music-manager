@@ -5,6 +5,7 @@ from gui.finding_lyrics_modal import FindingLyricsModal
 from processing_system.processor import Processor
 from processing_system.mode import Mode
 from processing_system.flags import Flag
+from threading import Thread
 import os
 
 
@@ -47,7 +48,7 @@ class MainWindow(QMainWindow, Ui_main_window):
         path = self.path_line_edit.text()
         mode = Mode(self.mode_combo_box.currentIndex())
         flags = {Flag.lyrics}
-        self.processor.process(path, mode, flags)
+        Thread(target=self.processor.process, args=(path, mode, flags)).start()
     
     def complete(self):
         self.start_push_button.setEnabled(True)
