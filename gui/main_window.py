@@ -14,6 +14,11 @@ class MainWindow(QMainWindow, Ui_main_window):
         self.setupUi(self)
         self.connect_signals()
         self.set_shortcuts()
+        error_handlers = {
+            'lyrics_not_found': self.lyrics_not_found
+        }
+        self.processor = Processor(error_handlers)
+        self.processor.on_complete = self.complete
     
     def connect_signals(self):
         self.path_line_edit.textChanged.connect(self.check_existence)
@@ -42,12 +47,9 @@ class MainWindow(QMainWindow, Ui_main_window):
         path = self.path_line_edit.text()
         mode = Mode(self.mode_combo_box.currentIndex())
         flags = {Flag.lyrics}
-        error_handlers = {
-            'lyrics_not_found': self.lyrics_not_found
-        }
-        processor = Processor(error_handlers)
-        processor.process(path, mode, flags)
-        del processor
+        self.processor.process(path, mode, flags)
+    
+    def complete(self):
         self.start_push_button.setEnabled(True)
         QMessageBox.information(self, 'Complete', 'Processing complete')
     

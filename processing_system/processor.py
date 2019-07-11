@@ -7,6 +7,7 @@ class Processor:
     def __init__(self, error_handlers):
         self.error_handlers = error_handlers
         self.filesystem = None
+        self.on_complete = None
         
         self.filters = {
             Mode.album:       self.filter_album,
@@ -19,6 +20,7 @@ class Processor:
         self.iterate(dir, mode, self.filesystem)
         handler = MainHandler(self.error_handlers)
         handler.handle(flags, mode, self.filesystem)
+        self.on_complete()
     
     def iterate(self, dir, mode, container):
         for filename in sorted(os.listdir(dir)):
