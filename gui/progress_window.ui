@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>progress_window</class>
+    <widget class="QMainWindow" name="progress_window">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>506</width>
+                <height>350</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>MainWindow</string>
+        </property>
+        <widget class="QWidget" name="centralwidget">
+            <layout class="QVBoxLayout" name="verticalLayout">
+                <item>
+                    <layout class="QVBoxLayout" name="vertical_layout_2">
+                        <property name="spacing">
+                            <number>12</number>
+                        </property>
+                        <item>
+                            <spacer name="vertical_spacer_2">
+                                <property name="orientation">
+                                    <enum>Qt::Vertical</enum>
+                                </property>
+                                <property name="sizeHint" stdset="0">
+                                    <size>
+                                        <width>486</width>
+                                        <height>84</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </item>
+                        <item>
+                            <widget class="QLabel" name="description_label">
+                                <property name="font">
+                                    <font>
+                                        <pointsize>11</pointsize>
+                                    </font>
+                                </property>
+                                <property name="styleSheet">
+                                    <string notr="true"/>
+                                </property>
+                                <property name="text">
+                                    <string>Artist: {artist}
+                                        Album: {album}
+                                        Title: {title}
+                                        {percent}% proceseed
+                                    </string>
+                                </property>
+                                <property name="textFormat">
+                                    <enum>Qt::AutoText</enum>
+                                </property>
+                                <property name="wordWrap">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="QProgressBar" name="progress_bar">
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="font">
+                                    <font>
+                                        <pointsize>11</pointsize>
+                                    </font>
+                                </property>
+                                <property name="value">
+                                    <number>0</number>
+                                </property>
+                                <property name="textVisible">
+                                    <bool>false</bool>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <spacer name="vertical_spacer_1">
+                                <property name="orientation">
+                                    <enum>Qt::Vertical</enum>
+                                </property>
+                                <property name="sizeHint" stdset="0">
+                                    <size>
+                                        <width>20</width>
+                                        <height>40</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </item>
+                    </layout>
+                </item>
+                <item>
+                    <layout class="QHBoxLayout" name="horizontal_layout_1">
+                        <property name="spacing">
+                            <number>11</number>
+                        </property>
+                        <item>
+                            <spacer name="horizontal_spacer_1">
+                                <property name="orientation">
+                                    <enum>Qt::Horizontal</enum>
+                                </property>
+                                <property name="sizeHint" stdset="0">
+                                    <size>
+                                        <width>40</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </item>
+                        <item>
+                            <widget class="QPushButton" name="finish_push_button">
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                                <property name="font">
+                                    <font>
+                                        <pointsize>11</pointsize>
+                                    </font>
+                                </property>
+                                <property name="text">
+                                    <string>Finish</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="QPushButton" name="cancel_push_button">
+                                <property name="font">
+                                    <font>
+                                        <pointsize>11</pointsize>
+                                    </font>
+                                </property>
+                                <property name="text">
+                                    <string>Cancel</string>
+                                </property>
+                            </widget>
+                        </item>
+                    </layout>
+                </item>
+            </layout>
+        </widget>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>
