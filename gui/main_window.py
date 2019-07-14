@@ -38,12 +38,16 @@ class MainWindow(QMainWindow, Ui_main_window):
         path = self.path_line_edit.text()
         exists = os.path.exists(path)
         self.start_push_button.setEnabled(exists)
+        return exists
     
     def browse(self):
         path = QFileDialog.getExistingDirectory(self, 'Open directory to process', self.path_line_edit.text())
         self.path_line_edit.setText(path)
     
     def start(self):
+        if not self.check_existence():
+            return
+        
         self.start_push_button.setEnabled(False)
         path = self.path_line_edit.text()
         mode = Mode(self.mode_combo_box.currentIndex())
