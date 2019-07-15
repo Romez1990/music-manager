@@ -6,11 +6,13 @@ from urllib.parse import quote
 
 class Handler:
     def __init__(self, error_handlers):
-        self.browser = Browser()
+        self.browser = None
         self.error_handlers = error_handlers
     
     def handle(self, filesystem, mode):
+        self.browser = Browser()
         self.iterate(filesystem)
+        self.browser = None
     
     def iterate(self, filesystem):
         if type(filesystem) is dict:
