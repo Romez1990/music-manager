@@ -5,7 +5,7 @@ import os
 
 class Processor:
     def __init__(self, error_handlers):
-        self.error_handlers = error_handlers
+        self.handler = MainHandler(error_handlers)
         self.filesystem = None
         self.on_complete = None
         
@@ -18,8 +18,7 @@ class Processor:
     def process(self, dir, mode, flags):
         self.filesystem = [] if mode is Mode.album else {}
         self.__iterate(dir, mode, self.filesystem)
-        handler = MainHandler(self.error_handlers)
-        handler.handle(flags, mode, self.filesystem)
+        self.handler.handle(flags, mode, self.filesystem)
         self.on_complete()
     
     def __iterate(self, dir, mode, container):
