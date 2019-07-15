@@ -1,5 +1,6 @@
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from gui.main_window_ui import Ui_main_window
+from gui.progress_window import ProgressWindow
 from gui.settings_window import SettingsWindow
 from gui.finding_lyrics_modal import FindingLyricsModal
 from processing_system.processor import Processor
@@ -19,7 +20,11 @@ class MainWindow(QMainWindow, Ui_main_window):
             'lyrics_not_found': self.lyrics_not_found
         }
         self.processor = Processor(error_handlers)
+        self.processor.on_progress = self.progress
+        self.processor.on_song_change = self.song_change
         self.processor.on_complete = self.complete
+        self.progress_window = ProgressWindow(self)
+        self.progress_window.on_cancel = self.cancel
     
     def connect_signals(self):
         self.path_line_edit.textChanged.connect(self.check_existence)
@@ -48,15 +53,32 @@ class MainWindow(QMainWindow, Ui_main_window):
         if not self.check_existence():
             return
         
-        self.start_push_button.setEnabled(False)
+        self.hide()
+        self.progress_window.change_progress(0)
+        self.progress_window.change_song({
+            'artist': '',
+            'album':  '',
+            'title':  '',
+        })
+        self.progress_window.show()
         path = self.path_line_edit.text()
         mode = Mode(self.mode_combo_box.currentIndex())
         flags = {Flag.lyrics}
         Thread(target=self.processor.process, args=(path, mode, flags)).start()
     
+    def progress(self, progress):
+        value = round(progress * 100)
+        self.progress_window.change_progress(value)
+    
+    def song_change(self, song):
+        self.progress_window.change_song(song)
+    
     def complete(self):
-        self.start_push_button.setEnabled(True)
-        QMessageBox.information(self, 'Complete', 'Processing complete')
+        self.progress_window.hide()
+        self.show()
+    
+    def cancel(self):
+        raise NotImplementedError
     
     def lyrics_not_found(self, artist, album, title):
         finding_lyrics_modal = FindingLyricsModal(self, artist, album, title)

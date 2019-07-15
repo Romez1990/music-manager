@@ -1,3 +1,4 @@
+from processing_system.mode import Mode
 from lyrics.browser import Browser
 from lyrics.writer import Song
 from lyrics.searcher import find_lyrics
@@ -8,26 +9,36 @@ class Handler:
     def __init__(self, error_handlers):
         self.browser = None
         self.error_handlers = error_handlers
+        self.song_list = []
+        self.on_song_change = None
+        self.on_progress = None
+    
+    def evaluate(self, filesystem, mode):
+        self.iterate(filesystem, mode)
+        return len(self.song_list)
+    
+    def iterate(self, filesystem, mode):
+        if mode is Mode.band or mode is Mode.compilation:
+            for item in filesystem.values():
+                self.iterate(item, Mode(mode.value - 1))
+        else:
+            self.song_list.extend(filesystem)
     
     def handle(self, filesystem, mode):
-        self.browser = Browser()
-        self.iterate(filesystem)
+        if self.song_list:
+            self.browser = Browser()
+        for path in self.song_list:
+            song = Song(path)
+            self.on_song_change({
+                'artist': song.artist(),
+                'album':  song.album(),
+                'title':  song.title(),
+            })
+            self.handle_song(song)
+            self.on_progress(1)
         self.browser = None
     
-    def iterate(self, filesystem):
-        if type(filesystem) is dict:
-            list_ = filesystem.values()
-        else:
-            list_ = filesystem
-        
-        for item in list_:
-            if type(item) is dict or type(item) is list:
-                self.iterate(item)
-            else:
-                self.handle_song(item)
-    
-    def handle_song(self, path):
-        song = Song(path)
+    def handle_song(self, song):
         artist = song.artist()
         album = song.album()
         title = song.title()
