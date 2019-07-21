@@ -1,12 +1,15 @@
 from processing_system.configuration import Config
-from urllib.parse import quote
+from urllib.parse import urlencode
 import requests
 
 
 def find_lyrics(search_request):
     config = Config()
-    token = config.get('genius', 'api_token')
-    url = f'https://api.genius.com/search?access_token={token}&q={quote(search_request)}'
+    parameters = {
+        'access_token': config.get('genius', 'api_token'),
+        'q':            search_request,
+    }
+    url = 'https://api.genius.com/search?' + urlencode(parameters)
     res = requests.get(url)
     data = res.json()
     try:
