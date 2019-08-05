@@ -6,10 +6,13 @@ from processing_system.configuration import Config
 class Browser:
     def __init__(self):
         config = Config()
-        self.browser = webdriver.Chrome(config.get('browser', 'driver'))
+        chrome_options = None
         if config.getboolean('browser', 'minimize'):
-            self.minimize()
-        else:
+            from selenium.webdriver.chrome.options import Options
+            chrome_options = Options()
+            chrome_options.add_argument("--headless")
+        self.browser = webdriver.Chrome(config.get('browser', 'driver'), chrome_options=chrome_options)
+        if not config.getboolean('browser', 'minimize'):
             self.maximize()
     
     def __del__(self):
