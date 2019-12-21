@@ -1,3 +1,4 @@
+from pytest import mark
 from pathlib import Path
 from textwrap import dedent
 
@@ -9,14 +10,15 @@ from .searcher import search_lyrics
 from .scraper import scrap_lyrics
 
 
-def test_song(use_copied_files: None) -> None:
+@mark.asyncio
+async def test_song(use_copied_files: None) -> None:
     _pytest_fixtures = [use_copied_files]
     path = Path('Asking Alexandria/2009 - Asking Alexandria - '
                 'Stand Up And Scream/01. Alerion.mp3')
     song = Song(path)
     query_string = f'{song.artist} {song.title}'
-    lyrics_url = search_lyrics(query_string)
-    lyrics = scrap_lyrics(lyrics_url)
+    lyrics_url = await search_lyrics(query_string)
+    lyrics = await scrap_lyrics(lyrics_url)
     song.lyrics = lyrics
     song.save()
     assert song.lyrics == dedent('''\

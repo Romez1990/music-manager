@@ -1,19 +1,20 @@
 from typing import Optional
 from bs4 import BeautifulSoup
-import requests
+from aiohttp import ClientSession
 
 
-def scrap_lyrics(url: str) -> Optional[str]:
-    html = fetch_html(url)
+async def scrap_lyrics(url: str) -> Optional[str]:
+    html = await fetch_html(url)
     lyrics = parse_html(html)
     lyrics = process_lyrics(lyrics)
     return lyrics
 
 
-def fetch_html(url: str) -> str:
-    result = requests.get(url)
-    html: str = result.text
-    return html
+async def fetch_html(url: str) -> str:
+    async with ClientSession() as session:
+        async with session.get(url) as response:
+            html = await response.text()
+            return html
 
 
 def parse_html(html: str) -> str:

@@ -9,8 +9,9 @@ python_version = "3.8"
 [packages]
 mutagen = "*"
 beautifulsoup4 = "*"
-requests = "*"
+aiohttp = "*"
 lxml = "*"
+pytest-asyncio = "*"
 
 [dev-packages]
 mypy = "*"
