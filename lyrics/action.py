@@ -1,4 +1,4 @@
-from asyncio import run, wait
+from asyncio import get_event_loop, wait
 from typing import Callable, List, Coroutine
 from pathlib import Path
 
@@ -19,7 +19,8 @@ class LyricsAction(Action):
         self.tasks = []
         self._iterate(filesystem)
         if self.tasks:
-            run(wait(self.tasks))
+            loop = get_event_loop()
+            loop.run_until_complete(wait(self.tasks))
 
     def _iterate(self, directory: Directory) -> None:
         for fs_node in directory:
