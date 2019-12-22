@@ -18,7 +18,7 @@ class FsNode:
         if not path.exists():
             raise FileNotFoundError(f'file or directory {path} not found')
 
-        return path
+        return path.resolve()
 
     @property
     def path(self) -> Path:

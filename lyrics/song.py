@@ -30,4 +30,4 @@ class Song:
         return str(tag[0])
 
     def save(self) -> None:
-        self._tags.save(str(self._path.resolve()))
+        self._tags.save(str(self._path))
