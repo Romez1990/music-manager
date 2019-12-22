@@ -1,11 +1,20 @@
 from pathlib import Path
+from typing import Union
 from mutagen.id3 import ID3, USLT
+
+from filesystem import File
 
 
 class Song:
-    def __init__(self, path: Path) -> None:
-        self._path = path
+    def __init__(self, path: Union[File, str]) -> None:
+        self._path = self._resole_path(path)
         self._tags = ID3(str(self._path))
+
+    def _resole_path(self, path: Union[File, str]) -> Path:
+        if isinstance(path, str):
+            return self._resole_path(File(path))
+
+        return path.path
 
     @property
     def artist(self) -> str:

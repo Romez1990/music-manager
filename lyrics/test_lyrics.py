@@ -1,5 +1,4 @@
 from pytest import mark
-from pathlib import Path
 from textwrap import dedent
 
 from contracts import Mode
@@ -13,9 +12,8 @@ from .scraper import scrap_lyrics
 @mark.asyncio
 async def test_song(use_copied_files: None) -> None:
     _pytest_fixtures = [use_copied_files]
-    path = Path('Asking Alexandria/2009 - Asking Alexandria - '
+    song = Song('Asking Alexandria/2009 - Asking Alexandria - '
                 'Stand Up And Scream/01. Alerion.mp3')
-    song = Song(path)
     query_string = f'{song.artist} {song.title}'
     lyrics_url = await search_lyrics(query_string)
     lyrics = await scrap_lyrics(lyrics_url)

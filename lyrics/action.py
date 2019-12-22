@@ -1,6 +1,5 @@
 from asyncio import get_event_loop, wait
 from typing import Callable, List, Coroutine
-from pathlib import Path
 
 from contracts import Action
 from filesystem import Directory, State, File
@@ -30,13 +29,13 @@ class LyricsAction(Action):
             if isinstance(fs_node, Directory):
                 self._iterate(fs_node)
             elif isinstance(fs_node, File):
-                task = self._perform_file(fs_node.path)
+                task = self._perform_file(fs_node)
                 self.tasks.append(task)
             else:
                 raise TypeError(
                     'fs_node must be only File or Directory type')
 
-    async def _perform_file(self, file: Path) -> None:
+    async def _perform_file(self, file: File) -> None:
         song = Song(file)
         search_query = f'{song.artist} - {song.title}'
         lyrics_url = await search_lyrics(search_query)
