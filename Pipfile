@@ -10,3 +10,5 @@ python_version = "3.8"
 
 [dev-packages]
 mypy = "*"
+pytest = "*"
+pytest-asyncio = "*"
