@@ -1,4 +1,4 @@
-def query_yes_no(question: str, default=None) -> bool:
+def query_yes_no(question: str, default: str = None) -> bool:
     valid = {'yes': True, 'y': True,
              'no': False, 'n': False}
     if default is None:
@@ -18,3 +18,6 @@ def query_yes_no(question: str, default=None) -> bool:
             return valid[choice]
         else:
             print('Please respond with yes or no')
+
+
+query_yes_no('alsdf', 'yes')

@@ -24,6 +24,13 @@ class FsNode:
     def path(self) -> Path:
         return self._path
 
+    @property
+    def name(self) -> str:
+        return self.path.name
+
+    def rename(self, target: str) -> None:
+        self.path.rename(target)
+
     def mark(self) -> None:
         self.state = State.enabled
         if self.on_mark is not None:

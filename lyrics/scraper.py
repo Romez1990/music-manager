@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from aiohttp import ClientSession
 
 
-async def scrap_lyrics(url: str) -> Optional[str]:
+def scrap_lyrics(url: str) -> Optional[str]:
     html = await fetch_html(url)
     lyrics = parse_html(html)
     lyrics = process_lyrics(lyrics)
