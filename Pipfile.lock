@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4f66352daf1bf6096df8ddc5387e0ed4b70f5bbbf45ffe9c6355d079dd334087"
+            "sha256": "393b75c292ba72f2e073328fa57155a554a41ab74f2a7e43f1eb248a88f9a6c7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -15,7 +15,59 @@
             }
         ]
     },
-    "default": {},
+    "default": {
+        "fn": {
+            "hashes": [
+                "sha256:f8cd80cdabf15367a2f07e7a9951fdc013d7200412743d85b88f2c896c95bada"
+            ],
+            "index": "pypi",
+            "version": "==0.4.3"
+        },
+        "hask3": {
+            "hashes": [
+                "sha256:9e288d5868da92ecff52c0e492079c185a488485fad7caca1c2bbf5fb4dddd8a",
+                "sha256:a4b92fb618318dda87aeba028b475f93be1ce6e71960ae0adf9d18d229667bef"
+            ],
+            "index": "pypi",
+            "version": "==0.1.1"
+        },
+        "mypy-lang": {
+            "hashes": [
+                "sha256:054bf1f8dfc0af7f53a49473c7a858e4c07b66e2cd8f7621e1401d6776807c45"
+            ],
+            "version": "==0.5.0"
+        },
+        "oslash": {
+            "hashes": [
+                "sha256:4de21aaa338ede372a21c4fac4d709555be60cc38f2d896650786dc6c5649bed"
+            ],
+            "index": "pypi",
+            "version": "==0.5.1"
+        },
+        "returns": {
+            "hashes": [
+                "sha256:2de5bd9c1a754c76aead1af33cd183ad0ed71fa7199cf67865e28f4fae349b6c",
+                "sha256:6003e1a4ef414ec36b42b1cf29a8a87c65f305ab5c9ef7a794eaa4cfb5ad5b6e"
+            ],
+            "index": "pypi",
+            "version": "==0.13.0"
+        },
+        "typing-extensions": {
+            "hashes": [
+                "sha256:091ecc894d5e908ac75209f10d5b4f118fbdb2eb1ede6a63544054bb1edb41f2",
+                "sha256:910f4656f54de5993ad9304959ce9bb903f90aadc7c67a0bef07e678014e892d",
+                "sha256:cf8b63fedea4d89bab840ecbb93e75578af28f76f66c35889bd7065f5af88575"
+            ],
+            "version": "==3.7.4.1"
+        },
+        "xoutil": {
+            "hashes": [
+                "sha256:0c3f31a4788e15cf14f2b0bfee9887e3d514777d29fd16daf9a10cf28d56587c",
+                "sha256:72cf36a577b34794a4ca5d296d8e3b5289837ccf56a881e4e788c63e7a758e10"
+            ],
+            "version": "==1.9.9"
+        }
+    },
     "develop": {
         "atomicwrites": {
             "hashes": [
