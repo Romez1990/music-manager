@@ -11,6 +11,10 @@ fn = "*"
 hask3 = "*"
 oslash = "*"
 returns = "*"
+aiohttp = "*"
+beautifulsoup4 = "*"
+lxml = "*"
+mutagen = "*"
 
 [dev-packages]
 mypy = "*"
