@@ -3,3 +3,7 @@ __pycache__/
 
 # Mypy
 /.mypy_cache/
+
+# pyinstaller
+/build/
+/dist/

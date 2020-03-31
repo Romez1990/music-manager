@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8debd9db948161e2c05c1e467f7aa921d975d6b72a4190d6f25ec18f2bf36e23"
+            "sha256": "2c308f8b165cec96d184976f8b74ee3e2096640a9da4f659a19168cfb1dace31"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -216,6 +216,13 @@
         }
     },
     "develop": {
+        "altgraph": {
+            "hashes": [
+                "sha256:1f05a47122542f97028caf78775a095fbe6a2699b5089de8477eb583167d69aa",
+                "sha256:c623e5f3408ca61d4016f23a681b9adb100802ca3e3da5e718915a9e4052cebe"
+            ],
+            "version": "==0.17"
+        },
         "atomicwrites": {
             "hashes": [
                 "sha256:03472c30eb2c5d1ba9227e4c2ca66ab8287fbfbbda3888aa93dc2e28fc6811b4",
@@ -238,6 +245,12 @@
             ],
             "markers": "sys_platform == 'win32'",
             "version": "==0.4.3"
+        },
+        "future": {
+            "hashes": [
+                "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"
+            ],
+            "version": "==0.18.2"
         },
         "more-itertools": {
             "hashes": [
@@ -280,6 +293,12 @@
             ],
             "version": "==20.3"
         },
+        "pefile": {
+            "hashes": [
+                "sha256:a5d6e8305c6b210849b47a6174ddf9c452b2888340b8177874b862ba6c207645"
+            ],
+            "version": "==2019.4.18"
+        },
         "pluggy": {
             "hashes": [
                 "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0",
@@ -293,6 +312,13 @@
                 "sha256:c20fdd83a5dbc0af9efd622bee9a5564e278f6380fffcacc43ba6f43db2813b0"
             ],
             "version": "==1.8.1"
+        },
+        "pyinstaller": {
+            "hashes": [
+                "sha256:3730fa80d088f8bb7084d32480eb87cbb4ddb64123363763cf8f2a1378c1c4b7"
+            ],
+            "index": "pypi",
+            "version": "==3.6"
         },
         "pyparsing": {
             "hashes": [
@@ -316,6 +342,13 @@
             ],
             "index": "pypi",
             "version": "==0.10.0"
+        },
+        "pywin32-ctypes": {
+            "hashes": [
+                "sha256:24ffc3b341d457d48e8922352130cf2644024a4ff09762a2261fd34c36ee5942",
+                "sha256:9dc2d991b3479cc2df15930958b674a48a227d5361d413827a4cfd0b5876fc98"
+            ],
+            "version": "==0.2.0"
         },
         "six": {
             "hashes": [
