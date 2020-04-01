@@ -17,7 +17,14 @@ class Song:
 
     @property
     def artist(self) -> str:
-        return self._get_tag('TPE1')
+        artist = self._get_tag('TPE1')
+        return self._trim_other_artists(artist)
+
+    def _trim_other_artists(self, artist: str) -> str:
+        if '/' not in artist:
+            return artist
+        slash_index = artist.index('/')
+        return artist[:slash_index]
 
     @property
     def title(self) -> str:
