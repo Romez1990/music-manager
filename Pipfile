@@ -7,7 +7,7 @@ verify_ssl = true
 python_version = "3.8"
 
 [scripts]
-build = "pipenv run pyinstaller --noconfirm mm.spec"
+build = "pyinstaller --noconfirm mm.spec"
 
 [packages]
 fn = "*"
