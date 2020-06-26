@@ -4,6 +4,7 @@ using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Reflection;
 using Core.FileSystem;
+using Directory = System.IO.Directory;
 
 namespace Core.Test.FileSystem
 {
