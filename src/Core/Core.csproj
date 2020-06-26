@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>Core</AssemblyName>
+    <RootNamespace>Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Config\" />
+    <Folder Include="Http\" />
+    <Folder Include="Lyrics\" />
+    <Folder Include="Scraper\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="System.IO.Abstractions" Version="12.0.2" />
+  </ItemGroup>
+
+</Project>
