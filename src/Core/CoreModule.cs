@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Core.FileSystem;
 
 namespace Core
 {
@@ -6,6 +7,7 @@ namespace Core
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<FsInfoFactory>().As<IFsInfoFactory>();
         }
     }
 }
