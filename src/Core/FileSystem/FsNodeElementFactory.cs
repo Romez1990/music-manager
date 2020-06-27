@@ -1,0 +1,33 @@
+using System;
+
+namespace Core.FileSystem
+{
+    public class FsNodeElementFactory : IFsNodeElementFactory
+    {
+        public FsNodeElementFactory(IFsNodeFactory fsNodeFactory)
+        {
+            _fsNodeFactory = fsNodeFactory;
+        }
+
+        private readonly IFsNodeFactory _fsNodeFactory;
+
+        public IDirectoryElement CreateDirectoryElement(string path)
+        {
+            return new DirectoryElement(_fsNodeFactory.InstantiateDirectory(path));
+        }
+
+        public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
+            EventHandler<FsNodeElementCheckEventArgs> checkHandler,
+            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler)
+        {
+            return new DirectoryElement(directory, checkHandler, uncheckHandler);
+        }
+
+        public IFileElement CreateFileElementInsideDirectory(IFile file,
+            EventHandler<FsNodeElementCheckEventArgs> checkHandler,
+            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler)
+        {
+            return new FileElement(file, checkHandler, uncheckHandler);
+        }
+    }
+}
