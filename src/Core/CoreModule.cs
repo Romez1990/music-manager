@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Core.FileScanner;
 using Core.FileSystem;
 
 namespace Core
@@ -7,6 +8,7 @@ namespace Core
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<Scanner>().As<IScanner>();
             builder.RegisterType<FsNodeElementFactory>().As<IFsNodeElementFactory>();
             builder.RegisterType<FsNodeFactory>().As<IFsNodeFactory>();
             builder.RegisterType<FsInfoFactory>().As<IFsInfoFactory>();
