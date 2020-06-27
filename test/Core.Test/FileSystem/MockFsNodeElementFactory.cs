@@ -148,7 +148,7 @@ namespace Core.Test.FileSystem
 
         public IDirectoryElement CreateDirectoryElement(string path)
         {
-            return new DirectoryElement(_fsNodes[path] as IDirectory);
+            return new DirectoryElement(this, _fsNodes[path] as IDirectory);
         }
 
         public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
@@ -156,7 +156,7 @@ namespace Core.Test.FileSystem
             EventHandler<FsNodeElementCheckEventArgs> uncheckHandler)
         {
             var path = directory.FullName;
-            return new DirectoryElement(_fsNodes[path] as IDirectory, checkHandler, uncheckHandler);
+            return new DirectoryElement(this, _fsNodes[path] as IDirectory, checkHandler, uncheckHandler);
         }
 
         public IFileElement CreateFileElementInsideDirectory(IFile file,
