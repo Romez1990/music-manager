@@ -157,7 +157,8 @@ namespace Core.Test.FileSystem
             EventHandler<FsNodeElementCheckEventArgs> checkHandler)
         {
             var path = directory.FullName;
-            return new DirectoryElement(this, _fsNodes[path] as IDirectory, uncheckHandler, checkHandler);
+            return new DirectoryElement(this, _fsNodes[path] as IDirectory, checkHandler, checkPartiallyHandler,
+                uncheckHandler);
         }
 
         public IFileElement CreateFileElementInsideDirectory(IFile file,
