@@ -11,12 +11,24 @@ namespace Core.Test.FileSystem
         public void SetUp()
         {
             _fsInfoFactory = new MockFsInfoFactory();
-            _directory = new Directory(_fsInfoFactory.DirectoryInfo);
+            var fsNodeFactory = new FsNodeFactory(_fsInfoFactory);
+            _directory = new Directory(fsNodeFactory, _fsInfoFactory.DirectoryInfo);
         }
 
         private MockFsInfoFactory _fsInfoFactory;
 
         private IDirectory _directory;
+
+        [Test]
+        public void Directory_Content()
+        {
+            var content = _directory.Content;
+
+            Assert.That(content.Length, Is.EqualTo(3));
+            Assert.That(content[0].Name, Is.EqualTo("sub_directory"));
+            Assert.That(content[1].Name, Is.EqualTo("file1.ext"));
+            Assert.That(content[2].Name, Is.EqualTo("file2.ext"));
+        }
 
         [Test]
         public void Directory_Renames_Correctly()

@@ -13,12 +13,12 @@ namespace Core.FileSystem
 
         public IDirectory InstantiateDirectory(string path)
         {
-            return new Directory(_fsInfoFactory.CreateDirectoryInfo(path));
+            return new Directory(this, _fsInfoFactory.CreateDirectoryInfo(path));
         }
 
         public IDirectory InstantiateDirectory(IDirectoryInfo info)
         {
-            return new Directory(info);
+            return new Directory(this, info);
         }
 
         public IFile InstantiateFile(string path)
