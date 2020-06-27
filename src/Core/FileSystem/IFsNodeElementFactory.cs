@@ -8,6 +8,7 @@ namespace Core.FileSystem
 
         IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
             EventHandler<FsNodeElementCheckEventArgs> checkHandler,
+            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
             EventHandler<FsNodeElementCheckEventArgs> uncheckHandler);
 
         IFileElement CreateFileElementInsideDirectory(IFile file,

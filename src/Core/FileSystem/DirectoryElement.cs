@@ -8,10 +8,12 @@ namespace Core.FileSystem
     {
         public DirectoryElement(IFsNodeElementFactory fsNodeElementFactory, IDirectory directory,
             EventHandler<FsNodeElementCheckEventArgs> checkHandler,
+            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
             EventHandler<FsNodeElementCheckEventArgs> uncheckHandler) : base(directory, checkHandler, uncheckHandler)
         {
             _fsNodeElementFactory = fsNodeElementFactory;
             Content = SelectContent();
+            CheckedPartiallyEvent += checkPartiallyHandler;
         }
 
         public DirectoryElement(IFsNodeElementFactory fsNodeElementFactory, IDirectory directory) : base(directory)
@@ -30,7 +32,7 @@ namespace Core.FileSystem
                 .Where(fsNode => fsNode is IDirectory)
                 .Cast<IDirectory>()
                 .Select(directory => _fsNodeElementFactory.CreateDirectoryElementInsideDirectory(directory,
-                    ContentCheckHandler, ContentUncheckHandler))
+                    ContentCheckHandler, ContentCheckPartiallyHandler, ContentUncheckHandler))
                 .Cast<IFsNodeElement<IFsNode>>()
                 .Concat(FsNode.Content
                     .Where(fsNode => fsNode is IFile)
@@ -38,6 +40,13 @@ namespace Core.FileSystem
                     .Select(file => _fsNodeElementFactory.CreateFileElementInsideDirectory(file,
                         ContentCheckHandler, ContentUncheckHandler)))
                 .ToImmutableArray();
+        }
+
+        private event EventHandler<FsNodeElementCheckEventArgs> CheckedPartiallyEvent;
+
+        private void OnCheckedPartiallyEvent()
+        {
+            CheckedPartiallyEvent?.Invoke(this, new FsNodeElementCheckEventArgs(CheckState));
         }
 
         public override void Check()
@@ -59,6 +68,20 @@ namespace Core.FileSystem
                 CheckState = CheckState.Checked;
                 OnCheckEvent();
             }
+            else if (CheckState == CheckState.Unchecked)
+            {
+                CheckState = CheckState.CheckedPartially;
+                OnCheckedPartiallyEvent();
+            }
+        }
+
+        private void ContentCheckPartiallyHandler(object sender, FsNodeElementCheckEventArgs e)
+        {
+            if (CheckState != CheckState.CheckedPartially)
+            {
+                CheckState = CheckState.CheckedPartially;
+                OnCheckedPartiallyEvent();
+            }
         }
 
         private void ContentUncheckHandler(object sender, FsNodeElementCheckEventArgs e)
@@ -67,6 +90,11 @@ namespace Core.FileSystem
             {
                 CheckState = CheckState.Unchecked;
                 OnUncheckEvent();
+            }
+            else if (CheckState != CheckState.CheckedPartially)
+            {
+                CheckState = CheckState.CheckedPartially;
+                OnCheckedPartiallyEvent();
             }
         }
     }
