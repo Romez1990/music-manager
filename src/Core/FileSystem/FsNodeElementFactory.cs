@@ -13,14 +13,15 @@ namespace Core.FileSystem
 
         public IDirectoryElement CreateDirectoryElement(string path)
         {
-            return new DirectoryElement(_fsNodeFactory.InstantiateDirectory(path));
+            return new DirectoryElement(this, _fsNodeFactory.InstantiateDirectory(path));
         }
 
         public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
             EventHandler<FsNodeElementCheckEventArgs> checkHandler,
+            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
             EventHandler<FsNodeElementCheckEventArgs> uncheckHandler)
         {
-            return new DirectoryElement(directory, checkHandler, uncheckHandler);
+            return new DirectoryElement(this, directory, checkHandler, uncheckHandler);
         }
 
         public IFileElement CreateFileElementInsideDirectory(IFile file,
