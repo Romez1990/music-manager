@@ -21,7 +21,7 @@ namespace Core.FileSystem
             EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
             EventHandler<FsNodeElementCheckEventArgs> uncheckHandler)
         {
-            return new DirectoryElement(this, directory, checkHandler, uncheckHandler);
+            return new DirectoryElement(this, directory, checkHandler, checkPartiallyHandler, uncheckHandler);
         }
 
         public IFileElement CreateFileElementInsideDirectory(IFile file,
