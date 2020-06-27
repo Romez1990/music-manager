@@ -11,7 +11,7 @@ namespace Core.Test.FileSystem
         {
             var filesHelper = new FsHelper();
             var solutionDirectory = filesHelper.GetSolutionDirectory();
-            TestFilesDirectoryPath = Path.Combine(solutionDirectory.FullName, "test", "test_compilation");
+            TestFilesDirectoryPath = Path.Combine(solutionDirectory.FullName, "test", "TestCompilation");
             _testFilesDirectoryInfo = new DirectoryInfo(TestFilesDirectoryPath);
         }
 
