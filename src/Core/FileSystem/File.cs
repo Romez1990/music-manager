@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.IO.Abstractions;
+﻿using System.IO.Abstractions;
 
 namespace Core.FileSystem
 {
@@ -13,7 +12,7 @@ namespace Core.FileSystem
 
         public override void Rename(string newName)
         {
-            var newPath = Path.Combine(Info.DirectoryName, newName);
+            var newPath = System.IO.Path.Combine(Info.DirectoryName, newName);
             Info.MoveTo(newPath);
         }
     }
