@@ -13,7 +13,7 @@ namespace Core.FileSystem
 
         public string Name => Info.Name;
 
-        public string FullName => Info.FullName;
+        public string Path => Info.FullName;
 
         public bool Exists => Info.Exists;
 

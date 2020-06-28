@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 
@@ -31,7 +30,7 @@ namespace Core.FileSystem
 
         public override void Rename(string newName)
         {
-            var newPath = Path.Combine(Info.Parent.FullName, newName);
+            var newPath = System.IO.Path.Combine(Info.Parent.FullName, newName);
             Info.MoveTo(newPath);
         }
     }

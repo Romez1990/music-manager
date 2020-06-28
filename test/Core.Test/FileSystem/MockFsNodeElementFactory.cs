@@ -87,7 +87,7 @@ namespace Core.Test.FileSystem
             var mockCompilationDirectory = new Mock<IDirectory>(MockBehavior.Strict);
             var name = mockCompilationDirectory.Name;
             mockCompilationDirectory.Setup(d => d.Name).Returns(() => name);
-            mockCompilationDirectory.Setup(d => d.FullName).Returns(CompilationPath);
+            mockCompilationDirectory.Setup(d => d.Path).Returns(CompilationPath);
             mockCompilationDirectory.Setup(d => d.ToString()).Returns(() => name);
             mockCompilationDirectory.Setup(d => d.Content).Returns(
                 bandDirectoriesInfo
@@ -104,7 +104,7 @@ namespace Core.Test.FileSystem
             var mockBandDirectory = new Mock<IDirectory>(MockBehavior.Strict);
             var name = mockBandDirectory.Name;
             mockBandDirectory.Setup(d => d.Name).Returns(() => name);
-            mockBandDirectory.Setup(d => d.FullName).Returns(CutPath(bandDirectoryInfo));
+            mockBandDirectory.Setup(d => d.Path).Returns(CutPath(bandDirectoryInfo));
             mockBandDirectory.Setup(d => d.ToString()).Returns(() => name);
             mockBandDirectory.Setup(d => d.Content).Returns(
                 albumDirectoriesInfo
@@ -120,7 +120,7 @@ namespace Core.Test.FileSystem
             var mockAlbumDirectory = new Mock<IDirectory>(MockBehavior.Strict);
             var name = albumDirectoryInfo.Name;
             mockAlbumDirectory.Setup(d => d.Name).Returns(() => name);
-            mockAlbumDirectory.Setup(d => d.FullName).Returns(CutPath(albumDirectoryInfo));
+            mockAlbumDirectory.Setup(d => d.Path).Returns(CutPath(albumDirectoryInfo));
             mockAlbumDirectory.Setup(d => d.ToString()).Returns(() => name);
             mockAlbumDirectory.Setup(d => d.Rename(It.IsAny<string>()))
                 .Callback<string>(newName => name = newName);
@@ -138,7 +138,7 @@ namespace Core.Test.FileSystem
             var mockTrack = new Mock<IFile>(MockBehavior.Strict);
             var name = fileInfo.Name;
             mockTrack.Setup(f => f.Name).Returns(() => name);
-            mockTrack.Setup(f => f.FullName).Returns(CutPath(fileInfo));
+            mockTrack.Setup(f => f.Path).Returns(CutPath(fileInfo));
             mockTrack.Setup(f => f.Extension).Returns(fileInfo.Extension);
             mockTrack.Setup(f => f.ToString()).Returns(() => name);
             mockTrack.Setup(f => f.Rename(It.IsAny<string>()))
@@ -156,7 +156,7 @@ namespace Core.Test.FileSystem
             EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
             EventHandler<FsNodeElementCheckEventArgs> checkHandler)
         {
-            var path = directory.FullName;
+            var path = directory.Path;
             return new DirectoryElement(this, _fsNodes[path] as IDirectory, checkHandler, checkPartiallyHandler,
                 uncheckHandler);
         }
@@ -165,7 +165,7 @@ namespace Core.Test.FileSystem
             EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
             EventHandler<FsNodeElementCheckEventArgs> checkHandler)
         {
-            var path = file.FullName;
+            var path = file.Path;
             return new FileElement(_fsNodes[path] as IFile, uncheckHandler, checkHandler);
         }
     }
