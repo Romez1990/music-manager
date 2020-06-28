@@ -4,7 +4,7 @@ namespace Core.FileSystem
     {
         string Name { get; }
 
-        string FullName { get; }
+        string Path { get; }
 
         bool Exists { get; }
 
