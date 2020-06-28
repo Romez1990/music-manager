@@ -30,7 +30,7 @@ namespace Core.Test.FileSystem
         [Test]
         public void FsNodeBase_FullName()
         {
-            Assert.That(_fsNodeBase.FullName, Is.EqualTo(_fsInfoFactory.FileInfo.FullName));
+            Assert.That(_fsNodeBase.Path, Is.EqualTo(_fsInfoFactory.FileInfo.FullName));
         }
 
         [Test]
