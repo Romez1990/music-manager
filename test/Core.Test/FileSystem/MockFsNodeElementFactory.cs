@@ -51,7 +51,7 @@ namespace Core.Test.FileSystem
         private void ScanCompilation(
             Dictionary<DirectoryInfo, Dictionary<DirectoryInfo, FileInfo[]>> bandDirectoriesInfo)
         {
-            BandPath = CutPath(bandDirectoriesInfo.First().Key);
+            BandPath = CutPath(bandDirectoriesInfo.OrderBy(fsNode => fsNode.Key.Name).First().Key);
             CompilationPath = _fileSystemRoot;
             var mockCompilationDirectory = MockCompilation(bandDirectoriesInfo);
             _fsNodes[CompilationPath] = mockCompilationDirectory;
@@ -60,7 +60,7 @@ namespace Core.Test.FileSystem
         private IDirectory ScanBand(KeyValuePair<DirectoryInfo, Dictionary<DirectoryInfo, FileInfo[]>> pair)
         {
             var (bandDirectoryInfo, albumDirectoriesInfo) = pair;
-            AlbumPath = CutPath(albumDirectoriesInfo.First().Key);
+            AlbumPath = CutPath(albumDirectoriesInfo.OrderBy(fsNode => fsNode.Key.Name).First().Key);
             var mockBandDirectory = MockBand(bandDirectoryInfo, albumDirectoriesInfo);
             _fsNodes[CutPath(bandDirectoryInfo)] = mockBandDirectory;
             return mockBandDirectory;
@@ -93,6 +93,7 @@ namespace Core.Test.FileSystem
                 bandDirectoriesInfo
                     .Select(ScanBand)
                     .Cast<IFsNode>()
+                    .OrderBy(fsNode => fsNode.Name)
                     .ToImmutableArray()
             );
             return mockCompilationDirectory.Object;
@@ -110,6 +111,7 @@ namespace Core.Test.FileSystem
                 albumDirectoriesInfo
                     .Select(ScanAlbum)
                     .Cast<IFsNode>()
+                    .OrderBy(fsNode => fsNode.Name)
                     .ToImmutableArray()
             );
             return mockBandDirectory.Object;
@@ -128,6 +130,7 @@ namespace Core.Test.FileSystem
                 tracksInfo
                     .Select(ScanTrack)
                     .Cast<IFsNode>()
+                    .OrderBy(fsNode => fsNode.Name)
                     .ToImmutableArray()
             );
             return mockAlbumDirectory.Object;
