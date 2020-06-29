@@ -18,13 +18,15 @@ namespace Core.FileSystem
 
         private ImmutableArray<IFsNode> ReadContent()
         {
-            return Info
+            var directories = Info
                 .GetDirectories()
                 .Select(info => _fsNodeFactory.InstantiateDirectory(info))
-                .Cast<IFsNode>()
-                .Concat(Info
-                    .GetFiles()
-                    .Select(info => _fsNodeFactory.InstantiateFile(info)))
+                .Cast<IFsNode>();
+            var files = Info
+                .GetFiles()
+                .Select(info => _fsNodeFactory.InstantiateFile(info));
+            return directories
+                .Concat(files)
                 .ToImmutableArray();
         }
 
