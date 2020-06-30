@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using Core.Engines;
+using Core;
 
-namespace ConsoleApp.Application
+namespace ConsoleApp
 {
     public class AppContainerBuilder
     {
@@ -9,7 +9,7 @@ namespace ConsoleApp.Application
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule<AppModule>();
-            containerBuilder.RegisterModule<EngineModule>();
+            containerBuilder.RegisterModule<CoreModule>();
             return containerBuilder.Build();
         }
     }

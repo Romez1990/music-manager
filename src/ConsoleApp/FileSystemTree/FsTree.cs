@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Core.FileSystem;
 
 namespace ConsoleApp.FileSystemTree
 {
-    public class FsTreePrinter : IFsTreePrinter
+    public class FsTree : IFsTree
     {
-        public FsTreePrinter()
+        public FsTree()
         {
             _bold = false;
         }
@@ -17,30 +15,31 @@ namespace ConsoleApp.FileSystemTree
 
         private readonly bool _bold;
 
-        public void PrintTree(IDirectoryElement directoryElement)
+        public IDirectoryElement DirectoryElement { get; set; }
+
+        public override string ToString()
         {
-            Console.OutputEncoding = Encoding.UTF8;
-            PrintTreeHelper(directoryElement, "", "");
+            return PrintTreeHelper(DirectoryElement, "", "");
         }
 
-        private void PrintTreeHelper(IFsNodeElement fsNodeElement, string directChildStart, string indirectChildStart)
+        private string PrintTreeHelper(IFsNodeElement<IFsNode> fsNodeElement, string directChildStart,
+            string indirectChildStart)
         {
             var checkBox = GetCheckBox(fsNodeElement.CheckState);
             var name = fsNodeElement.FsNode.Name;
-            Console.WriteLine($"{directChildStart}{checkBox} {name}");
+            var directoryElementString = $"{directChildStart}{checkBox} {name}";
 
-            if (!(fsNodeElement is IDirectoryElement directoryElement)) return;
+            if (!(fsNodeElement is IDirectoryElement directoryElement)) return directoryElementString;
 
             var lastChildFsNodeElement = directoryElement.Content.Last();
-            directoryElement.Content
-                .ToList()
-                .ForEach(childFsNodeElement =>
+            return directoryElementString + string.Join('\n', directoryElement.Content
+                .Select(childFsNodeElement =>
                 {
                     var isLast = childFsNodeElement == lastChildFsNodeElement;
-                    PrintTreeHelper(childFsNodeElement,
+                    return PrintTreeHelper(childFsNodeElement,
                         indirectChildStart + GetStart(GetHead(true, isLast), GetTail(true)),
                         indirectChildStart + GetStart(GetHead(false, isLast), GetTail(false)));
-                });
+                }));
         }
 
         private readonly Dictionary<CheckState, string> _checkBoxes = new Dictionary<CheckState, string>

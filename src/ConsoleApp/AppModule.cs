@@ -10,7 +10,7 @@ namespace ConsoleApp
         {
             builder.RegisterType<App>().As<IApp>();
             builder.RegisterType<OptionsResolver>().As<IOptionsResolver>();
-            builder.RegisterType<FsTreePrinter>().As<IFsTreePrinter>();
+            builder.RegisterType<FsTree>().As<IFsTree>();
         }
     }
 }

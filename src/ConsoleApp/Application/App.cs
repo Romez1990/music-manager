@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using CommandLine;
 using ConsoleApp.FileSystemTree;
 using Core.CoreEngine;
@@ -9,18 +10,19 @@ namespace ConsoleApp.Application
 {
     public class App : IApp
     {
-        public App(IEngine engine, IOptionsResolver optionsResolver, IFsTreePrinter fsTreePrinter)
+        public App(IEngine engine, IOptionsResolver optionsResolver, IFsTree fsTree)
         {
+            Console.OutputEncoding = Encoding.UTF8;
             _engine = engine;
             _optionsResolver = optionsResolver;
-            _fsTreePrinter = fsTreePrinter;
+            _fsTree = fsTree;
         }
 
         private readonly IEngine _engine;
 
         private readonly IOptionsResolver _optionsResolver;
 
-        private readonly IFsTreePrinter _fsTreePrinter;
+        private readonly IFsTree _fsTree;
 
         private ParserResult<Options> _parserResult;
 
@@ -67,7 +69,8 @@ namespace ConsoleApp.Application
         private void PrintFileSystem()
         {
             var directoryElement = _engine.DirectoryElement;
-            _fsTreePrinter.PrintTree(directoryElement);
+            _fsTree.DirectoryElement = directoryElement;
+            Console.WriteLine(_fsTree);
         }
 
         private int HandleParsingErrors(IEnumerable<Error> errors)
