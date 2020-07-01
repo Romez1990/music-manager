@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using CommandLine;
 using ConsoleApp.FileSystemTree;
 using Core.CoreEngine;
+using Core.FileSystem;
 
 namespace ConsoleApp.Application
 {
@@ -41,7 +41,7 @@ namespace ConsoleApp.Application
         {
             if (_runGraphicApp)
             {
-                return RunGraphicApp();
+                return RunGraphicalApp();
             }
 
             return _parserResult.MapResult(RunWithOptions, HandleParsingErrors);
@@ -58,17 +58,16 @@ namespace ConsoleApp.Application
             var mode = _optionsResolver.ResolveMode(options.Compilation, options.Band, options.Album);
             _engine.Scan(mode);
 
-            PrintFileSystem();
+            PrintFileSystem(_engine.DirectoryElement);
 
-            var actions = _optionsResolver.ResolveActions(options.Rename, options.Lyrics);
-             _engine.PerformActions(actions);
+            // var actions = _optionsResolver.ResolveActions(options.Rename, options.Lyrics);
+            // _engine.PerformActions(actions);
 
             return 0;
         }
 
-        private void PrintFileSystem()
+        private void PrintFileSystem(IDirectoryElement directoryElement)
         {
-            var directoryElement = _engine.DirectoryElement;
             _fsTree.DirectoryElement = directoryElement;
             Console.WriteLine(_fsTree);
         }
@@ -78,11 +77,10 @@ namespace ConsoleApp.Application
             return 1;
         }
 
-        private int RunGraphicApp()
+        private int RunGraphicalApp()
         {
-            // get assembly directory
-            Process.Start("MusicManager.exe");
-            return 0;
+            var graphicalApp = new GraphicalApp();
+            return graphicalApp.Run();
         }
     }
 }
