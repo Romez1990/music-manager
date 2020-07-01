@@ -2,7 +2,7 @@
 
 namespace ConsoleApp.Application
 {
-    public class Options
+    public abstract class OptionsBase
     {
         [Value(0, HelpText = "Directory path")]
         public string Path { get; set; }

@@ -24,7 +24,7 @@ namespace ConsoleApp.Application
 
         private readonly IFsTree _fsTree;
 
-        private ParserResult<Options> _parserResult;
+        private ParserResult<OptionsBase> _parserResult;
 
         private bool _runGraphicApp;
 
@@ -34,7 +34,7 @@ namespace ConsoleApp.Application
 
             if (_runGraphicApp) return;
 
-            _parserResult = Parser.Default.ParseArguments<Options>(args);
+            _parserResult = Parser.Default.ParseArguments<OptionsBase>(args);
         }
 
         public int Run()
@@ -47,15 +47,15 @@ namespace ConsoleApp.Application
             return _parserResult.MapResult(RunWithOptions, HandleParsingErrors);
         }
 
-        private int RunWithOptions(Options options)
+        private int RunWithOptions(OptionsBase optionsBase)
         {
-            var directoryPath = options.Path ?? Environment.CurrentDirectory;
+            var directoryPath = optionsBase.Path ?? Environment.CurrentDirectory;
             if (!_engine.SetDirectory(directoryPath))
             {
                 return 1;
             }
 
-            var mode = _optionsResolver.ResolveMode(options.Compilation, options.Band, options.Album);
+            var mode = _optionsResolver.ResolveMode(optionsBase);
             _engine.Scan(mode);
 
             PrintFileSystem(_engine.DirectoryElement);

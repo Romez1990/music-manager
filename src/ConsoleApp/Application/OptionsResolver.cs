@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.CoreEngine;
+﻿using Core.CoreEngine;
 
 namespace ConsoleApp.Application
 {
     public class OptionsResolver : IOptionsResolver
     {
-        public Mode ResolveMode(bool compilation, bool band, bool album)
+        public Mode ResolveMode(OptionsBase options)
         {
-            if (compilation)
+            if (options.Compilation)
                 return Mode.Compilation;
-            if (band)
+            if (options.Band)
                 return Mode.Band;
             return Mode.Album;
         }
