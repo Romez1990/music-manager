@@ -13,7 +13,7 @@ namespace ConsoleApp.Application
 
             if (!graphicalAppFileInfo.Exists)
             {
-                Console.WriteLine("Graphical app not found");
+                Console.WriteLine("Error: Graphical app not found");
                 return 1;
             }
 
