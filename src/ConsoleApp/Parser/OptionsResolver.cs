@@ -1,6 +1,6 @@
 ﻿using Core.CoreEngine;
 
-namespace ConsoleApp.Application
+namespace ConsoleApp.Parser
 {
     public class OptionsResolver : IOptionsResolver
     {

@@ -32,7 +32,7 @@ namespace ConsoleApp.FileSystemTree
             if (!(fsNodeElement is IDirectoryElement directoryElement)) return directoryElementString;
 
             var lastChildFsNodeElement = directoryElement.Content.Last();
-            return directoryElementString + string.Join('\n', directoryElement.Content
+            var directoryElementContent = string.Join('\n', directoryElement.Content
                 .Select(childFsNodeElement =>
                 {
                     var isLast = childFsNodeElement == lastChildFsNodeElement;
@@ -40,6 +40,7 @@ namespace ConsoleApp.FileSystemTree
                         indirectChildStart + GetStart(GetHead(true, isLast), GetTail(true)),
                         indirectChildStart + GetStart(GetHead(false, isLast), GetTail(false)));
                 }));
+            return directoryElementString + '\n' + directoryElementContent;
         }
 
         private readonly Dictionary<CheckState, string> _checkBoxes = new Dictionary<CheckState, string>

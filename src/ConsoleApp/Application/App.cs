@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using CommandLine;
 using ConsoleApp.FileSystemTree;
+using ConsoleApp.Parser;
 using Core.CoreEngine;
 using Core.FileSystem;
 
@@ -10,23 +11,16 @@ namespace ConsoleApp.Application
 {
     public class App : IApp
     {
-        public App(IEngine engine, IOptionsResolver optionsResolver, IFsTree fsTree)
+        public App(IEngine engine, IFsTree fsTree)
         {
             Console.OutputEncoding = Encoding.UTF8;
             _engine = engine;
-            _optionsResolver = optionsResolver;
             _fsTree = fsTree;
         }
 
         private readonly IEngine _engine;
 
-        private readonly IOptionsResolver _optionsResolver;
-
         private readonly IFsTree _fsTree;
-
-        private ParserResult<OptionsBase> _parserResult;
-
-        private bool _runGraphicApp;
 
         public void Configure(string[] args)
         {
@@ -39,30 +33,26 @@ namespace ConsoleApp.Application
 
         public int Run()
         {
+
             if (_runGraphicApp)
             {
                 return RunGraphicalApp();
             }
 
-            return _parserResult.MapResult(RunWithOptions, HandleParsingErrors);
+            return _parserResult.MapResult(RunConsoleApp, HandleParsingErrors);
         }
 
-        private int RunWithOptions(OptionsBase optionsBase)
+        private int RunConsoleApp(AppOptions options)
         {
-            var directoryPath = optionsBase.Path ?? Environment.CurrentDirectory;
+            var directoryPath = options.Path ?? Environment.CurrentDirectory;
             if (!_engine.SetDirectory(directoryPath))
             {
                 return 1;
             }
 
-            var mode = _optionsResolver.ResolveMode(optionsBase);
-            _engine.Scan(mode);
-
+            _engine.Scan(options.Mode);
             PrintFileSystem(_engine.DirectoryElement);
-
-            // var actions = _optionsResolver.ResolveActions(options.Rename, options.Lyrics);
-            // _engine.PerformActions(actions);
-
+            _engine.PerformOperations(options.Operations);
             return 0;
         }
 

@@ -92,7 +92,7 @@ namespace Core.Test.CoreEngine
             var operation1 = new Mock<IOperation>();
             var operation2 = new Mock<IOperation>();
 
-            _engine.PerformActions(new[] {operation1.Object, operation2.Object});
+            _engine.PerformOperations(new[] {operation1.Object, operation2.Object});
 
             operation1.Verify(o => o.Perform(directoryElement.Object, Mode.Band), Times.Once());
             operation2.Verify(o => o.Perform(directoryElement.Object, Mode.Band), Times.Once());
@@ -106,7 +106,7 @@ namespace Core.Test.CoreEngine
             var operation1 = new Mock<IOperation>();
             var operation2 = new Mock<IOperation>();
 
-            void Perform() => _engine.PerformActions(new[] {operation1.Object, operation2.Object});
+            void Perform() => _engine.PerformOperations(new[] {operation1.Object, operation2.Object});
 
             Assert.That(Perform,
                 Throws.Exception.TypeOf<ApplicationException>().With.Property("Message")

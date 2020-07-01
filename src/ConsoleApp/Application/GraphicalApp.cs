@@ -24,7 +24,7 @@ namespace ConsoleApp.Application
         private FileInfo GetGraphicalAppFileInfo()
         {
             var assemblyDirectoryPath = Assembly.GetExecutingAssembly().Location;
-            var graphicalAppPath = Path.Combine(assemblyDirectoryPath, "MusicManager.exe");
+            var graphicalAppPath = Path.Combine(assemblyDirectoryPath, "Music Manager.exe");
             return new FileInfo(graphicalAppPath);
         }
     }

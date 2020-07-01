@@ -1,8 +1,8 @@
 ﻿using CommandLine;
 
-namespace ConsoleApp.Application
+namespace ConsoleApp.Parser
 {
-    public abstract class OptionsBase
+    public class OptionsBase
     {
         [Value(0, HelpText = "Directory path")]
         public string Path { get; set; }

@@ -4,6 +4,8 @@ namespace ConsoleApp.FileSystemTree
 {
     public interface IFsTree
     {
-        IDirectoryElement DirectoryElement { get; set; }
+        IDirectoryElement DirectoryElement { set; }
+
+        string ToString();
     }
 }

@@ -12,6 +12,6 @@ namespace Core.CoreEngine
 
         void Scan(Mode mode);
 
-        void PerformActions(IEnumerable<IOperation> operations);
+        void PerformOperations(IEnumerable<IOperation> operations);
     }
 }

@@ -44,7 +44,7 @@ namespace Core.CoreEngine
             _scanner.Scan(DirectoryElement, mode);
         }
 
-        public void PerformActions(IEnumerable<IOperation> operations)
+        public void PerformOperations(IEnumerable<IOperation> operations)
         {
             CheckDirectoryElement();
             CheckCheckState();

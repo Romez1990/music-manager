@@ -1,4 +1,4 @@
-namespace ConsoleApp.Application
+namespace ConsoleApp.Parser
 {
     public class OptionsBuilder
     {
