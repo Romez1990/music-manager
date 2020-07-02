@@ -1,6 +1,5 @@
 using Core.FileSystem;
 using NUnit.Framework;
-using Path = System.IO.Path;
 
 namespace Core.Test.FileSystem
 {
@@ -10,12 +9,10 @@ namespace Core.Test.FileSystem
         [SetUp]
         public void SetUp()
         {
-            _fsInfoFactory = new MockFsInfoFactory();
-            var fsNodeFactory = new FsNodeFactory(_fsInfoFactory);
-            _directory = new Directory(fsNodeFactory, _fsInfoFactory.DirectoryInfo);
+            var fsInfoFactory = new MockFsInfoFactory();
+            var fsNodeFactory = new FsNodeFactory(fsInfoFactory);
+            _directory = new Directory(fsNodeFactory, fsInfoFactory.DirectoryInfo);
         }
-
-        private MockFsInfoFactory _fsInfoFactory;
 
         private IDirectory _directory;
 
@@ -28,18 +25,6 @@ namespace Core.Test.FileSystem
             Assert.That(content[0].Name, Is.EqualTo("sub_directory"));
             Assert.That(content[1].Name, Is.EqualTo("file1.ext"));
             Assert.That(content[2].Name, Is.EqualTo("file2.ext"));
-        }
-
-        [Test]
-        public void Directory_Renames_Correctly()
-        {
-            const string newName = "directory2";
-            var newPath = Path.Combine(_fsInfoFactory.FsRoot, newName);
-
-            _directory.Rename(newName);
-
-            Assert.That(_fsInfoFactory.CreateDirectoryInfo(newPath).Exists, Is.True);
-            Assert.That(_fsInfoFactory.CreateDirectoryInfo(_fsInfoFactory.DirectoryPath).Exists, Is.False);
         }
     }
 }
