@@ -29,17 +29,5 @@ namespace Core.Test.FileSystem
             Assert.That(content[1].Name, Is.EqualTo("file1.ext"));
             Assert.That(content[2].Name, Is.EqualTo("file2.ext"));
         }
-
-        [Test]
-        public void Directory_Renames_Correctly()
-        {
-            const string newName = "directory2";
-            var newPath = Path.Combine(_fsInfoFactory.FsRoot, newName);
-
-            _directory.Rename(newName);
-
-            Assert.That(_fsInfoFactory.CreateDirectoryInfo(newPath).Exists, Is.True);
-            Assert.That(_fsInfoFactory.CreateDirectoryInfo(_fsInfoFactory.DirectoryPath).Exists, Is.False);
-        }
     }
 }
