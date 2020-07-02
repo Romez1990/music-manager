@@ -12,7 +12,7 @@ namespace Core.Test.FileSystem
         {
             _fsInfoFactory = new MockFsInfoFactory();
             var fsNodeFactory = new FsNodeFactory(_fsInfoFactory);
-            _directory = new Directory(fsNodeFactory, _fsInfoFactory.DirectoryInfo);
+            _directory = new Directory(fsNodeFactory, _fsInfoFactory, _fsInfoFactory.DirectoryInfo);
         }
 
         private MockFsInfoFactory _fsInfoFactory;

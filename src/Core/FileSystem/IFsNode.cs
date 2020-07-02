@@ -7,7 +7,5 @@ namespace Core.FileSystem
         string Path { get; }
 
         bool Exists { get; }
-
-        void Rename(string newName);
     }
 }

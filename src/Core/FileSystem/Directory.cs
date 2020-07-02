@@ -7,13 +7,16 @@ namespace Core.FileSystem
 {
     public class Directory : FsNodeBase<IDirectoryInfo>, IDirectory
     {
-        public Directory(IFsNodeFactory fsNodeFactory, IDirectoryInfo info) : base(info)
+        public Directory(IFsNodeFactory fsNodeFactory, IFsInfoFactory fsInfoFactory, IDirectoryInfo info) : base(info)
         {
             _fsNodeFactory = fsNodeFactory;
+            _fsInfoFactory = fsInfoFactory;
             Content = ReadContent();
         }
 
         private readonly IFsNodeFactory _fsNodeFactory;
+
+        private readonly IFsInfoFactory _fsInfoFactory;
 
         public ImmutableArray<IFsNode> Content { get; }
 
@@ -33,10 +36,12 @@ namespace Core.FileSystem
                 .ToImmutableArray();
         }
 
-        public override void Rename(string newName)
+        public IDirectory Rename(string newName)
         {
-            var newPath = IO.Path.Combine(Info.Parent.FullName, newName);
-            Info.MoveTo(newPath);
+            var parentPath = Info.Parent.FullName;
+            var newPath = IO.Path.Combine(parentPath, newName);
+            IO.Directory.Move(Path, newPath);
+            return new Directory(_fsNodeFactory, _fsInfoFactory, _fsInfoFactory.CreateDirectoryInfo(newPath));
         }
     }
 }
