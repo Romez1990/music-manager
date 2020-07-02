@@ -6,95 +6,166 @@ namespace Core.FileSystem
 {
     public class DirectoryElement : FsNodeElementBase<IDirectory>, IDirectoryElement
     {
-        public DirectoryElement(IFsNodeElementFactory fsNodeElementFactory, IDirectory directory,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler) : base(directory, uncheckHandler, checkHandler)
+        private DirectoryElement(
+            IFsNodeElementFactory fsNodeElementFactory,
+            IDirectory directory,
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler,
+            ImmutableArray<IFsNodeElement<IFsNode>> content,
+            CheckState checkState) :
+            base(directory, checkStateChangeHandler, checkState)
         {
             _fsNodeElementFactory = fsNodeElementFactory;
-            CheckedPartiallyEvent += checkPartiallyHandler;
+            _directory = directory;
+            Content = content;
+        }
+
+        private DirectoryElement(
+            IFsNodeElementFactory fsNodeElementFactory,
+            IDirectory directory,
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler,
+            CheckState checkState) :
+            base(directory, checkStateChangeHandler, checkState)
+        {
+            _fsNodeElementFactory = fsNodeElementFactory;
+            _directory = directory;
             Content = GetContent();
         }
 
-        public DirectoryElement(IFsNodeElementFactory fsNodeElementFactory, IDirectory directory) : base(directory)
+        public DirectoryElement(
+            IFsNodeElementFactory fsNodeElementFactory,
+            IDirectory directory,
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler) :
+            base(directory, checkStateChangeHandler)
         {
             _fsNodeElementFactory = fsNodeElementFactory;
+            _directory = directory;
             Content = GetContent();
         }
 
         private readonly IFsNodeElementFactory _fsNodeElementFactory;
 
+        private readonly IDirectory _directory;
+
         public ImmutableArray<IFsNodeElement<IFsNode>> Content { get; }
 
         private ImmutableArray<IFsNodeElement<IFsNode>> GetContent()
         {
-            return FsNode.Content
+            return _directory.Content
                 .Where(fsNode => fsNode is IDirectory)
                 .Cast<IDirectory>()
-                .Select(directory => _fsNodeElementFactory.CreateDirectoryElementInsideDirectory(directory,
-                    ContentCheckHandler, ContentCheckPartiallyHandler, ContentUncheckHandler))
+                .Select(directory =>
+                    _fsNodeElementFactory.CreateDirectoryElementInsideDirectory(directory,
+                        ContentCheckStateChangeHandler))
                 .Cast<IFsNodeElement<IFsNode>>()
-                .Concat(FsNode.Content
+                .Concat(_directory.Content
                     .Where(fsNode => fsNode is IFile)
                     .Cast<IFile>()
-                    .Select(file => _fsNodeElementFactory.CreateFileElementInsideDirectory(file, null, null)))
+                    .Select(file => _fsNodeElementFactory.CreateFileElementInsideDirectory(file, null)))
                 .ToImmutableArray();
         }
 
-        private event EventHandler<FsNodeElementCheckEventArgs> CheckedPartiallyEvent;
-
-        private void OnCheckedPartiallyEvent()
+        public IDirectoryElement Rename(string newName)
         {
-            CheckedPartiallyEvent?.Invoke(this, new FsNodeElementCheckEventArgs(CheckState));
+            return new DirectoryElement(
+                _fsNodeElementFactory,
+                _directory.Rename(newName),
+                CheckStateChangeHandler,
+                CheckState
+            );
         }
 
         public override void Uncheck()
         {
-            base.Check();
-            Content.ToList().ForEach(fsNodeElement => fsNodeElement.Uncheck());
+            OnCheckStateChange(UncheckSilently());
         }
 
         public override void Check()
         {
-            base.Check();
-            Content.ToList().ForEach(fsNodeElement => fsNodeElement.Check());
+            OnCheckStateChange(CheckSilently());
         }
 
-        private void ContentUncheckHandler(object sender, FsNodeElementCheckEventArgs e)
+        public IDirectoryElement UncheckSilently()
         {
-            if (Content.All(fsNodeElement => fsNodeElement.CheckState == CheckState.Unchecked))
-            {
-                CheckState = CheckState.Unchecked;
-                OnUncheckEvent();
-            }
-            else if (CheckState != CheckState.CheckedPartially)
-            {
-                CheckState = CheckState.CheckedPartially;
-                OnCheckedPartiallyEvent();
-            }
+            var newDirectoryElements = Content
+                .Where(fsNodeElement => fsNodeElement is IDirectoryElement)
+                .Cast<IDirectoryElement>()
+                .Select(directoryElement => directoryElement.UncheckSilently());
+            var newFileElements = Content
+                .Where(fsNodeElement => fsNodeElement is IFileElement)
+                .Cast<IFileElement>()
+                .Select(fileElement => fileElement.UncheckSilently());
+            var newContent = newDirectoryElements
+                .Cast<IFsNodeElement<IFsNode>>()
+                .Concat(newFileElements)
+                .ToImmutableArray();
+            return new DirectoryElement(
+                _fsNodeElementFactory,
+                _directory,
+                CheckStateChangeHandler,
+                newContent,
+                CheckState.Unchecked
+            );
         }
 
-        private void ContentCheckPartiallyHandler(object sender, FsNodeElementCheckEventArgs e)
+        public IDirectoryElement CheckSilently()
         {
-            if (CheckState != CheckState.CheckedPartially)
-            {
-                CheckState = CheckState.CheckedPartially;
-                OnCheckedPartiallyEvent();
-            }
+            var newDirectoryElements = Content
+                .Where(fsNodeElement => fsNodeElement is IDirectoryElement)
+                .Cast<IDirectoryElement>()
+                .Select(directoryElement => directoryElement.CheckSilently());
+            var newFileElements = Content
+                .Where(fsNodeElement => fsNodeElement is IFileElement)
+                .Cast<IFileElement>()
+                .Select(fileElement => fileElement.CheckSilently());
+            var newContent = newDirectoryElements
+                .Cast<IFsNodeElement<IFsNode>>()
+                .Concat(newFileElements)
+                .ToImmutableArray();
+            return new DirectoryElement(
+                _fsNodeElementFactory,
+                _directory,
+                CheckStateChangeHandler,
+                newContent,
+                CheckState.Checked
+            );
         }
-   
-        private void ContentCheckHandler(object sender, FsNodeElementCheckEventArgs e)
+
+        private void ContentCheckStateChangeHandler(object sender, FsNodeElementCheckEventArgs e)
         {
-            if (Content.All(fsNodeElement => fsNodeElement.CheckState == CheckState.Checked))
+            var oldFsNodeElement = (IFsNodeElement<IFsNode>)sender;
+            var newFsNodeElement = e.FsNodeElement;
+            var newDirectoryElement = ChangeDirectoryElement(oldFsNodeElement, newFsNodeElement);
+            OnCheckStateChange(newDirectoryElement);
+        }
+
+        private IDirectoryElement ChangeDirectoryElement(IFsNodeElement<IFsNode> oldChildFsNodeElement,
+            IFsNodeElement<IFsNode> newChildFsNodeElement)
+        {
+            var newContent = Content.Replace(oldChildFsNodeElement, newChildFsNodeElement);
+            var checkState = ResolveCheckState(newContent, newChildFsNodeElement.CheckState);
+            return new DirectoryElement(
+                _fsNodeElementFactory,
+                _directory,
+                CheckStateChangeHandler,
+                newContent,
+                checkState
+            );
+        }
+
+        private CheckState ResolveCheckState(ImmutableArray<IFsNodeElement<IFsNode>> content,
+            CheckState childCheckState)
+        {
+            return childCheckState switch
             {
-                CheckState = CheckState.Checked;
-                OnCheckEvent();
-            }
-            else if (CheckState == CheckState.Unchecked)
-            {
-                CheckState = CheckState.CheckedPartially;
-                OnCheckedPartiallyEvent();
-            }
+                CheckState.Unchecked => content.All(fsNodeElement => fsNodeElement.CheckState == CheckState.Unchecked)
+                    ? CheckState.Unchecked
+                    : CheckState.CheckedPartially,
+                CheckState.CheckedPartially => CheckState.CheckedPartially,
+                CheckState.Checked => content.All(fsNodeElement => fsNodeElement.CheckState == CheckState.Checked)
+                    ? CheckState.Checked
+                    : CheckState.CheckedPartially,
+                _ => throw new ArgumentOutOfRangeException(nameof(childCheckState), childCheckState, null),
+            };
         }
     }
 }

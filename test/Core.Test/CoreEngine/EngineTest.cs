@@ -34,7 +34,8 @@ namespace Core.Test.CoreEngine
         {
             var directoryElement = new Mock<IDirectoryElement>();
             directoryElement.Setup(d => d.FsNode.Exists).Returns(true);
-            _fsNodeElementFactory.Setup(f => f.CreateDirectoryElement(It.IsAny<string>()))
+            _fsNodeElementFactory.Setup(f =>
+                    f.CreateDirectoryElement(It.IsAny<string>(), It.IsAny<EventHandler<FsNodeElementCheckEventArgs>>()))
                 .Returns(directoryElement.Object);
 
             var result = _engine.SetDirectory("");
@@ -47,7 +48,8 @@ namespace Core.Test.CoreEngine
         {
             var directoryElement = new Mock<IDirectoryElement>();
             directoryElement.Setup(d => d.FsNode.Exists).Returns(false);
-            _fsNodeElementFactory.Setup(f => f.CreateDirectoryElement(It.IsAny<string>()))
+            _fsNodeElementFactory.Setup(f =>
+                    f.CreateDirectoryElement(It.IsAny<string>(), It.IsAny<EventHandler<FsNodeElementCheckEventArgs>>()))
                 .Returns(directoryElement.Object);
 
             var result = _engine.SetDirectory("");
@@ -60,7 +62,8 @@ namespace Core.Test.CoreEngine
         {
             var directoryElement = new Mock<IDirectoryElement>();
             directoryElement.Setup(d => d.FsNode.Exists).Returns(true);
-            _fsNodeElementFactory.Setup(f => f.CreateDirectoryElement(It.IsAny<string>()))
+            _fsNodeElementFactory.Setup(f =>
+                    f.CreateDirectoryElement(It.IsAny<string>(), It.IsAny<EventHandler<FsNodeElementCheckEventArgs>>()))
                 .Returns(directoryElement.Object);
             _engine.SetDirectory("");
 

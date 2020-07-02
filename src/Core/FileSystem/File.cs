@@ -16,9 +16,10 @@ namespace Core.FileSystem
 
         public IFile Rename(string newName)
         {
+            var newInfo = _fsInfoFactory.CreateFileInfo(Path);
             var newPath = IO.Path.Combine(Info.DirectoryName, newName);
-            IO.File.Move(Path, newPath);
-            return new File(_fsInfoFactory, _fsInfoFactory.CreateFileInfo(newPath));
+            newInfo.MoveTo(newPath);
+            return new File(_fsInfoFactory, newInfo);
         }
     }
 }

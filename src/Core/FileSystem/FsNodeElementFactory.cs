@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace Core.FileSystem
 {
@@ -11,24 +13,23 @@ namespace Core.FileSystem
 
         private readonly IFsNodeFactory _fsNodeFactory;
 
-        public IDirectoryElement CreateDirectoryElement(string path)
+        public IDirectoryElement CreateDirectoryElement(
+            string path,
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler)
         {
-            return new DirectoryElement(this, _fsNodeFactory.InstantiateDirectory(path));
+            return new DirectoryElement(this, _fsNodeFactory.InstantiateDirectory(path), checkStateChangeHandler);
         }
 
         public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler)
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler)
         {
-            return new DirectoryElement(this, directory, checkHandler, checkPartiallyHandler, uncheckHandler);
+            return new DirectoryElement(this, directory, checkStateChangeHandler);
         }
 
         public IFileElement CreateFileElementInsideDirectory(IFile file,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler)
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler)
         {
-            return new FileElement(file, checkHandler, uncheckHandler);
+            return new FileElement(file, checkStateChangeHandler);
         }
     }
 }

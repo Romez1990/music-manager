@@ -4,11 +4,11 @@ namespace Core.FileSystem
 {
     public class FsNodeElementCheckEventArgs : EventArgs
     {
-        public FsNodeElementCheckEventArgs(CheckState checkState)
+        public FsNodeElementCheckEventArgs(IFsNodeElement<IFsNode> fsNodeElement)
         {
-            CheckState = checkState;
+            FsNodeElement = fsNodeElement;
         }
 
-        public CheckState CheckState { get; }
+        public IFsNodeElement<IFsNode> FsNodeElement { get; }
     }
 }

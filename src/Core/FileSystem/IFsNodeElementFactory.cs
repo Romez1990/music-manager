@@ -4,15 +4,16 @@ namespace Core.FileSystem
 {
     public interface IFsNodeElementFactory
     {
-        IDirectoryElement CreateDirectoryElement(string path);
+        IDirectoryElement CreateDirectoryElement(
+            string path,
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler);
 
-        IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler);
+        IDirectoryElement CreateDirectoryElementInsideDirectory(
+            IDirectory directory,
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler);
 
-        IFileElement CreateFileElementInsideDirectory(IFile file,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler);
+        IFileElement CreateFileElementInsideDirectory(
+            IFile file,
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler);
     }
 }

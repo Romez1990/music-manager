@@ -7,7 +7,7 @@ namespace Core.FileSystem
         CheckState CheckState { get; }
 
         void Uncheck();
-  
+        
         void Check();
     }
 }

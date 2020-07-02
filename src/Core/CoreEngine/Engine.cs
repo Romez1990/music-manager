@@ -23,7 +23,8 @@ namespace Core.CoreEngine
 
         public bool SetDirectory(string path)
         {
-            var directoryElement = _fsNodeElementFactory.CreateDirectoryElement(path);
+            var directoryElement =
+                _fsNodeElementFactory.CreateDirectoryElement(path, ChangeDirectory);
             var exists = directoryElement.FsNode.Exists;
 
             if (exists)
@@ -32,6 +33,11 @@ namespace Core.CoreEngine
             }
 
             return exists;
+        }
+
+        private void ChangeDirectory(object sender, FsNodeElementCheckEventArgs e)
+        {
+            DirectoryElement = (IDirectoryElement)e.FsNodeElement;
         }
 
         private Mode _mode;

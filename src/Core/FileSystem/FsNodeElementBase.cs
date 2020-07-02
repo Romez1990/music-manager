@@ -4,14 +4,27 @@ namespace Core.FileSystem
 {
     public abstract class FsNodeElementBase<T> : IFsNodeElement<T> where T : IFsNode
     {
-        protected FsNodeElementBase(T fsNode, EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler) : this(fsNode)
+        protected FsNodeElementBase(T fsNode, EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler,
+            CheckState checkState) : this(fsNode, checkState)
         {
-            UncheckEvent += uncheckHandler;
-            CheckEvent += checkHandler;
+            CheckStateChange += checkStateChangeHandler;
+            CheckStateChangeHandler = checkStateChangeHandler;
         }
 
-        protected FsNodeElementBase(T fsNode)
+        protected FsNodeElementBase(T fsNode, EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler) :
+            this(fsNode)
+        {
+            CheckStateChange += checkStateChangeHandler;
+            CheckStateChangeHandler = checkStateChangeHandler;
+        }
+
+        private FsNodeElementBase(T fsNode, CheckState checkState)
+        {
+            FsNode = fsNode;
+            CheckState = checkState;
+        }
+
+        private FsNodeElementBase(T fsNode)
         {
             FsNode = fsNode;
             CheckState = CheckState.Unchecked;
@@ -19,33 +32,20 @@ namespace Core.FileSystem
 
         public T FsNode { get; }
 
-        protected event EventHandler<FsNodeElementCheckEventArgs> UncheckEvent;
+        protected event EventHandler<FsNodeElementCheckEventArgs> CheckStateChange;
 
-        protected event EventHandler<FsNodeElementCheckEventArgs> CheckEvent;
+        protected readonly EventHandler<FsNodeElementCheckEventArgs> CheckStateChangeHandler;
 
-        protected void OnUncheckEvent()
+        protected void OnCheckStateChange(IFsNodeElement<IFsNode> newFsNodeElement)
         {
-            UncheckEvent?.Invoke(this, new FsNodeElementCheckEventArgs(CheckState));
+            CheckStateChange?.Invoke(this, new FsNodeElementCheckEventArgs(newFsNodeElement));
         }
 
-        protected void OnCheckEvent()
-        {
-            CheckEvent?.Invoke(this, new FsNodeElementCheckEventArgs(CheckState));
-        }
+        public CheckState CheckState { get; }
 
-        public CheckState CheckState { get; protected set; }
+        public abstract void Uncheck();
 
-        public virtual void Uncheck()
-        {
-            CheckState = CheckState.Unchecked;
-            OnUncheckEvent();
-        }
-
-        public virtual void Check()
-        {
-            CheckState = CheckState.Checked;
-            OnCheckEvent();
-        }
+        public abstract void Check();
 
         public override string ToString()
         {

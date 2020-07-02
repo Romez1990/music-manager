@@ -16,6 +16,9 @@ namespace Core.Test.FileSystem
             _testFilesLoader = new TestFilesLoader();
             _fileSystemRoot = Directory.GetDirectoryRoot(_testFilesLoader.TestFilesDirectoryPath);
             ScanTestFiles();
+            CompilationDirectoryElement = CreateDirectoryElement(CompilationPath, ChangeCompilationDirectoryElement);
+            BandDirectoryElement = CreateDirectoryElement(BandPath, ChangeBandDirectoryElement);
+            AlbumDirectoryElement = CreateDirectoryElement(AlbumPath, ChangeAlbumDirectoryElement);
         }
 
         private readonly TestFilesLoader _testFilesLoader;
@@ -30,11 +33,26 @@ namespace Core.Test.FileSystem
 
         private string AlbumPath { get; set; }
 
-        public IDirectoryElement CompilationDirectoryElement => CreateDirectoryElement(CompilationPath);
+        public IDirectoryElement CompilationDirectoryElement { get; private set; }
 
-        public IDirectoryElement BandDirectoryElement => CreateDirectoryElement(BandPath);
+        public IDirectoryElement BandDirectoryElement { get; private set; }
 
-        public IDirectoryElement AlbumDirectoryElement => CreateDirectoryElement(AlbumPath);
+        public IDirectoryElement AlbumDirectoryElement { get; private set; }
+
+        private void ChangeCompilationDirectoryElement(object sender, FsNodeElementCheckEventArgs e)
+        {
+            CompilationDirectoryElement = (IDirectoryElement)e.FsNodeElement;
+        }
+
+        private void ChangeBandDirectoryElement(object sender, FsNodeElementCheckEventArgs e)
+        {
+            BandDirectoryElement = (IDirectoryElement)e.FsNodeElement;
+        }
+
+        private void ChangeAlbumDirectoryElement(object sender, FsNodeElementCheckEventArgs e)
+        {
+            AlbumDirectoryElement = (IDirectoryElement)e.FsNodeElement;
+        }
 
         private void ScanTestFiles()
         {
@@ -103,7 +121,7 @@ namespace Core.Test.FileSystem
             Dictionary<DirectoryInfo, FileInfo[]> albumDirectoriesInfo)
         {
             var mockBandDirectory = new Mock<IDirectory>(MockBehavior.Strict);
-            var name = mockBandDirectory.Name;
+            var name = bandDirectoryInfo.Name;
             mockBandDirectory.Setup(directory => directory.Name).Returns(() => name);
             mockBandDirectory.Setup(directory => directory.Path).Returns(CutPath(bandDirectoryInfo));
             mockBandDirectory.Setup(directory => directory.ToString()).Returns(() => name);
@@ -149,27 +167,24 @@ namespace Core.Test.FileSystem
             return mockTrack.Object;
         }
 
-        public IDirectoryElement CreateDirectoryElement(string path)
+        public IDirectoryElement CreateDirectoryElement(string path,
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler)
         {
-            return new DirectoryElement(this, _fsNodes[path] as IDirectory);
+            return new DirectoryElement(this, _fsNodes[path] as IDirectory, checkStateChangeHandler);
         }
 
         public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler)
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler)
         {
             var path = directory.Path;
-            return new DirectoryElement(this, _fsNodes[path] as IDirectory, checkHandler, checkPartiallyHandler,
-                uncheckHandler);
+            return new DirectoryElement(this, _fsNodes[path] as IDirectory, checkStateChangeHandler);
         }
 
         public IFileElement CreateFileElementInsideDirectory(IFile file,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler)
+            EventHandler<FsNodeElementCheckEventArgs> checkStateChangeHandler)
         {
             var path = file.Path;
-            return new FileElement(_fsNodes[path] as IFile, checkHandler, uncheckHandler);
+            return new FileElement(_fsNodes[path] as IFile, checkStateChangeHandler);
         }
     }
 }

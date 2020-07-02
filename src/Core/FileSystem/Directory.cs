@@ -38,10 +38,10 @@ namespace Core.FileSystem
 
         public IDirectory Rename(string newName)
         {
-            var parentPath = Info.Parent.FullName;
-            var newPath = IO.Path.Combine(parentPath, newName);
-            IO.Directory.Move(Path, newPath);
-            return new Directory(_fsNodeFactory, _fsInfoFactory, _fsInfoFactory.CreateDirectoryInfo(newPath));
+            var newInfo = _fsInfoFactory.CreateDirectoryInfo(Path);
+            var newPath = IO.Path.Combine(Info.Parent.FullName, newName);
+            newInfo.MoveTo(newPath);
+            return new Directory(_fsNodeFactory, _fsInfoFactory, newInfo);
         }
     }
 }

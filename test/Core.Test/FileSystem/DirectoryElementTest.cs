@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Core.FileSystem;
 using NUnit.Framework;
 
@@ -10,34 +10,35 @@ namespace Core.Test.FileSystem
         [SetUp]
         public void SetUp()
         {
-            var fsNodeElementFactory = new MockFsNodeElementFactory();
-            _directoryElement = fsNodeElementFactory.BandDirectoryElement;
+            _fsNodeElementFactory = new MockFsNodeElementFactory();
         }
 
-        private IDirectoryElement _directoryElement;
+        private MockFsNodeElementFactory _fsNodeElementFactory;
+
+        private IDirectoryElement DirectoryElement => _fsNodeElementFactory.BandDirectoryElement;
 
         [Test]
         public void DirectoryElement_Checks_Correctly()
         {
-            _directoryElement.Check();
+            DirectoryElement.Check();
 
-            Assert.That(_directoryElement.Content.All(fsNodeElement => fsNodeElement.CheckState == CheckState.Checked));
+            Assert.That(DirectoryElement.Content.All(fsNodeElement => fsNodeElement.CheckState == CheckState.Checked));
         }
 
         [Test]
         public void DirectoryElement_ChecksPartially_Correctly()
         {
-            _directoryElement.Check();
+            DirectoryElement.Check();
 
-            _directoryElement.Content.First().Uncheck();
+            DirectoryElement.Content.First().Uncheck();
 
-            Assert.That(_directoryElement.CheckState, Is.EqualTo(CheckState.CheckedPartially));
+            Assert.That(DirectoryElement.CheckState, Is.EqualTo(CheckState.CheckedPartially));
         }
 
         [Test]
         public void DirectoryElement_ToString_Correctly()
         {
-            Assert.That(_directoryElement.ToString(), Is.EqualTo(_directoryElement.FsNode.Name));
+            Assert.That(DirectoryElement.ToString(), Is.EqualTo(DirectoryElement.FsNode.Name));
         }
     }
 }
