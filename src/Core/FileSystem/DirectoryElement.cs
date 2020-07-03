@@ -42,6 +42,8 @@ namespace Core.FileSystem
             Content = GetContent();
         }
 
+        private readonly FsNodeElementEqualityComparer _equalityComparer = new FsNodeElementEqualityComparer();
+
         private readonly IFsNodeElementFactory _fsNodeElementFactory;
 
         private readonly IDirectory _directory;
@@ -132,7 +134,7 @@ namespace Core.FileSystem
 
         private void ContentCheckStateChangeHandler(object sender, FsNodeElementCheckEventArgs e)
         {
-            var oldFsNodeElement = (IFsNodeElement<IFsNode>)sender;
+            var oldFsNodeElement = (IFsNodeElement<IFsNode>) sender;
             var newFsNodeElement = e.FsNodeElement;
             var newDirectoryElement = ChangeDirectoryElement(oldFsNodeElement, newFsNodeElement);
             OnCheckStateChange(newDirectoryElement);
@@ -141,7 +143,7 @@ namespace Core.FileSystem
         private IDirectoryElement ChangeDirectoryElement(IFsNodeElement<IFsNode> oldChildFsNodeElement,
             IFsNodeElement<IFsNode> newChildFsNodeElement)
         {
-            var newContent = Content.Replace(oldChildFsNodeElement, newChildFsNodeElement);
+            var newContent = Content.Replace(oldChildFsNodeElement, newChildFsNodeElement, _equalityComparer);
             var checkState = ResolveCheckState(newContent, newChildFsNodeElement.CheckState);
             return new DirectoryElement(
                 _fsNodeElementFactory,
