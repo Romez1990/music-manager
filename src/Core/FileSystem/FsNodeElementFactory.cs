@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using LanguageExt;
 
 namespace Core.FileSystem
 {
@@ -11,9 +13,10 @@ namespace Core.FileSystem
 
         private readonly IFsNodeFactory _fsNodeFactory;
 
-        public IDirectoryElement CreateDirectoryElement(string path)
+        public Either<DirectoryNotFoundException, IDirectoryElement> CreateDirectoryElement(string path)
         {
-            return new DirectoryElement(this, _fsNodeFactory.InstantiateDirectory(path));
+            return _fsNodeFactory.InstantiateDirectory(path)
+                .Map(directory => (IDirectoryElement)new DirectoryElement(this, directory));
         }
 
         public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
