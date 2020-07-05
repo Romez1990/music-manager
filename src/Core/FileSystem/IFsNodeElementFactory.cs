@@ -1,10 +1,12 @@
 using System;
+using System.IO;
+using LanguageExt;
 
 namespace Core.FileSystem
 {
     public interface IFsNodeElementFactory
     {
-        IDirectoryElement CreateDirectoryElement(string path);
+        Either<DirectoryNotFoundException, IDirectoryElement> CreateDirectoryElement(string path);
 
         IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
             EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,

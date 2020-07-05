@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using Core.FileSystem;
+using LanguageExt;
 using Moq;
 using Directory = System.IO.Directory;
 
@@ -30,11 +31,12 @@ namespace Core.Test.FileSystem
 
         private string AlbumPath { get; set; }
 
-        public IDirectoryElement CompilationDirectoryElement => CreateDirectoryElement(CompilationPath);
+        public IDirectoryElement CompilationDirectoryElement =>
+            CreateDirectoryElement(CompilationPath).IfLeft(e => throw e);
 
-        public IDirectoryElement BandDirectoryElement => CreateDirectoryElement(BandPath);
+        public IDirectoryElement BandDirectoryElement => CreateDirectoryElement(BandPath).IfLeft(e => throw e);
 
-        public IDirectoryElement AlbumDirectoryElement => CreateDirectoryElement(AlbumPath);
+        public IDirectoryElement AlbumDirectoryElement => CreateDirectoryElement(AlbumPath).IfLeft(e => throw e);
 
         private void ScanTestFiles()
         {
@@ -149,7 +151,7 @@ namespace Core.Test.FileSystem
             return mockTrack.Object;
         }
 
-        public IDirectoryElement CreateDirectoryElement(string path)
+        public Either<DirectoryNotFoundException, IDirectoryElement> CreateDirectoryElement(string path)
         {
             return new DirectoryElement(this, _fsNodes[path] as IDirectory);
         }
