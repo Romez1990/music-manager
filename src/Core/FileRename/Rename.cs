@@ -58,16 +58,19 @@ namespace Core.FileRename
 
         private void RenameAlbumDirectoryInBand(IDirectoryElement directoryElement, int number)
         {
+            RenameAlbum(directoryElement);
+
             var numberString = number.ToString().PadLeft(2, '0');
             var newName = Regex.Replace(directoryElement.Name,
                 @"(?<year>\d{4}) - .+ - (?<name>.+)",
                 numberString + " ${name} (${year})");
             directoryElement.Rename(newName);
-            RenameAlbum(directoryElement);
         }
 
         private void RenameAlbumDirectorySingle(IDirectoryElement directoryElement)
         {
+            RenameAlbum(directoryElement);
+
             var name = directoryElement.Name;
             var regex = new Regex(@"(?<year>\d{4}) - .+ - (?<name>.+)");
             if (regex.IsMatch(name))
@@ -76,8 +79,6 @@ namespace Core.FileRename
                 var newName = regex.Replace(name, replacement);
                 directoryElement.Rename(newName);
             }
-
-            RenameAlbum(directoryElement);
         }
 
         private void RenameAlbum(IDirectoryElement directoryElement)
