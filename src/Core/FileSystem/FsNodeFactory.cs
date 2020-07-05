@@ -1,4 +1,7 @@
+using System.IO;
 using System.IO.Abstractions;
+using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace Core.FileSystem
 {
@@ -11,9 +14,15 @@ namespace Core.FileSystem
 
         private readonly IFsInfoFactory _fsInfoFactory;
 
-        public IDirectory InstantiateDirectory(string path)
+        public Either<DirectoryNotFoundException, IDirectory> InstantiateDirectory(string path)
         {
-            return new Directory(this, _fsInfoFactory.CreateDirectoryInfo(path));
+            var info = _fsInfoFactory.CreateDirectoryInfo(path);
+            if (!info.Exists)
+            {
+                return Left(new DirectoryNotFoundException($"Directory {path} not found"));
+            }
+
+            return new Directory(this, info);
         }
 
         public IDirectory InstantiateDirectory(IDirectoryInfo info)

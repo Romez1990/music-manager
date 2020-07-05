@@ -1,10 +1,12 @@
+using System.IO;
 using System.IO.Abstractions;
+using LanguageExt;
 
 namespace Core.FileSystem
 {
     public interface IFsNodeFactory
     {
-        IDirectory InstantiateDirectory(string path);
+        Either<DirectoryNotFoundException, IDirectory> InstantiateDirectory(string path);
         IDirectory InstantiateDirectory(IDirectoryInfo info);
         IFile InstantiateFile(string path);
         IFile InstantiateFile(IFileInfo info);
