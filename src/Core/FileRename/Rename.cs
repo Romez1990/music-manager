@@ -54,9 +54,10 @@ namespace Core.FileRename
 
         private void RenameAlbumDirectoryInBand(IDirectoryElement directoryElement, int number)
         {
+            var numberString = number.ToString().PadLeft(2, '0');
             var newName = Regex.Replace(directoryElement.FsNode.Name,
                 @"(?<year>\d{4}) - .+ - (?<name>.+)",
-                number + " ${name} (${year})");
+                numberString + " ${name} (${year})");
             directoryElement.FsNode.Rename(newName);
             RenameAlbum(directoryElement);
         }
