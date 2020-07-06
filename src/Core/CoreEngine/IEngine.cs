@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-using Core.FileSystem;
-using Core.Operation;
+﻿using System.IO;
+using LanguageExt;
 
 namespace Core.CoreEngine
 {
     public interface IEngine
     {
-        IDirectoryElement DirectoryElement { get; }
-        bool SetDirectory(string path);
-        void Scan(Mode mode);
-        void PerformActions(IEnumerable<IOperation> operations);
+        Either<DirectoryNotFoundException, IEngineScanner> SetDirectory(string path);
     }
 }
