@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using Core.CoreEngine;
 using Core.FileSystem;
 using Core.Operation;
@@ -13,22 +15,50 @@ namespace Core.Test.CoreEngine
         [SetUp]
         public void SetUp()
         {
+            _operationRepository = new Mock<IOperationRepository>(MockBehavior.Strict);
             _directoryElement = new Mock<IDirectoryElement>().Object;
-            _enginePerformer = ReflectionHelper.Construct<EnginePerformer>(_directoryElement, Mode.Band);
+            _enginePerformer =
+                ReflectionHelper.Construct<EnginePerformer>(_operationRepository.Object, _directoryElement, Mode.Band);
         }
+
+        private Mock<IOperationRepository> _operationRepository;
 
         private IDirectoryElement _directoryElement;
 
         private IEnginePerformer _enginePerformer;
 
         [Test]
-        public void Engine_PerformsActions_Correctly()
+        public void Engine_PerformsAllOperations_Correctly()
         {
             var operation1 = new Mock<IOperation>();
             var operation2 = new Mock<IOperation>();
+            _operationRepository.Setup(r => r.FindAll()).Returns(new List<IOperation>
+            {
+                operation1.Object,
+                operation2.Object,
+            });
 
-            _enginePerformer.PerformOperations(new[] {operation1.Object, operation2.Object});
+            _enginePerformer.PerformAllOperations();
 
+            _operationRepository.Verify(r => r.FindAll(), Times.Once());
+            operation1.Verify(o => o.Perform(_directoryElement, Mode.Band), Times.Once());
+            operation2.Verify(o => o.Perform(_directoryElement, Mode.Band), Times.Once());
+        }
+
+        [Test]
+        public void Engine_PerformsOperationsWhere_Correctly()
+        {
+            var operation1 = new Mock<IOperation>();
+            var operation2 = new Mock<IOperation>();
+            _operationRepository.Setup(r => r.FindAllByName(It.IsAny<IEnumerable<string>>())).Returns(new List<IOperation>
+            {
+                operation1.Object,
+                operation2.Object,
+            });
+
+            _enginePerformer.PerformOperations(new ImmutableArray<string>());
+
+            _operationRepository.Verify(r => r.FindAllByName(It.IsAny<IEnumerable<string>>()), Times.Once());
             operation1.Verify(o => o.Perform(_directoryElement, Mode.Band), Times.Once());
             operation2.Verify(o => o.Perform(_directoryElement, Mode.Band), Times.Once());
         }
