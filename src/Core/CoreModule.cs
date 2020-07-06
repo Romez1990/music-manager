@@ -2,6 +2,7 @@
 using Core.CoreEngine;
 using Core.FileScanner;
 using Core.FileSystem;
+using Core.Operation;
 
 namespace Core
 {
@@ -11,6 +12,7 @@ namespace Core
         {
             builder.RegisterType<Engine>().As<IEngine>();
             builder.RegisterType<EngineFactory>().As<IEngineFactory>();
+            builder.RegisterType<OperationRepository>().As<IOperationRepository>();
             builder.RegisterType<Scanner>().As<IScanner>();
             builder.RegisterType<FsNodeElementFactory>().As<IFsNodeElementFactory>();
             builder.RegisterType<FsNodeFactory>().As<IFsNodeFactory>();
