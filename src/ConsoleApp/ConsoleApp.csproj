@@ -14,4 +14,8 @@
       <OutputPath>..\..\bin\Release\</OutputPath>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Core\Core.csproj" />
+    </ItemGroup>
+
 </Project>
