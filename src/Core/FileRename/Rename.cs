@@ -9,6 +9,10 @@ namespace Core.FileRename
 {
     public class Rename : IOperation
     {
+        public string Name { get; } = "Rename";
+
+        public string Description { get; } = "Rename tracks and folders";
+
         public void Perform(IDirectoryElement directoryElement, Mode mode)
         {
             switch (mode)
