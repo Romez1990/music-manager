@@ -9,6 +9,7 @@ namespace ConsoleApp
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<App>().As<IApp>();
             builder.RegisterType<ArgParser>().As<IArgParser>();
             builder.RegisterType<OptionsBuilder>().As<IOptionsBuilder>();
             builder.RegisterType<FsTreePrinter>().As<IFsTreePrinter>();

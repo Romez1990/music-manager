@@ -1,4 +1,7 @@
-﻿namespace ConsoleApp
+﻿using Autofac;
+using ConsoleApp.Application;
+
+namespace ConsoleApp
 {
     public static class Program
     {
@@ -6,7 +9,8 @@
         {
             var containerBuilder = new AppContainerBuilder();
             var container = containerBuilder.Build();
-            return 0;
+            var app = container.Resolve<IApp>();
+            return app.Run(args);
         }
     }
 }
