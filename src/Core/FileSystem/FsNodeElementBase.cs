@@ -2,7 +2,7 @@ using System;
 
 namespace Core.FileSystem
 {
-    public abstract class FsNodeElementBase<T> : IFsNodeElement<T> where T : IFsNode
+    public abstract class FsNodeElementBase<T> : IFsNodeElement where T : IFsNode
     {
         protected FsNodeElementBase(T fsNode, EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
             EventHandler<FsNodeElementCheckEventArgs> checkHandler) : this(fsNode)
@@ -17,7 +17,13 @@ namespace Core.FileSystem
             CheckState = CheckState.Unchecked;
         }
 
-        public T FsNode { get; }
+        protected T FsNode { get; }
+
+        public string Name => FsNode.Name;
+
+        public string Path => FsNode.Path;
+
+        public abstract void Rename(string newName);
 
         protected event EventHandler<FsNodeElementCheckEventArgs> UncheckEvent;
 

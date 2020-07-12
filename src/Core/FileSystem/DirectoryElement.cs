@@ -24,20 +24,27 @@ namespace Core.FileSystem
 
         private readonly IFsNodeElementFactory _fsNodeElementFactory;
 
-        public ImmutableArray<IFsNodeElement<IFsNode>> Content { get; }
+        public override void Rename(string newName)
+        {
+            FsNode.Rename(newName);
+        }
 
-        private ImmutableArray<IFsNodeElement<IFsNode>> GetContent()
+        public ImmutableArray<IFsNodeElement> Content { get; }
+
+        private ImmutableArray<IFsNodeElement> GetContent()
         {
             return FsNode.Content
                 .Where(fsNode => fsNode is IDirectory)
                 .Cast<IDirectory>()
                 .Select(directory => _fsNodeElementFactory.CreateDirectoryElementInsideDirectory(directory,
                     ContentUncheckHandler, ContentCheckPartiallyHandler, ContentCheckHandler))
-                .Cast<IFsNodeElement<IFsNode>>()
+                .Cast<IFsNodeElement>()
                 .Concat(FsNode.Content
                     .Where(fsNode => fsNode is IFile)
                     .Cast<IFile>()
-                    .Select(file => _fsNodeElementFactory.CreateFileElementInsideDirectory(file, ContentUncheckHandler, ContentCheckHandler)))
+                    .Select(file =>
+                        _fsNodeElementFactory.CreateFileElementInsideDirectory(file, ContentUncheckHandler,
+                            ContentCheckHandler)))
                 .ToImmutableArray();
         }
 

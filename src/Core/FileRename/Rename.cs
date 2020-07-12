@@ -59,22 +59,22 @@ namespace Core.FileRename
         private void RenameAlbumDirectoryInBand(IDirectoryElement directoryElement, int number)
         {
             var numberString = number.ToString().PadLeft(2, '0');
-            var newName = Regex.Replace(directoryElement.FsNode.Name,
+            var newName = Regex.Replace(directoryElement.Name,
                 @"(?<year>\d{4}) - .+ - (?<name>.+)",
                 numberString + " ${name} (${year})");
-            directoryElement.FsNode.Rename(newName);
+            directoryElement.Rename(newName);
             RenameAlbum(directoryElement);
         }
 
         private void RenameAlbumDirectorySingle(IDirectoryElement directoryElement)
         {
-            var name = directoryElement.FsNode.Name;
+            var name = directoryElement.Name;
             var regex = new Regex(@"(?<year>\d{4}) - .+ - (?<name>.+)");
             if (regex.IsMatch(name))
             {
                 const string replacement = "${name} (${year})";
                 var newName = regex.Replace(name, replacement);
-                directoryElement.FsNode.Rename(newName);
+                directoryElement.Rename(newName);
             }
 
             RenameAlbum(directoryElement);
@@ -92,10 +92,10 @@ namespace Core.FileRename
 
         private void RenameTrack(IFileElement fileElement)
         {
-            var newName = Regex.Replace(fileElement.FsNode.Name,
+            var newName = Regex.Replace(fileElement.Name,
                 @"(?<number>\d{1,2})\. (?<name>.+\.mp3)",
                 "${number} ${name}");
-            fileElement.FsNode.Rename(newName);
+            fileElement.Rename(newName);
         }
     }
 }

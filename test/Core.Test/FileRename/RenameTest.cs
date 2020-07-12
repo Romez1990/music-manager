@@ -33,12 +33,12 @@ namespace Core.Test.FileRename
 
             _rename.Perform(albumDirectoryElement, Mode.Album);
 
-            Assert.That(albumDirectoryElement.FsNode.Name, Is.EqualTo("Stand Up And Scream (2009)"));
-            Assert.That(albumContent[0].FsNode.Name, Is.EqualTo("01 Alerion.mp3"));
-            Assert.That(albumContent[1].FsNode.Name, Is.EqualTo("02 The Final Episode (Let's Change Channel).mp3"));
-            Assert.That(albumContent[2].FsNode.Name, Is.EqualTo("03. A Candlelit Dinner With Inamorta.mp3"));
-            Assert.That(albumContent[3].FsNode.Name, Is.EqualTo("04 Nobody Don't Dance No More.mp3"));
-            Assert.That(albumContent[13].FsNode.Name, Is.EqualTo("cover.jpg"));
+            Assert.That(albumDirectoryElement.Name, Is.EqualTo("Stand Up And Scream (2009)"));
+            Assert.That(albumContent[0].Name, Is.EqualTo("01 Alerion.mp3"));
+            Assert.That(albumContent[1].Name, Is.EqualTo("02 The Final Episode (Let's Change Channel).mp3"));
+            Assert.That(albumContent[2].Name, Is.EqualTo("03. A Candlelit Dinner With Inamorta.mp3"));
+            Assert.That(albumContent[3].Name, Is.EqualTo("04 Nobody Don't Dance No More.mp3"));
+            Assert.That(albumContent[13].Name, Is.EqualTo("cover.jpg"));
         }
 
         [Test]
@@ -53,25 +53,25 @@ namespace Core.Test.FileRename
 
             _rename.Perform(bandDirectoryElement, Mode.Band);
 
-            Assert.That(bandDirectoryElement.Content[0].FsNode.Name, Is.EqualTo("1 Stand Up And Scream (2009)"));
-            Assert.That(bandDirectoryElement.Content[1].FsNode.Name, Is.EqualTo("2 Reckless And Relentless (2011)"));
-            Assert.That(bandDirectoryElement.Content[2].FsNode.Name,
+            Assert.That(bandDirectoryElement.Content[0].Name, Is.EqualTo("1 Stand Up And Scream (2009)"));
+            Assert.That(bandDirectoryElement.Content[1].Name, Is.EqualTo("2 Reckless And Relentless (2011)"));
+            Assert.That(bandDirectoryElement.Content[2].Name,
                 Is.EqualTo("2013 - Asking Alexandria - From Death To Destiny"));
-            Assert.That(album1Content[0].FsNode.Name, Is.EqualTo("01 Alerion.mp3"));
-            Assert.That(album1Content[1].FsNode.Name, Is.EqualTo("02 The Final Episode (Let's Change Channel).mp3"));
-            Assert.That(album1Content[2].FsNode.Name, Is.EqualTo("03 A Candlelit Dinner With Inamorta.mp3"));
-            Assert.That(album1Content[3].FsNode.Name, Is.EqualTo("04 Nobody Don't Dance No More.mp3"));
-            Assert.That(album1Content[13].FsNode.Name, Is.EqualTo("cover.jpg"));
-            Assert.That(album2Content[0].FsNode.Name, Is.EqualTo("01 Welcome.mp3"));
-            Assert.That(album2Content[1].FsNode.Name, Is.EqualTo("02 Dear Insanity.mp3"));
-            Assert.That(album2Content[2].FsNode.Name, Is.EqualTo("03 Closure.mp3"));
-            Assert.That(album2Content[3].FsNode.Name, Is.EqualTo("04 A Lesson Never Learned.mp3"));
-            Assert.That(album2Content[12].FsNode.Name, Is.EqualTo("cover.jpg"));
-            Assert.That(album3Content[0].FsNode.Name, Is.EqualTo("01. Don't Pray For Me.mp3"));
-            Assert.That(album3Content[1].FsNode.Name, Is.EqualTo("02. Killing You.mp3"));
-            Assert.That(album3Content[2].FsNode.Name, Is.EqualTo("03. The Death Of Me.mp3"));
-            Assert.That(album3Content[3].FsNode.Name, Is.EqualTo("04. Run Free.mp3"));
-            Assert.That(album3Content[13].FsNode.Name, Is.EqualTo("cover.jpg"));
+            Assert.That(album1Content[0].Name, Is.EqualTo("01 Alerion.mp3"));
+            Assert.That(album1Content[1].Name, Is.EqualTo("02 The Final Episode (Let's Change Channel).mp3"));
+            Assert.That(album1Content[2].Name, Is.EqualTo("03 A Candlelit Dinner With Inamorta.mp3"));
+            Assert.That(album1Content[3].Name, Is.EqualTo("04 Nobody Don't Dance No More.mp3"));
+            Assert.That(album1Content[13].Name, Is.EqualTo("cover.jpg"));
+            Assert.That(album2Content[0].Name, Is.EqualTo("01 Welcome.mp3"));
+            Assert.That(album2Content[1].Name, Is.EqualTo("02 Dear Insanity.mp3"));
+            Assert.That(album2Content[2].Name, Is.EqualTo("03 Closure.mp3"));
+            Assert.That(album2Content[3].Name, Is.EqualTo("04 A Lesson Never Learned.mp3"));
+            Assert.That(album2Content[12].Name, Is.EqualTo("cover.jpg"));
+            Assert.That(album3Content[0].Name, Is.EqualTo("01. Don't Pray For Me.mp3"));
+            Assert.That(album3Content[1].Name, Is.EqualTo("02. Killing You.mp3"));
+            Assert.That(album3Content[2].Name, Is.EqualTo("03. The Death Of Me.mp3"));
+            Assert.That(album3Content[3].Name, Is.EqualTo("04. Run Free.mp3"));
+            Assert.That(album3Content[13].Name, Is.EqualTo("cover.jpg"));
         }
 
         [Test]
@@ -87,25 +87,25 @@ namespace Core.Test.FileRename
 
             _rename.Perform(compilationDirectoryElement, Mode.Compilation);
 
-            Assert.That(bandDirectoryElement.Content[0].FsNode.Name, Is.EqualTo("1 Stand Up And Scream (2009)"));
-            Assert.That(bandDirectoryElement.Content[1].FsNode.Name, Is.EqualTo("2 Reckless And Relentless (2011)"));
-            Assert.That(bandDirectoryElement.Content[2].FsNode.Name,
+            Assert.That(bandDirectoryElement.Content[0].Name, Is.EqualTo("1 Stand Up And Scream (2009)"));
+            Assert.That(bandDirectoryElement.Content[1].Name, Is.EqualTo("2 Reckless And Relentless (2011)"));
+            Assert.That(bandDirectoryElement.Content[2].Name,
                 Is.EqualTo("2013 - Asking Alexandria - From Death To Destiny"));
-            Assert.That(album1Content[0].FsNode.Name, Is.EqualTo("01 Alerion.mp3"));
-            Assert.That(album1Content[1].FsNode.Name, Is.EqualTo("02 The Final Episode (Let's Change Channel).mp3"));
-            Assert.That(album1Content[2].FsNode.Name, Is.EqualTo("03 A Candlelit Dinner With Inamorta.mp3"));
-            Assert.That(album1Content[3].FsNode.Name, Is.EqualTo("04 Nobody Don't Dance No More.mp3"));
-            Assert.That(album1Content[13].FsNode.Name, Is.EqualTo("cover.jpg"));
-            Assert.That(album2Content[0].FsNode.Name, Is.EqualTo("01 Welcome.mp3"));
-            Assert.That(album2Content[1].FsNode.Name, Is.EqualTo("02 Dear Insanity.mp3"));
-            Assert.That(album2Content[2].FsNode.Name, Is.EqualTo("03 Closure.mp3"));
-            Assert.That(album2Content[3].FsNode.Name, Is.EqualTo("04 A Lesson Never Learned.mp3"));
-            Assert.That(album2Content[12].FsNode.Name, Is.EqualTo("cover.jpg"));
-            Assert.That(album3Content[0].FsNode.Name, Is.EqualTo("01. Don't Pray For Me.mp3"));
-            Assert.That(album3Content[1].FsNode.Name, Is.EqualTo("02. Killing You.mp3"));
-            Assert.That(album3Content[2].FsNode.Name, Is.EqualTo("03. The Death Of Me.mp3"));
-            Assert.That(album3Content[3].FsNode.Name, Is.EqualTo("04. Run Free.mp3"));
-            Assert.That(album3Content[13].FsNode.Name, Is.EqualTo("cover.jpg"));
+            Assert.That(album1Content[0].Name, Is.EqualTo("01 Alerion.mp3"));
+            Assert.That(album1Content[1].Name, Is.EqualTo("02 The Final Episode (Let's Change Channel).mp3"));
+            Assert.That(album1Content[2].Name, Is.EqualTo("03 A Candlelit Dinner With Inamorta.mp3"));
+            Assert.That(album1Content[3].Name, Is.EqualTo("04 Nobody Don't Dance No More.mp3"));
+            Assert.That(album1Content[13].Name, Is.EqualTo("cover.jpg"));
+            Assert.That(album2Content[0].Name, Is.EqualTo("01 Welcome.mp3"));
+            Assert.That(album2Content[1].Name, Is.EqualTo("02 Dear Insanity.mp3"));
+            Assert.That(album2Content[2].Name, Is.EqualTo("03 Closure.mp3"));
+            Assert.That(album2Content[3].Name, Is.EqualTo("04 A Lesson Never Learned.mp3"));
+            Assert.That(album2Content[12].Name, Is.EqualTo("cover.jpg"));
+            Assert.That(album3Content[0].Name, Is.EqualTo("01. Don't Pray For Me.mp3"));
+            Assert.That(album3Content[1].Name, Is.EqualTo("02. Killing You.mp3"));
+            Assert.That(album3Content[2].Name, Is.EqualTo("03. The Death Of Me.mp3"));
+            Assert.That(album3Content[3].Name, Is.EqualTo("04. Run Free.mp3"));
+            Assert.That(album3Content[13].Name, Is.EqualTo("cover.jpg"));
         }
     }
 }

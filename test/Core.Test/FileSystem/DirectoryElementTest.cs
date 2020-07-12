@@ -63,7 +63,7 @@ namespace Core.Test.FileSystem
         [Test]
         public void DirectoryElement_ToString_Correctly()
         {
-            Assert.That(_directoryElement.ToString(), Is.EqualTo(_directoryElement.FsNode.Name));
+            Assert.That(_directoryElement.ToString(), Is.EqualTo(_directoryElement.Name));
         }
     }
 }
