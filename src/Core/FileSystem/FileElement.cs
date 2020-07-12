@@ -8,5 +8,12 @@ namespace Core.FileSystem
             EventHandler<FsNodeElementCheckEventArgs> checkHandler) : base(file, uncheckHandler, checkHandler)
         {
         }
+
+        public string Extension => FsNode.Extension;
+
+        public override void Rename(string newName)
+        {
+            FsNode.Rename(newName);
+        }
     }
 }
