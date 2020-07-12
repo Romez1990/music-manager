@@ -32,11 +32,5 @@ namespace Core.Test.FileSystem
         {
             Assert.That(_fsNodeBase.Path, Is.EqualTo(_fsInfoFactory.FileInfo.FullName));
         }
-
-        [Test]
-        public void FsNodeBase_Exists()
-        {
-            Assert.That(_fsNodeBase.Exists);
-        }
     }
 }
