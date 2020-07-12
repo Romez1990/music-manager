@@ -15,8 +15,6 @@ namespace Core.FileSystem
 
         public string Path => Info.FullName;
 
-        public bool Exists => Info.Exists;
-
         public abstract void Rename(string newName);
 
         public override string ToString()
