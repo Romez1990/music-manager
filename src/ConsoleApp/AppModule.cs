@@ -1,4 +1,5 @@
 using Autofac;
+using ConsoleApp.ArgumentParser;
 
 namespace ConsoleApp
 {
@@ -6,6 +7,7 @@ namespace ConsoleApp
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<OptionsBuilder>().As<IOptionsBuilder>();
         }
     }
 }
