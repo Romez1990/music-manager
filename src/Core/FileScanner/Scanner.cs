@@ -38,7 +38,7 @@ namespace Core.FileScanner
             directoryElement.Content
                 .Where(fsNode => fsNode is IFileElement)
                 .Cast<IFileElement>()
-                .Where(file => file.FsNode.Extension == ".mp3")
+                .Where(file => file.Extension == ".mp3")
                 .ToList()
                 .ForEach(file => file.Check());
         }

@@ -1,6 +1,7 @@
 namespace Core.FileSystem
 {
-    public interface IFileElement : IFsNodeElement<IFile>
+    public interface IFileElement : IFsNodeElement
     {
+        string Extension { get; }
     }
 }

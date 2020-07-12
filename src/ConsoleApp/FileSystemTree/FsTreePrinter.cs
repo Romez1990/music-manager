@@ -20,11 +20,11 @@ namespace ConsoleApp.FileSystemTree
             return PrintHelper(directoryElement, "", "");
         }
 
-        private string PrintHelper(IFsNodeElement<IFsNode> fsNodeElement, string directChildStart,
+        private string PrintHelper(IFsNodeElement fsNodeElement, string directChildStart,
             string indirectChildStart)
         {
             var checkBox = GetCheckBox(fsNodeElement.CheckState);
-            var name = fsNodeElement.FsNode.Name;
+            var name = fsNodeElement.Name;
             var directoryElementString = $"{directChildStart}{checkBox} {name}";
 
             if (!(fsNodeElement is IDirectoryElement directoryElement)) return directoryElementString;
