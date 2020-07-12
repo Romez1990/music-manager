@@ -1,4 +1,5 @@
 using Autofac;
+using ConsoleApp.Application;
 using ConsoleApp.ArgumentParser;
 using ConsoleApp.FileSystemTree;
 
@@ -11,6 +12,7 @@ namespace ConsoleApp
             builder.RegisterType<ArgParser>().As<IArgParser>();
             builder.RegisterType<OptionsBuilder>().As<IOptionsBuilder>();
             builder.RegisterType<FsTreePrinter>().As<IFsTreePrinter>();
+            builder.RegisterType<GraphicalApp>().As<IGraphicalApp>();
         }
     }
 }
