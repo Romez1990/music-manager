@@ -8,7 +8,12 @@ async def scrap_lyrics(url: str) -> Optional[str]:
     soup = await scrap(url)
     lyrics_block: Optional[Tag] = soup.select_one('.lyrics')
     if lyrics_block is None:
+        lyrics_block = soup.select_one('main > :nth-child(2) > :nth-child(3)')
+        [br.replace_with('\n') for br in lyrics_block.select('br')]
+
+    if lyrics_block is None:
         return None
+
     lyrics: str = lyrics_block.get_text()
     lyrics = process_lyrics(lyrics)
     return lyrics
