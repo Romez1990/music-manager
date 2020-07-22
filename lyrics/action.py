@@ -38,13 +38,13 @@ class LyricsAction(Action):
     async def _perform_file(self, file: File) -> None:
         song = Song(file)
         search_query = f'{song.artist} - {song.title}'
-        lyrics_url_result = await search_lyrics(search_query)
-        if lyrics_url_result is None:
+        lyrics_url = await search_lyrics(search_query)
+        if lyrics_url is None:
             print(f'No results for {search_query}')
             return
-        lyrics = await scrap_lyrics(lyrics_url_result)
+        lyrics = await scrap_lyrics(lyrics_url)
         if lyrics is None:
-            print(f'No results for {search_query} on {lyrics_url_result}')
+            print(f'No results for {search_query} on {lyrics_url}')
             return
         song.lyrics = lyrics
         song.save()
