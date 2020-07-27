@@ -74,6 +74,13 @@ namespace Core.FileSystem
             return new DirectoryElement(_fsNodeElementFactory, FsNode, checkState, newContent);
         }
 
+        public IDirectoryElement SelectContent(Func<IFsNodeElement<object>, int, IFsNodeElement<object>> selector)
+        {
+            var newContent = Content.Select(selector).ToImmutableArray();
+            var checkState = DefineCheckState(newContent);
+            return new DirectoryElement(_fsNodeElementFactory, FsNode, checkState, newContent);
+        }
+
         private CheckState DefineCheckState(ImmutableArray<IFsNodeElement<object>> content)
         {
             if (content.All(fsNodeElement => fsNodeElement.CheckState == CheckState.Unchecked))

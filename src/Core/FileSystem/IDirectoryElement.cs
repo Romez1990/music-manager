@@ -7,5 +7,6 @@ namespace Core.FileSystem
     {
         ImmutableArray<IFsNodeElement<object>> Content { get; }
         IDirectoryElement SelectContent(Func<IFsNodeElement<object>, IFsNodeElement<object>> selector);
+        IDirectoryElement SelectContent(Func<IFsNodeElement<object>, int, IFsNodeElement<object>> selector);
     }
 }
