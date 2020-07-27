@@ -1,5 +1,5 @@
+using System;
 using System.ComponentModel;
-using System.Linq;
 using Core.CoreEngine;
 using Core.FileSystem;
 
@@ -7,40 +7,45 @@ namespace Core.FileScanner
 {
     public class Scanner : IScanner
     {
-        public void Scan(IDirectoryElement directoryElement, Mode mode)
+        public IDirectoryElement Scan(IDirectoryElement directoryElement, Mode mode)
         {
-            switch (mode)
+            return mode switch
             {
-                case Mode.Compilation:
-                case Mode.Band:
-                    ScanCompilationOrBand(directoryElement, mode);
-                    break;
-                case Mode.Album:
-                    ScanAlbum(directoryElement);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(Mode));
-            }
+                Mode.Compilation => ScanCompilationOrBand(directoryElement, mode),
+                Mode.Band => ScanCompilationOrBand(directoryElement, mode),
+                Mode.Album => ScanAlbum(directoryElement),
+                _ => throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(Mode)),
+            };
         }
 
-        private void ScanCompilationOrBand(IDirectoryElement directoryElement, Mode mode)
+        private IDirectoryElement ScanCompilationOrBand(IDirectoryElement compilationDirectoryElement, Mode mode)
         {
             var nextMode = (Mode)((int)mode - 1);
-            directoryElement.Content
-                .Where(fsNode => fsNode is IDirectoryElement)
-                .Cast<IDirectoryElement>()
-                .ToList()
-                .ForEach(directory => Scan(directory, nextMode));
+            return compilationDirectoryElement.SelectContent(fsNodeElement =>
+                fsNodeElement switch
+                {
+                    IFileElement _ => fsNodeElement,
+                    IDirectoryElement directoryElement => Scan(directoryElement, nextMode),
+                    _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
+                });
         }
 
-        private void ScanAlbum(IDirectoryElement directoryElement)
+        private IDirectoryElement ScanAlbum(IDirectoryElement directoryElement)
         {
-            directoryElement.Content
-                .Where(fsNode => fsNode is IFileElement)
-                .Cast<IFileElement>()
-                .Where(file => file.Extension == ".mp3")
-                .ToList()
-                .ForEach(file => file.Check());
+            return directoryElement.SelectContent(fsNodeElement =>
+                fsNodeElement switch
+                {
+                    IDirectoryElement _ => fsNodeElement,
+                    IFileElement fileElement => IsFileElementToSelect(fileElement)
+                        ? fileElement.Check()
+                        : fsNodeElement,
+                    _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
+                });
+        }
+
+        private bool IsFileElementToSelect(IFileElement fileElement)
+        {
+            return fileElement.Extension == ".mp3";
         }
     }
 }
