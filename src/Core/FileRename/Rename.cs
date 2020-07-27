@@ -61,7 +61,7 @@ namespace Core.FileRename
             return RenameAlbum(renamedDirectoryElement);
         }
 
-        private readonly Regex _albumRegex = new Regex(@"(?<year>\d{4}) - .+ - (?<name>.+)");
+        private readonly Regex _albumRegex = new Regex(@"(?<year>\d{4}) - (?:.+ - )?(?<name>.+)");
 
         private IDirectoryElement RenameAlbumDirectoryWithNumber(IDirectoryElement directoryElement, int number)
         {
@@ -102,7 +102,7 @@ namespace Core.FileRename
         private IFileElement RenameTrack(IFileElement fileElement)
         {
             var newName = Regex.Replace(fileElement.Name,
-                @"(?<number>\d{1,2})\. (?<name>.+\.mp3)",
+                @"(?<number>\d{1,2})(?:\.| -)? (?<name>.+\.mp3)",
                 "${number} ${name}");
             return fileElement.Rename(newName);
         }
