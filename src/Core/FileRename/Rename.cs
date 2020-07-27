@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Core.CoreEngine;
@@ -52,7 +52,12 @@ namespace Core.FileRename
 
         private IDirectoryElement RenameAlbumDirectoryInsideBand(IDirectoryElement directoryElement, int number)
         {
-            var renamedDirectoryElement = RenameAlbumDirectoryWithNumber(directoryElement, number);
+            var albumsCount = directoryElement
+                .Content
+                .Count(fsNodeElement =>
+                    fsNodeElement is IDirectoryElement && fsNodeElement.CheckState == CheckState.Checked);
+            var numberLength = albumsCount.ToString().Count();
+            var renamedDirectoryElement = RenameAlbumDirectoryWithNumber(directoryElement, numberLength, number);
             return RenameAlbum(renamedDirectoryElement);
         }
 
@@ -64,9 +69,10 @@ namespace Core.FileRename
 
         private readonly Regex _albumRegex = new Regex(@"(?<year>\d{4}) - (?:.+ - )?(?<name>.+)");
 
-        private IDirectoryElement RenameAlbumDirectoryWithNumber(IDirectoryElement directoryElement, int number)
+        private IDirectoryElement RenameAlbumDirectoryWithNumber(IDirectoryElement directoryElement, int numberLength,
+            int number)
         {
-            var numberString = number.ToString().PadLeft(2, '0');
+            var numberString = number.ToString().PadLeft(numberLength, '0');
             var name = directoryElement.Name;
             if (!_albumRegex.IsMatch(name))
                 return directoryElement;
