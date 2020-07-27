@@ -10,15 +10,15 @@ namespace Core.Test.FileSystem
         [SetUp]
         public void SetUp()
         {
-            var mockFsNode = new Mock<IFsNode>(MockBehavior.Strict);
-            var mockFsNodeBase = new Mock<FsNodeElementBase<IFsNode>>(mockFsNode.Object)
+            var mockFsNode = new Mock<IFsNode<object>>(MockBehavior.Strict);
+            var mockFsNodeBase = new Mock<FsNodeElementBase<IFsNodeElement<object>, IFsNode<object>>>(mockFsNode.Object)
             {
                 CallBase = true,
             };
             _fsNodeElementBaseTest = mockFsNodeBase.Object;
         }
 
-        private FsNodeElementBase<IFsNode> _fsNodeElementBaseTest;
+        private FsNodeElementBase<IFsNodeElement<object>, IFsNode<object>> _fsNodeElementBaseTest;
 
         [Test]
         public void FsNodeElementBase_Creates_Unchecked()

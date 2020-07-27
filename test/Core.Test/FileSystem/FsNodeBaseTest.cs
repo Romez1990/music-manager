@@ -13,13 +13,13 @@ namespace Core.Test.FileSystem
         {
             _fsInfoFactory = new MockFsInfoFactory();
             var info = _fsInfoFactory.FileInfo;
-            var mockFsNodeBase = new Mock<FsNodeBase<IFileSystemInfo>>(MockBehavior.Strict, info);
+            var mockFsNodeBase = new Mock<FsNodeBase<IFsNode<object>, IFileSystemInfo>>(MockBehavior.Strict, info);
             _fsNodeBase = mockFsNodeBase.Object;
         }
 
         private MockFsInfoFactory _fsInfoFactory;
 
-        private FsNodeBase<IFileSystemInfo> _fsNodeBase;
+        private FsNodeBase<IFsNode<object>, IFileSystemInfo> _fsNodeBase;
 
         [Test]
         public void FsNodeBase_Name()

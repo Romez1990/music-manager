@@ -20,7 +20,7 @@ namespace ConsoleApp.FileSystemTree
             return PrintHelper(directoryElement, "", "");
         }
 
-        private string PrintHelper(IFsNodeElement fsNodeElement, string directChildStart,
+        private string PrintHelper(IFsNodeElement<object> fsNodeElement, string directChildStart,
             string indirectChildStart)
         {
             var checkBox = GetCheckBox(fsNodeElement.CheckState);

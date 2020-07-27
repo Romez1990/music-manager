@@ -20,16 +20,16 @@ namespace Core.FileSystem
         }
 
         public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler)
+            EventHandler<CheckStateChangeEventArgs> uncheckHandler,
+            EventHandler<CheckStateChangeEventArgs> checkPartiallyHandler,
+            EventHandler<CheckStateChangeEventArgs> checkHandler)
         {
             return new DirectoryElement(this, directory, uncheckHandler, checkPartiallyHandler, checkHandler);
         }
 
         public IFileElement CreateFileElementInsideDirectory(IFile file,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler)
+            EventHandler<CheckStateChangeEventArgs> uncheckHandler,
+            EventHandler<CheckStateChangeEventArgs> checkHandler)
         {
             return new FileElement(file, uncheckHandler, checkHandler);
         }

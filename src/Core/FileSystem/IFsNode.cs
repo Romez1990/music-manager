@@ -1,9 +1,9 @@
 namespace Core.FileSystem
 {
-    public interface IFsNode
+    public interface IFsNode<out TThis>
     {
         string Name { get; }
         string Path { get; }
-        void Rename(string newName);
+        TThis Rename(string newName);
     }
 }

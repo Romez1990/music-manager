@@ -9,12 +9,12 @@ namespace Core.FileSystem
         Either<DirectoryNotFoundException, IDirectoryElement> CreateDirectoryElement(string path);
 
         IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler);
+            EventHandler<CheckStateChangeEventArgs> uncheckHandler,
+            EventHandler<CheckStateChangeEventArgs> checkPartiallyHandler,
+            EventHandler<CheckStateChangeEventArgs> checkHandler);
 
         IFileElement CreateFileElementInsideDirectory(IFile file,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler);
+            EventHandler<CheckStateChangeEventArgs> uncheckHandler,
+            EventHandler<CheckStateChangeEventArgs> checkHandler);
     }
 }
