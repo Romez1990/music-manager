@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Core.CoreEngine;
 using Core.FileSystem;
@@ -88,22 +89,28 @@ namespace Core.FileRename
 
         private IDirectoryElement RenameAlbum(IDirectoryElement directoryElement)
         {
+            var tracksCount = directoryElement
+                .Content
+                .Count(fsNodeElement => fsNodeElement.CheckState == CheckState.Checked);
+            var isTrackNumberOneDigit = tracksCount < 10;
             return directoryElement.SelectContent(fsNodeElement =>
                 fsNodeElement switch
                 {
                     IDirectoryElement _ => fsNodeElement,
                     IFileElement fileElement => fsNodeElement.CheckState == CheckState.Checked
-                        ? RenameTrack(fileElement)
+                        ? RenameTrack(fileElement, isTrackNumberOneDigit)
                         : fsNodeElement,
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
                 });
         }
 
-        private IFileElement RenameTrack(IFileElement fileElement)
+        private IFileElement RenameTrack(IFileElement fileElement, bool isTrackNumberOneDigit)
         {
             var newName = Regex.Replace(fileElement.Name,
                 @"(?<number>\d{1,2})(?:\.| -)? (?<name>.+\.mp3)",
                 "${number} ${name}");
+            if (isTrackNumberOneDigit)
+                newName = newName.TrimStart('0');
             return fileElement.Rename(newName);
         }
     }
