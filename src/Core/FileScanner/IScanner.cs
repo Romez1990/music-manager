@@ -5,6 +5,6 @@ namespace Core.FileScanner
 {
     public interface IScanner
     {
-        void Scan(IDirectoryElement directoryElement, Mode mode);
+        IDirectoryElement Scan(IDirectoryElement directoryElement, Mode mode);
     }
 }
