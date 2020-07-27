@@ -28,24 +28,6 @@ namespace Core.Test.CoreEngine
         private IEnginePerformer _enginePerformer;
 
         [Test]
-        public void Engine_PerformsAllOperations_Correctly()
-        {
-            var operation1 = new Mock<IOperation>();
-            var operation2 = new Mock<IOperation>();
-            _operationRepository.Setup(r => r.FindAll()).Returns(new List<IOperation>
-            {
-                operation1.Object,
-                operation2.Object,
-            });
-
-            _enginePerformer.PerformAllOperations();
-
-            _operationRepository.Verify(r => r.FindAll(), Times.Once());
-            operation1.Verify(o => o.Perform(_directoryElement, Mode.Band), Times.Once());
-            operation2.Verify(o => o.Perform(_directoryElement, Mode.Band), Times.Once());
-        }
-
-        [Test]
         public void Engine_PerformsOperationsWhere_Correctly()
         {
             var operation1 = new Mock<IOperation>();

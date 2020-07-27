@@ -22,11 +22,6 @@ namespace Core.CoreEngine
 
         private readonly Mode _mode;
 
-        public void PerformAllOperations()
-        {
-            PerformOperations(_operationRepository.FindAll());
-        }
-
         public void PerformOperations(ImmutableArray<string> operations)
         {
             PerformOperations(_operationRepository.FindAllByName(operations));
