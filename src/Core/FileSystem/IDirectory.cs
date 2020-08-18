@@ -2,8 +2,8 @@
 
 namespace Core.FileSystem
 {
-    public interface IDirectory : IFsNode
+    public interface IDirectory : IFsNode<IDirectory>
     {
-        ImmutableArray<IFsNode> Content { get; }
+        ImmutableArray<IFsNode<object>> Content { get; }
     }
 }

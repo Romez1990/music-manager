@@ -1,9 +1,9 @@
 namespace Core.FileSystem
 {
-    public interface IFsNodeElement : IFsNode
+    public interface IFsNodeElement<out TThis> : IFsNode<TThis>
     {
         CheckState CheckState { get; }
-        void Uncheck();
-        void Check();
+        TThis Uncheck();
+        TThis Check();
     }
 }

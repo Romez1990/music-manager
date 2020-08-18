@@ -4,24 +4,27 @@ using System.Linq;
 
 namespace Core.FileSystem
 {
-    public class Directory : FsNodeBase<IDirectoryInfo>, IDirectory
+    public class Directory : FsNodeBase<IDirectory, IDirectoryInfo>, IDirectory
     {
-        public Directory(IFsNodeFactory fsNodeFactory, IDirectoryInfo info) : base(info)
+        public Directory(IFsInfoFactory fsInfoFactory, IFsNodeFactory fsNodeFactory, IDirectoryInfo info) : base(info)
         {
+            _fsInfoFactory = fsInfoFactory;
             _fsNodeFactory = fsNodeFactory;
             Content = ReadContent();
         }
 
+        private readonly IFsInfoFactory _fsInfoFactory;
+
         private readonly IFsNodeFactory _fsNodeFactory;
 
-        public ImmutableArray<IFsNode> Content { get; }
+        public ImmutableArray<IFsNode<object>> Content { get; }
 
-        private ImmutableArray<IFsNode> ReadContent()
+        private ImmutableArray<IFsNode<object>> ReadContent()
         {
             var directories = Info
                 .GetDirectories()
                 .Select(info => _fsNodeFactory.InstantiateDirectory(info))
-                .Cast<IFsNode>()
+                .Cast<IFsNode<object>>()
                 .OrderBy(fsNode => fsNode.Name);
             var files = Info
                 .GetFiles()
@@ -32,10 +35,12 @@ namespace Core.FileSystem
                 .ToImmutableArray();
         }
 
-        public override void Rename(string newName)
+        public override IDirectory Rename(string newName)
         {
             var newPath = System.IO.Path.Combine(Info.Parent.FullName, newName);
-            Info.MoveTo(newPath);
+            var newInfo = _fsInfoFactory.CreateDirectoryInfo(Path);
+            newInfo.MoveTo(newPath);
+            return new Directory(_fsInfoFactory, _fsNodeFactory, newInfo);
         }
     }
 }
