@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace Core.FileSystem
@@ -64,6 +65,22 @@ namespace Core.FileSystem
                 .Select(fsNodeElement => (IFsNodeElement<object>)fsNodeElement.Check())
                 .ToImmutableArray();
             return new DirectoryElement(_fsNodeElementFactory, FsNode, CheckState.Checked, newContent);
+        }
+
+        public IDirectoryElement SelectContent(Func<IFsNodeElement<object>, IFsNodeElement<object>> selector)
+        {
+            var newContent = Content.Select(selector).ToImmutableArray();
+            var checkState = DefineCheckState(newContent);
+            return new DirectoryElement(_fsNodeElementFactory, FsNode, checkState, newContent);
+        }
+
+        private CheckState DefineCheckState(ImmutableArray<IFsNodeElement<object>> content)
+        {
+            if (content.All(fsNodeElement => fsNodeElement.CheckState == CheckState.Unchecked))
+                return CheckState.Unchecked;
+            if (content.All(fsNodeElement => fsNodeElement.CheckState == CheckState.Checked))
+                return CheckState.Checked;
+            return CheckState.CheckedPartially;
         }
     }
 }
