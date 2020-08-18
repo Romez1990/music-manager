@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using LanguageExt;
 
@@ -19,19 +18,14 @@ namespace Core.FileSystem
                 .Map(directory => (IDirectoryElement)new DirectoryElement(this, directory));
         }
 
-        public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler)
+        public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory)
         {
-            return new DirectoryElement(this, directory, uncheckHandler, checkPartiallyHandler, checkHandler);
+            return new DirectoryElement(this, directory);
         }
 
-        public IFileElement CreateFileElementInsideDirectory(IFile file,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler)
+        public IFileElement CreateFileElementInsideDirectory(IFile file)
         {
-            return new FileElement(file, uncheckHandler, checkHandler);
+            return new FileElement(file);
         }
     }
 }

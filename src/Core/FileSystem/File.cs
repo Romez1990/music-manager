@@ -2,18 +2,23 @@
 
 namespace Core.FileSystem
 {
-    public class File : FsNodeBase<IFileInfo>, IFile
+    public class File : FsNodeBase<IFile, IFileInfo>, IFile
     {
-        public File(IFileInfo info) : base(info)
+        public File(IFsInfoFactory fsInfoFactory, IFileInfo info) : base(info)
         {
+            _fsInfoFactory = fsInfoFactory;
         }
+
+        private readonly IFsInfoFactory _fsInfoFactory;
 
         public string Extension => Info.Extension;
 
-        public override void Rename(string newName)
+        public override IFile Rename(string newName)
         {
             var newPath = System.IO.Path.Combine(Info.DirectoryName, newName);
-            Info.MoveTo(newPath);
+            var newInfo = _fsInfoFactory.CreateFileInfo(Path);
+            newInfo.MoveTo(newPath);
+            return new File(_fsInfoFactory, newInfo);
         }
     }
 }

@@ -2,20 +2,21 @@ using System.IO.Abstractions;
 
 namespace Core.FileSystem
 {
-    public abstract class FsNodeBase<T> : IFsNode where T : IFileSystemInfo
+    public abstract class FsNodeBase<TThis, TInfo> : IFsNode<TThis>
+        where TInfo : IFileSystemInfo
     {
-        protected FsNodeBase(T info)
+        protected FsNodeBase(TInfo info)
         {
             Info = info;
         }
 
-        protected T Info { get; }
+        protected TInfo Info { get; }
 
         public string Name => Info.Name;
 
         public string Path => Info.FullName;
 
-        public abstract void Rename(string newName);
+        public abstract TThis Rename(string newName);
 
         public override string ToString()
         {

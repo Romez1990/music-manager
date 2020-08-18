@@ -22,22 +22,22 @@ namespace Core.FileSystem
                 return Left(new DirectoryNotFoundException($"Directory {path} not found"));
             }
 
-            return new Directory(this, info);
+            return new Directory(_fsInfoFactory, this, info);
         }
 
         public IDirectory InstantiateDirectory(IDirectoryInfo info)
         {
-            return new Directory(this, info);
+            return new Directory(_fsInfoFactory, this, info);
         }
 
         public IFile InstantiateFile(string path)
         {
-            return new File(_fsInfoFactory.CreateFileInfo(path));
+            return new File(_fsInfoFactory, _fsInfoFactory.CreateFileInfo(path));
         }
 
         public IFile InstantiateFile(IFileInfo info)
         {
-            return new File(info);
+            return new File(_fsInfoFactory, info);
         }
     }
 }

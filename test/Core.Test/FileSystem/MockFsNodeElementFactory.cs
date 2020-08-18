@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
@@ -21,7 +20,7 @@ namespace Core.Test.FileSystem
 
         private readonly TestFilesLoader _testFilesLoader;
 
-        private readonly Dictionary<string, IFsNode> _fsNodes = new Dictionary<string, IFsNode>();
+        private readonly Dictionary<string, IFsNode<object>> _fsNodes = new Dictionary<string, IFsNode<object>>();
 
         private readonly string _fileSystemRoot;
 
@@ -94,7 +93,7 @@ namespace Core.Test.FileSystem
             mockCompilationDirectory.Setup(d => d.Content).Returns(
                 bandDirectoriesInfo
                     .Select(ScanBand)
-                    .Cast<IFsNode>()
+                    .Cast<IFsNode<object>>()
                     .OrderBy(fsNode => fsNode.Name)
                     .ToImmutableArray()
             );
@@ -112,7 +111,7 @@ namespace Core.Test.FileSystem
             mockBandDirectory.Setup(d => d.Content).Returns(
                 albumDirectoriesInfo
                     .Select(ScanAlbum)
-                    .Cast<IFsNode>()
+                    .Cast<IFsNode<object>>()
                     .OrderBy(fsNode => fsNode.Name)
                     .ToImmutableArray()
             );
@@ -131,7 +130,7 @@ namespace Core.Test.FileSystem
             mockAlbumDirectory.Setup(d => d.Content).Returns(
                 tracksInfo
                     .Select(ScanTrack)
-                    .Cast<IFsNode>()
+                    .Cast<IFsNode<object>>()
                     .OrderBy(fsNode => fsNode.Name)
                     .ToImmutableArray()
             );
@@ -156,22 +155,16 @@ namespace Core.Test.FileSystem
             return new DirectoryElement(this, _fsNodes[path] as IDirectory);
         }
 
-        public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkPartiallyHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler)
+        public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory)
         {
             var path = directory.Path;
-            return new DirectoryElement(this, _fsNodes[path] as IDirectory, checkHandler, checkPartiallyHandler,
-                uncheckHandler);
+            return new DirectoryElement(this, _fsNodes[path] as IDirectory);
         }
 
-        public IFileElement CreateFileElementInsideDirectory(IFile file,
-            EventHandler<FsNodeElementCheckEventArgs> uncheckHandler,
-            EventHandler<FsNodeElementCheckEventArgs> checkHandler)
+        public IFileElement CreateFileElementInsideDirectory(IFile file)
         {
             var path = file.Path;
-            return new FileElement(_fsNodes[path] as IFile, uncheckHandler, checkHandler);
+            return new FileElement(_fsNodes[path] as IFile);
         }
     }
 }

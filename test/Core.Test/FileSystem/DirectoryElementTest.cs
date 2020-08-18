@@ -19,45 +19,21 @@ namespace Core.Test.FileSystem
         [Test]
         public void DirectoryElement_Checks_Correctly()
         {
-            _directoryElement.Check();
+            var newDirectoryElement = _directoryElement.Check();
 
-            Assert.That(_directoryElement.Content.All(fsNodeElement => fsNodeElement.CheckState == CheckState.Checked));
+            Assert.That(newDirectoryElement.CheckState, Is.EqualTo(CheckState.Checked));
+            Assert.That(newDirectoryElement.Content.All(fsNodeElement =>
+                fsNodeElement.CheckState == CheckState.Checked));
         }
 
         [Test]
-        public void DirectoryElement_ChecksPartially_WhenChildFileChecks()
+        public void DirectoryElement_Unchecks_Correctly()
         {
-            var childDirectoryElement = (IDirectoryElement)_directoryElement.Content.First();
-            childDirectoryElement.Content.First().Check();
+            var newDirectoryElement = _directoryElement.Uncheck();
 
-            Assert.That(_directoryElement.CheckState, Is.EqualTo(CheckState.CheckedPartially));
-        }
-
-        [Test]
-        public void DirectoryElement_ChecksPartially_WhenChildFileUnchecks()
-        {
-            _directoryElement.Check();
-            var childDirectoryElement = (IDirectoryElement)_directoryElement.Content.First();
-            childDirectoryElement.Content.First().Uncheck();
-
-            Assert.That(_directoryElement.CheckState, Is.EqualTo(CheckState.CheckedPartially));
-        }
-
-        [Test]
-        public void DirectoryElement_ChecksPartially_WhenChildDirectoryChecks()
-        {
-            _directoryElement.Content.First().Check();
-
-            Assert.That(_directoryElement.CheckState, Is.EqualTo(CheckState.CheckedPartially));
-        }
-
-        [Test]
-        public void DirectoryElement_ChecksPartially_WhenChildDirectoryUnchecks()
-        {
-            _directoryElement.Check();
-            _directoryElement.Content.First().Uncheck();
-
-            Assert.That(_directoryElement.CheckState, Is.EqualTo(CheckState.CheckedPartially));
+            Assert.That(newDirectoryElement.CheckState, Is.EqualTo(CheckState.Unchecked));
+            Assert.That(newDirectoryElement.Content.All(fsNodeElement =>
+                fsNodeElement.CheckState == CheckState.Unchecked));
         }
 
         [Test]
