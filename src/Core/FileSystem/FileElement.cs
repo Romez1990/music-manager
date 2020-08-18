@@ -2,11 +2,7 @@ namespace Core.FileSystem
 {
     public class FileElement : FsNodeElementBase<IFileElement, IFile>, IFileElement
     {
-        public FileElement(IFile file) : this(file, CheckState.Unchecked)
-        {
-        }
-
-        private FileElement(IFile file, CheckState checkState) : base(file, checkState)
+        public FileElement(IFile file, CheckState checkState = CheckState.Unchecked) : base(file, checkState)
         {
         }
 
