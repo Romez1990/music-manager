@@ -24,7 +24,7 @@ namespace Core.CoreEngine
 
         public IDirectoryElement PerformOperations(ImmutableArray<string> operations)
         {
-            return PerformOperations(_operationRepository.FindAllByName(operations));
+            return PerformOperations(_operationRepository.FindAllByNames(operations));
         }
 
         private IDirectoryElement PerformOperations(IEnumerable<IOperation> operations)
