@@ -32,7 +32,7 @@ namespace Core.Test.CoreEngine
         {
             var operation1 = new Mock<IOperation>();
             var operation2 = new Mock<IOperation>();
-            _operationRepository.Setup(r => r.FindAllByName(It.IsAny<IEnumerable<string>>())).Returns(new List<IOperation>
+            _operationRepository.Setup(r => r.FindAllByNames(It.IsAny<IEnumerable<string>>())).Returns(new List<IOperation>
             {
                 operation1.Object,
                 operation2.Object,
@@ -40,7 +40,7 @@ namespace Core.Test.CoreEngine
 
             _enginePerformer.PerformOperations(new ImmutableArray<string>());
 
-            _operationRepository.Verify(r => r.FindAllByName(It.IsAny<IEnumerable<string>>()), Times.Once());
+            _operationRepository.Verify(r => r.FindAllByNames(It.IsAny<IEnumerable<string>>()), Times.Once());
             operation1.Verify(o => o.Perform(_directoryElement, Mode.Band), Times.Once());
             operation2.Verify(o => o.Perform(_directoryElement, Mode.Band), Times.Once());
         }

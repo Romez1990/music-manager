@@ -17,7 +17,7 @@ namespace Core.Operation
             return _operations;
         }
 
-        public IEnumerable<IOperation> FindAllByName(IEnumerable<string> names)
+        public IEnumerable<IOperation> FindAllByNames(IEnumerable<string> names)
         {
             return _operations.Where(operation => names.Contains(operation.Name));
         }
