@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using Core.CoreEngine;
 using Core.FileSystem;
-using Core.Operation;
+using Core.Operations.Operation;
 using Moq;
 using NUnit.Framework;
 using Utils.Reflection;

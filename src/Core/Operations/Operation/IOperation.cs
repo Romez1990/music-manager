@@ -1,7 +1,7 @@
 ﻿using Core.CoreEngine;
 using Core.FileSystem;
 
-namespace Core.Operation
+namespace Core.Operations.Operation
 {
     public interface IOperation
     {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Core.FileSystem;
-using Core.Operation;
+using Core.Operations.Operation;
 
 namespace Core.CoreEngine
 {

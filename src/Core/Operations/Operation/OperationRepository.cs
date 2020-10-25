@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Core.FileRename;
+using Core.Operations.FileRename;
 
-namespace Core.Operation
+namespace Core.Operations.Operation
 {
     public class OperationRepository : IOperationRepository
     {

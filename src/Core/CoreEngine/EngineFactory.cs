@@ -1,6 +1,6 @@
 using Core.FileScanner;
 using Core.FileSystem;
-using Core.Operation;
+using Core.Operations.Operation;
 
 namespace Core.CoreEngine
 {
