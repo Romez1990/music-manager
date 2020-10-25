@@ -3,9 +3,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Core.CoreEngine;
 using Core.FileSystem;
-using Core.Operation;
+using Core.Operations.Operation;
 
-namespace Core.FileRename
+namespace Core.Operations.FileRename
 {
     public class Rename : IOperation
     {

@@ -1,8 +1,8 @@
 ﻿using Core.CoreEngine;
-using Core.FileRename;
 using Core.FileScanner;
 using Core.FileSystem;
-using Core.Operation;
+using Core.Operations.FileRename;
+using Core.Operations.Operation;
 using Core.Test.FileSystem;
 using NUnit.Framework;
 

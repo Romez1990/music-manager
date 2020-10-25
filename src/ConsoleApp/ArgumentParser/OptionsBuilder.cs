@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using CommandLine;
-using Core.Operation;
+using Core.Operations.Operation;
 using Utils.Reflection;
 
 namespace ConsoleApp.ArgumentParser

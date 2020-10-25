@@ -5,7 +5,7 @@ using ConsoleApp.ArgumentParser;
 using ConsoleApp.FileSystemTree;
 using Core.CoreEngine;
 using Core.FileSystem;
-using Core.Operation;
+using Core.Operations.Operation;
 
 namespace ConsoleApp.Application
 {

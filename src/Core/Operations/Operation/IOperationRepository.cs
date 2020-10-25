@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Core.Operation
+namespace Core.Operations.Operation
 {
     public interface IOperationRepository
     {
