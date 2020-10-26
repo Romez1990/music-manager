@@ -7,7 +7,8 @@ namespace ConsoleApp
     {
         public static int Main(string[] args)
         {
-            var containerBuilder = new AppContainerBuilder();
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterModule<AppModule>();
             var container = containerBuilder.Build();
 
             var app = container.Resolve<IApp>();
