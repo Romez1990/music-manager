@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using CommandLine;
@@ -45,8 +44,8 @@ namespace ConsoleApp.ArgumentParser
 
         private void CreateProperties(TypeBuilder typeBuilder)
         {
-            _operations.FindAll().ToList().ForEach(operation =>
-                CreateProperty(typeBuilder, operation.Name, typeof(bool), operation.Description));
+            foreach (var operation in _operations.FindAll())
+                CreateProperty(typeBuilder, operation.Name, typeof(bool), operation.Description);
         }
 
         private void CreateProperty(TypeBuilder typeBuilder, string name, Type type, string description)
