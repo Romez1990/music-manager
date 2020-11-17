@@ -13,7 +13,6 @@ namespace Core.CoreEngine
         }
 
         private readonly IScanner _scanner;
-
         private readonly IOperationRepository _operationRepository;
 
         public IEngineScanner CreateEngineScanner(IDirectoryElement directoryElement)

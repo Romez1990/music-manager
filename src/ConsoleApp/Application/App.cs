@@ -22,13 +22,9 @@ namespace ConsoleApp.Application
         }
 
         private readonly IEngine _engine;
-
         private readonly IArgParser _parser;
-
         private readonly IOperationRepository _operationRepository;
-
         private readonly IFsTreePrinter _fsTreePrinter;
-
         private readonly IGraphicalApp _graphicalApp;
 
         public int Run(string[] args)

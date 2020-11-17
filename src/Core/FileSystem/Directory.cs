@@ -14,7 +14,6 @@ namespace Core.FileSystem
         }
 
         private readonly IFsInfoFactory _fsInfoFactory;
-
         private readonly IFsNodeFactory _fsNodeFactory;
 
         public ImmutableArray<IFsNode<object>> Content { get; }

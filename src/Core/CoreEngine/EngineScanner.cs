@@ -13,9 +13,7 @@ namespace Core.CoreEngine
         }
 
         private readonly IEngineFactory _engineFactory;
-
         private readonly IScanner _scanner;
-
         private readonly IDirectoryElement _directoryElement;
 
         public IEnginePerformer Scan(Mode mode)
