@@ -13,7 +13,6 @@ namespace Core.CoreEngine
         }
 
         private readonly IEngineFactory _engineFactory;
-
         private readonly IFsNodeElementFactory _fsNodeElementFactory;
 
         public Either<DirectoryNotFoundException, IEngineScanner> SetDirectory(string path)
