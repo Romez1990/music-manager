@@ -16,6 +16,7 @@ namespace ConsoleApp
             builder.RegisterType<OptionsBuilder>().As<IOptionsBuilder>();
             builder.RegisterType<FsTreePrinter>().As<IFsTreePrinter>();
             builder.RegisterType<Console>().As<IConsole>();
+            builder.RegisterType<Environment>().As<IEnvironment>();
             builder.RegisterType<GraphicalApp>().As<IGraphicalApp>();
         }
     }
