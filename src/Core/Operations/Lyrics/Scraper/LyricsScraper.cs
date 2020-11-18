@@ -1,6 +1,8 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
+using Core.FileSystem;
 using Core.HttpClient;
+using Core.Operations.Lyrics.Exceptions;
 using LanguageExt;
 using static LanguageExt.Prelude;
 
@@ -17,15 +19,16 @@ namespace Core.Operations.Lyrics.Scraper
         private readonly IHttp _http;
         private readonly HtmlParser _htmlParser;
 
-        public OptionAsync<string> Scrap(string url) =>
+        public EitherAsync<LyricsNotFoundException, string> Scrap(IFileElement file, string url) =>
             _http.Html(url)
-                .ToOption()
+                .MapLeft(_ => new LyricsNotFoundException(file))
                 .MapAsync(_htmlParser.ParseDocumentAsync)
-                .Bind(document => GetLyricsElement(document).ToAsync())
+                .Bind(document => GetLyricsElement(file, document).ToAsync())
                 .Map(GetLyricsText);
 
-        private Option<IElement> GetLyricsElement(IParentNode parent) =>
-            Optional(parent.QuerySelector(".lyrics"));
+        private Either<LyricsNotFoundException, IElement> GetLyricsElement(IFileElement file, IParentNode parent) =>
+            Optional(parent.QuerySelector(".lyrics"))
+                .ToEither(() => new LyricsNotFoundException(file));
 
         private string GetLyricsText(IElement lyricsBlock) =>
             lyricsBlock.TextContent;

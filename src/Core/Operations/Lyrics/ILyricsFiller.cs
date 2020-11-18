@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using Core.FileSystem;
+﻿using Core.FileSystem;
+using Core.Operations.Lyrics.Exceptions;
 using LanguageExt;
 
 namespace Core.Operations.Lyrics
 {
     public interface ILyricsFiller
     {
-        Task<Unit> FillLyrics(IFileElement file);
+        EitherAsync<LyricsException, Unit> FillLyrics(IFileElement file);
     }
 }
