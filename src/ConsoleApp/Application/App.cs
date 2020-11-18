@@ -12,12 +12,13 @@ namespace ConsoleApp.Application
     public class App : IApp
     {
         public App(IEngine engine, IArgParser parser, IOperationRepository operationRepository,
-            IFsTreePrinter fsTreePrinter, IGraphicalApp graphicalApp)
+            IFsTreePrinter fsTreePrinter, IConsole console, IGraphicalApp graphicalApp)
         {
             _engine = engine;
             _parser = parser;
             _operationRepository = operationRepository;
             _fsTreePrinter = fsTreePrinter;
+            _console = console;
             _graphicalApp = graphicalApp;
         }
 
@@ -25,6 +26,7 @@ namespace ConsoleApp.Application
         private readonly IArgParser _parser;
         private readonly IOperationRepository _operationRepository;
         private readonly IFsTreePrinter _fsTreePrinter;
+        private readonly IConsole _console;
         private readonly IGraphicalApp _graphicalApp;
 
         public int Run(string[] args)
@@ -58,14 +60,14 @@ namespace ConsoleApp.Application
                 })
                 .Left(e =>
                 {
-                    Console.WriteLine($"Error: {e.Message}");
+                    _console.Error(e);
                     return 1;
                 });
 
         private void PrintFileSystem(IDirectoryElement directoryElement)
         {
             var fsTree = _fsTreePrinter.Print(directoryElement);
-            Console.WriteLine(fsTree);
+            _console.Print(fsTree);
         }
 
         private int RunGraphicalApp() =>

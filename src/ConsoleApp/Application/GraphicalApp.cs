@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -7,13 +6,20 @@ namespace ConsoleApp.Application
 {
     public class GraphicalApp : IGraphicalApp
     {
+        public GraphicalApp(IConsole console)
+        {
+            _console = console;
+        }
+
+        private readonly IConsole _console;
+
         public int Run()
         {
             var graphicalAppFileInfo = GetGraphicalAppFileInfo();
 
             if (!graphicalAppFileInfo.Exists)
             {
-                Console.WriteLine("Error: Graphical app not found");
+                _console.Print("Error: Graphical app not found");
                 return 1;
             }
 
