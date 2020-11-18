@@ -7,6 +7,6 @@ namespace Core.Operations.Operation
     {
         string Name { get; }
         string Description { get; }
-        IDirectoryElement Perform(IDirectoryElement directory, Mode mode);
+        OperationResult Perform(IDirectoryElement directory, Mode mode);
     }
 }

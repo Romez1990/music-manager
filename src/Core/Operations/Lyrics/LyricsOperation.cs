@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Core.CoreEngine;
 using Core.FileSystem;
 using Core.Operations.Lyrics.Exceptions;
@@ -23,18 +24,17 @@ namespace Core.Operations.Lyrics
 
         public string Description => "Find lyrics for songs and write it to file";
 
-        public IDirectoryElement Perform(IDirectoryElement directory, Mode mode)
+        public OperationResult Perform(IDirectoryElement directory, Mode mode)
         {
-            var exceptions = PerformHelper(directory, mode)
-                .Map(eitherAsync =>
-                {
-                    var task = eitherAsync.ToEither();
-                    task.Wait();
-                    return task.Result;
-                })
+            var tasks = PerformHelper(directory, mode)
+                .Map(eitherAsync => eitherAsync.ToEither())
+                .ToArray();
+            Task.WaitAll(tasks);
+            var exceptions = tasks
+                .Map(task => task.Result)
                 .Filter(either => either.IsLeft)
                 .Map(either => either.IfRight(unit2 => throw new Exception("Unexpected right value")));
-            return directory;
+            return new OperationResult(directory, exceptions);
         }
 
         private IEnumerable<EitherAsync<LyricsException, Unit>> PerformHelper(IDirectoryElement parentDirectoryElement,

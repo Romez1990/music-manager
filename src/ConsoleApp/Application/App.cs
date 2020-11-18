@@ -56,7 +56,9 @@ namespace ConsoleApp.Application
                 {
                     var enginePerformer = engineScanner.Scan(options.Mode);
                     PrintFileSystem(enginePerformer.DirectoryElement);
-                    enginePerformer.PerformOperations(options.Operations);
+                    var operationResult = enginePerformer.PerformOperations(options.Operations);
+                    foreach (var e in operationResult.Exceptions)
+                        _console.Error(e);
                     return 0;
                 })
                 .Left(e =>
