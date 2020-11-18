@@ -1,9 +1,11 @@
-﻿using LanguageExt;
+﻿using Core.FileSystem;
+using Core.Operations.Lyrics.Exceptions;
+using LanguageExt;
 
 namespace Core.Operations.Lyrics.Searcher
 {
     public interface ILyricsSearcher
     {
-        OptionAsync<string> GetLyricsLink(string searchQuery);
+        EitherAsync<LyricsException, string> GetLyricsLink(IFileElement file, string searchQuery);
     }
 }

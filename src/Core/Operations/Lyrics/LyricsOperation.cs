@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Core.CoreEngine;
 using Core.FileSystem;
+using Core.Operations.Lyrics.Exceptions;
 using Core.Operations.Operation;
 using LanguageExt;
 using static LanguageExt.Prelude;
@@ -25,21 +25,29 @@ namespace Core.Operations.Lyrics
 
         public IDirectoryElement Perform(IDirectoryElement directory, Mode mode)
         {
-            var tasks = PerformHelper(directory, mode);
-            Task.WhenAll(tasks).Wait();
+            var exceptions = PerformHelper(directory, mode)
+                .Map(eitherAsync =>
+                {
+                    var task = eitherAsync.ToEither();
+                    task.Wait();
+                    return task.Result;
+                })
+                .Filter(either => either.IsLeft)
+                .Map(either => either.IfRight(unit2 => throw new Exception("Unexpected right value")));
             return directory;
         }
 
-        private IEnumerable<Task<Unit>> PerformHelper(IDirectoryElement parentDirectoryElement, Mode mode) =>
+        private IEnumerable<EitherAsync<LyricsException, Unit>> PerformHelper(IDirectoryElement parentDirectoryElement,
+            Mode mode) =>
             mode switch
             {
                 Mode.Album => FillAlbum(parentDirectoryElement),
                 _ => parentDirectoryElement.Content.Map(fsNodeElement => fsNodeElement switch
                     {
-                        IFileElement _ => Enumerable.Empty<Task<Unit>>(),
+                        IFileElement _ => Enumerable.Empty<EitherAsync<LyricsException, Unit>>(),
                         IDirectoryElement directory => fsNodeElement.CheckState != CheckState.Unchecked
                             ? PerformHelper(directory, DecreaseMode(mode))
-                            : Enumerable.Empty<Task<Unit>>(),
+                            : Enumerable.Empty<EitherAsync<LyricsException, Unit>>(),
                         _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
                     })
                     .Flatten(),
@@ -52,7 +60,7 @@ namespace Core.Operations.Lyrics
             return (Mode)newNumber;
         }
 
-        private IEnumerable<Task<Unit>> FillAlbum(IDirectoryElement albumDirectoryElement) =>
+        private IEnumerable<EitherAsync<LyricsException, Unit>> FillAlbum(IDirectoryElement albumDirectoryElement) =>
             albumDirectoryElement.Content.Map(fsNodeElement =>
                 fsNodeElement switch
                 {

@@ -1,9 +1,11 @@
-﻿using LanguageExt;
+﻿using Core.FileSystem;
+using Core.Operations.Lyrics.Exceptions;
+using LanguageExt;
 
 namespace Core.Operations.Lyrics.Scraper
 {
     public interface ILyricsScraper
     {
-        OptionAsync<string> Scrap(string url);
+        EitherAsync<LyricsNotFoundException, string> Scrap(IFileElement file, string url);
     }
 }
