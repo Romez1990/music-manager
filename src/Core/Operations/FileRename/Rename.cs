@@ -13,13 +13,13 @@ namespace Core.Operations.FileRename
 
         public string Description { get; } = "Rename tracks and folders";
 
-        public IDirectoryElement Perform(IDirectoryElement directoryElement, Mode mode)
+        public IDirectoryElement Perform(IDirectoryElement directory, Mode mode)
         {
             return mode switch
             {
-                Mode.Compilation => RenameCompilation(directoryElement),
-                Mode.Band => RenameBand(directoryElement),
-                Mode.Album => RenameAlbumDirectorySingle(directoryElement),
+                Mode.Compilation => RenameCompilation(directory),
+                Mode.Band => RenameBand(directory),
+                Mode.Album => RenameAlbumDirectorySingle(directory),
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
         }
@@ -30,8 +30,8 @@ namespace Core.Operations.FileRename
                 fsNodeElement switch
                 {
                     IFileElement _ => fsNodeElement,
-                    IDirectoryElement directoryElement => fsNodeElement.CheckState != CheckState.Unchecked
-                        ? RenameBand(directoryElement)
+                    IDirectoryElement directory => fsNodeElement.CheckState != CheckState.Unchecked
+                        ? RenameBand(directory)
                         : fsNodeElement,
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
                 });
@@ -43,81 +43,81 @@ namespace Core.Operations.FileRename
                 fsNodeElement switch
                 {
                     IFileElement _ => fsNodeElement,
-                    IDirectoryElement directoryElement => fsNodeElement.CheckState != CheckState.Unchecked
-                        ? RenameAlbumDirectoryInsideBand(directoryElement, index + 1)
+                    IDirectoryElement directory => fsNodeElement.CheckState != CheckState.Unchecked
+                        ? RenameAlbumDirectoryInsideBand(directory, index + 1)
                         : fsNodeElement,
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
                 });
         }
 
-        private IDirectoryElement RenameAlbumDirectoryInsideBand(IDirectoryElement directoryElement, int number)
+        private IDirectoryElement RenameAlbumDirectoryInsideBand(IDirectoryElement directory, int number)
         {
-            var albumsCount = directoryElement
+            var albumsCount = directory
                 .Content
                 .Count(fsNodeElement =>
                     fsNodeElement is IDirectoryElement && fsNodeElement.CheckState == CheckState.Checked);
             var numberLength = albumsCount.ToString().Count();
-            var renamedDirectoryElement = RenameAlbumDirectoryWithNumber(directoryElement, numberLength, number);
+            var renamedDirectoryElement = RenameAlbumDirectoryWithNumber(directory, numberLength, number);
             return RenameAlbum(renamedDirectoryElement);
         }
 
-        private IDirectoryElement RenameAlbumDirectorySingle(IDirectoryElement directoryElement)
+        private IDirectoryElement RenameAlbumDirectorySingle(IDirectoryElement directory)
         {
-            var renamedDirectoryElement = RenameAlbumDirectoryWithoutNumber(directoryElement);
+            var renamedDirectoryElement = RenameAlbumDirectoryWithoutNumber(directory);
             return RenameAlbum(renamedDirectoryElement);
         }
 
         private readonly Regex _albumRegex = new Regex(@"(?<year>\d{4}) - (?:.+ - )?(?<name>.+)");
 
-        private IDirectoryElement RenameAlbumDirectoryWithNumber(IDirectoryElement directoryElement, int numberLength,
+        private IDirectoryElement RenameAlbumDirectoryWithNumber(IDirectoryElement directory, int numberLength,
             int number)
         {
             var numberString = number.ToString().PadLeft(numberLength, '0');
-            var name = directoryElement.Name;
+            var name = directory.Name;
             if (!_albumRegex.IsMatch(name))
-                return directoryElement;
+                return directory;
 
             var replacement = numberString + " ${name} (${year})";
             var newName = _albumRegex.Replace(name, replacement);
-            return directoryElement.Rename(newName);
+            return directory.Rename(newName);
         }
 
-        private IDirectoryElement RenameAlbumDirectoryWithoutNumber(IDirectoryElement directoryElement)
+        private IDirectoryElement RenameAlbumDirectoryWithoutNumber(IDirectoryElement directory)
         {
-            var name = directoryElement.Name;
+            var name = directory.Name;
             if (!_albumRegex.IsMatch(name))
-                return directoryElement;
+                return directory;
 
             const string replacement = "${name} (${year})";
             var newName = _albumRegex.Replace(name, replacement);
-            return directoryElement.Rename(newName);
+            return directory.Rename(newName);
         }
 
-        private IDirectoryElement RenameAlbum(IDirectoryElement directoryElement)
+        private IDirectoryElement RenameAlbum(IDirectoryElement directory)
         {
-            var tracksCount = directoryElement
+            var tracksCount = directory
                 .Content
                 .Count(fsNodeElement => fsNodeElement.CheckState == CheckState.Checked);
             var isTrackNumberOneDigit = tracksCount < 10;
-            return directoryElement.SelectContent(fsNodeElement =>
+            return directory.SelectContent(fsNodeElement =>
                 fsNodeElement switch
                 {
                     IDirectoryElement _ => fsNodeElement,
-                    IFileElement fileElement => fsNodeElement.CheckState == CheckState.Checked
-                        ? RenameTrack(fileElement, isTrackNumberOneDigit)
+                    IFileElement file => fsNodeElement.CheckState == CheckState.Checked
+                        ? RenameTrack(file, isTrackNumberOneDigit)
                         : fsNodeElement,
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
                 });
         }
 
-        private IFileElement RenameTrack(IFileElement fileElement, bool isTrackNumberOneDigit)
+        private IFileElement RenameTrack(IFileElement file, bool isTrackNumberOneDigit)
         {
-            var newName = Regex.Replace(fileElement.Name,
+            var newName = Regex.Replace(file.Name,
                 @"(?<number>\d{1,2})(?:\.| -)? (?<name>.+\.mp3)",
                 "${number} ${name}");
             if (isTrackNumberOneDigit)
                 newName = newName.TrimStart('0');
-            return fileElement.Rename(newName);
+            return file.Rename(newName);
         }
     }
 }

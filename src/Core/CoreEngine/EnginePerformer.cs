@@ -8,11 +8,11 @@ namespace Core.CoreEngine
 {
     public class EnginePerformer : IEnginePerformer
     {
-        internal EnginePerformer(IOperationRepository operationRepository, IDirectoryElement directoryElement,
+        internal EnginePerformer(IOperationRepository operationRepository, IDirectoryElement directory,
             Mode mode)
         {
             _operationRepository = operationRepository;
-            DirectoryElement = directoryElement;
+            DirectoryElement = directory;
             _mode = mode;
         }
 
@@ -30,7 +30,7 @@ namespace Core.CoreEngine
         private IDirectoryElement PerformOperations(IEnumerable<IOperation> operations)
         {
             return operations.Aggregate(DirectoryElement,
-                (directoryElement, operation) => operation.Perform(directoryElement, _mode));
+                (directory, operation) => operation.Perform(directory, _mode));
         }
     }
 }

@@ -7,13 +7,13 @@ namespace Core.FileScanner
 {
     public class Scanner : IScanner
     {
-        public IDirectoryElement Scan(IDirectoryElement directoryElement, Mode mode)
+        public IDirectoryElement Scan(IDirectoryElement directory, Mode mode)
         {
             return mode switch
             {
-                Mode.Compilation => ScanCompilationOrBand(directoryElement, mode),
-                Mode.Band => ScanCompilationOrBand(directoryElement, mode),
-                Mode.Album => ScanAlbum(directoryElement),
+                Mode.Compilation => ScanCompilationOrBand(directory, mode),
+                Mode.Band => ScanCompilationOrBand(directory, mode),
+                Mode.Album => ScanAlbum(directory),
                 _ => throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(Mode)),
             };
         }
@@ -25,27 +25,27 @@ namespace Core.FileScanner
                 fsNodeElement switch
                 {
                     IFileElement _ => fsNodeElement,
-                    IDirectoryElement directoryElement => Scan(directoryElement, nextMode),
+                    IDirectoryElement directory => Scan(directory, nextMode),
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
                 });
         }
 
-        private IDirectoryElement ScanAlbum(IDirectoryElement directoryElement)
+        private IDirectoryElement ScanAlbum(IDirectoryElement directory)
         {
-            return directoryElement.SelectContent(fsNodeElement =>
+            return directory.SelectContent(fsNodeElement =>
                 fsNodeElement switch
                 {
                     IDirectoryElement _ => fsNodeElement,
-                    IFileElement fileElement => IsFileElementToSelect(fileElement)
-                        ? fileElement.Check()
+                    IFileElement file => IsFileElementToSelect(file)
+                        ? file.Check()
                         : fsNodeElement,
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
                 });
         }
 
-        private bool IsFileElementToSelect(IFileElement fileElement)
+        private bool IsFileElementToSelect(IFileElement file)
         {
-            return fileElement.Extension == ".mp3";
+            return file.Extension == ".mp3";
         }
     }
 }
