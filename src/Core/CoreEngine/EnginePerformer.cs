@@ -22,11 +22,16 @@ namespace Core.CoreEngine
 
         private readonly Mode _mode;
 
-        public IDirectoryElement PerformOperations(ImmutableArray<string> operations) =>
+        public OperationResult PerformOperations(ImmutableArray<string> operations) =>
             PerformOperations(_operationRepository.FindAllByNames(operations));
 
-        private IDirectoryElement PerformOperations(IEnumerable<IOperation> operations) =>
-            operations.Aggregate(DirectoryElement,
-                (directory, operation) => operation.Perform(directory, _mode));
+        private OperationResult PerformOperations(IEnumerable<IOperation> operations) =>
+            operations.Aggregate(new OperationResult(DirectoryElement, Enumerable.Empty<OperationException>()),
+                (resultAccumulator, operation) =>
+                {
+                    var result = operation.Perform(resultAccumulator.Directory, _mode);
+                    return new OperationResult(result.Directory,
+                        resultAccumulator.Exceptions.Concat(result.Exceptions));
+                });
     }
 }

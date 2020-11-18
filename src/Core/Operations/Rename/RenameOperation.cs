@@ -13,14 +13,17 @@ namespace Core.Operations.Rename
 
         public string Description { get; } = "Rename tracks and folders";
 
-        public IDirectoryElement Perform(IDirectoryElement directory, Mode mode) =>
-            mode switch
+        public OperationResult Perform(IDirectoryElement directory, Mode mode)
+        {
+            var resultDirectory = mode switch
             {
                 Mode.Compilation => RenameCompilation(directory),
                 Mode.Band => RenameBand(directory),
                 Mode.Album => RenameAlbumDirectorySingle(directory),
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
+            return new OperationResult(resultDirectory, Enumerable.Empty<OperationException>());
+        }
 
         private IDirectoryElement RenameCompilation(IDirectoryElement compilationDirectoryElement) =>
             compilationDirectoryElement.SelectContent(fsNodeElement =>
