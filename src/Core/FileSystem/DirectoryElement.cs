@@ -49,9 +49,8 @@ namespace Core.FileSystem
 
         public ImmutableArray<IFsNodeElement<object>> Content { get; }
 
-        private ImmutableArray<IFsNodeElement<object>> GetContent()
-        {
-            return FsNode.Content
+        private ImmutableArray<IFsNodeElement<object>> GetContent() =>
+            FsNode.Content
                 .Where(fsNode => fsNode is IDirectory)
                 .Cast<IDirectory>()
                 .Select(directory => new DirectoryElement(_fsNodeElementFactory, directory))
@@ -61,11 +60,9 @@ namespace Core.FileSystem
                     .Cast<IFile>()
                     .Select(file => new FileElement(file)))
                 .ToImmutableArray();
-        }
 
-        private ImmutableArray<IFsNodeElement<object>> GetContent(ImmutableArray<IFsNodeElement<object>> content)
-        {
-            return FsNode.Content
+        private ImmutableArray<IFsNodeElement<object>> GetContent(ImmutableArray<IFsNodeElement<object>> content) =>
+            FsNode.Content
                 .Zip(content)
                 .Where(((IFsNode<object> fsNode, IFsNodeElement<object> fsNodeElement) t) => t.fsNode is IDirectory)
                 .Select(((IFsNode<object> fsNode, IFsNodeElement<object> fsNodeElement) t) =>
@@ -82,7 +79,6 @@ namespace Core.FileSystem
                     .Select(((IFile file, IFileElement fileElement) t) =>
                         new FileElement(t.file, t.fileElement.CheckState)))
                 .ToImmutableArray();
-        }
 
         public override IDirectoryElement Uncheck()
         {
@@ -105,6 +101,7 @@ namespace Core.FileSystem
         public IDirectoryElement SelectContent(Func<IFsNodeElement<object>, IFsNodeElement<object>> selector)
         {
             var newContent = Content.Select(selector).ToImmutableArray();
+
             var checkState = DefineCheckState(newContent);
             return new DirectoryElement(_fsNodeElementFactory, FsNode, checkState, newContent, ContentAction.Set);
         }
@@ -112,6 +109,7 @@ namespace Core.FileSystem
         public IDirectoryElement SelectContent(Func<IFsNodeElement<object>, int, IFsNodeElement<object>> selector)
         {
             var newContent = Content.Select(selector).ToImmutableArray();
+
             var checkState = DefineCheckState(newContent);
             return new DirectoryElement(_fsNodeElementFactory, FsNode, checkState, newContent, ContentAction.Set);
         }

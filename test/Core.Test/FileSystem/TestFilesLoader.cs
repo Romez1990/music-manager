@@ -19,9 +19,8 @@ namespace Core.Test.FileSystem
 
         private readonly DirectoryInfo _testFilesDirectoryInfo;
 
-        public Dictionary<DirectoryInfo, Dictionary<DirectoryInfo, FileInfo[]>> GetFiles()
-        {
-            return _testFilesDirectoryInfo
+        public Dictionary<DirectoryInfo, Dictionary<DirectoryInfo, FileInfo[]>> GetFiles() =>
+            _testFilesDirectoryInfo
                 .GetDirectories()
                 .ToDictionary(
                     bandDirectoryInfo => bandDirectoryInfo,
@@ -33,6 +32,5 @@ namespace Core.Test.FileSystem
                                 .GetFiles()
                         )
                 );
-        }
     }
 }

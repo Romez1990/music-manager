@@ -23,9 +23,6 @@ namespace Core.FileSystem
 
         public abstract TThis Check();
 
-        public override string ToString()
-        {
-            return FsNode.ToString();
-        }
+        public override string ToString() => FsNode.ToString();
     }
 }

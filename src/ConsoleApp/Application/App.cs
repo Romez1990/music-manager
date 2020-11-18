@@ -47,9 +47,8 @@ namespace ConsoleApp.Application
                 .Left(e => 0);
         }
 
-        private int RunConsoleApp(AppOptions options)
-        {
-            return _engine.SetDirectory(options.Path)
+        private int RunConsoleApp(AppOptions options) =>
+            _engine.SetDirectory(options.Path)
                 .Right(engineScanner =>
                 {
                     var enginePerformer = engineScanner.Scan(options.Mode);
@@ -62,7 +61,6 @@ namespace ConsoleApp.Application
                     Console.WriteLine($"Error: {e.Message}");
                     return 1;
                 });
-        }
 
         private void PrintFileSystem(IDirectoryElement directoryElement)
         {
@@ -70,9 +68,7 @@ namespace ConsoleApp.Application
             Console.WriteLine(fsTree);
         }
 
-        private int RunGraphicalApp()
-        {
-            return _graphicalApp.Run();
-        }
+        private int RunGraphicalApp() =>
+            _graphicalApp.Run();
     }
 }

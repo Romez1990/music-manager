@@ -19,14 +19,10 @@ namespace Core.Operations.Operation
 
         private readonly ImmutableArray<IOperation> _operations;
 
-        public IEnumerable<IOperation> FindAll()
-        {
-            return _operations;
-        }
+        public IEnumerable<IOperation> FindAll() =>
+            _operations;
 
-        public IEnumerable<IOperation> FindAllByNames(IEnumerable<string> names)
-        {
-            return _operations.Where(operation => names.Contains(operation.Name));
-        }
+        public IEnumerable<IOperation> FindAllByNames(IEnumerable<string> names) =>
+            _operations.Where(operation => names.Contains(operation.Name));
     }
 }
