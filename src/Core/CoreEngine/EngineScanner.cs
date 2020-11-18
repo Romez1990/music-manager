@@ -5,20 +5,20 @@ namespace Core.CoreEngine
 {
     public class EngineScanner : IEngineScanner
     {
-        internal EngineScanner(IEngineFactory engineFactory, IScanner scanner, IDirectoryElement directoryElement)
+        internal EngineScanner(IEngineFactory engineFactory, IScanner scanner, IDirectoryElement directory)
         {
             _engineFactory = engineFactory;
             _scanner = scanner;
-            _directoryElement = directoryElement;
+            _directory = directory;
         }
 
         private readonly IEngineFactory _engineFactory;
         private readonly IScanner _scanner;
-        private readonly IDirectoryElement _directoryElement;
+        private readonly IDirectoryElement _directory;
 
         public IEnginePerformer Scan(Mode mode)
         {
-            var newDirectoryElement = _scanner.Scan(_directoryElement, mode);
+            var newDirectoryElement = _scanner.Scan(_directory, mode);
             return _engineFactory.CreateEnginePerformer(newDirectoryElement, mode);
         }
     }

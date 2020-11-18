@@ -15,14 +15,14 @@ namespace Core.CoreEngine
         private readonly IScanner _scanner;
         private readonly IOperationRepository _operationRepository;
 
-        public IEngineScanner CreateEngineScanner(IDirectoryElement directoryElement)
+        public IEngineScanner CreateEngineScanner(IDirectoryElement directory)
         {
-            return new EngineScanner(this, _scanner, directoryElement);
+            return new EngineScanner(this, _scanner, directory);
         }
 
-        public IEnginePerformer CreateEnginePerformer(IDirectoryElement directoryElement, Mode mode)
+        public IEnginePerformer CreateEnginePerformer(IDirectoryElement directory, Mode mode)
         {
-            return new EnginePerformer(_operationRepository, directoryElement, mode);
+            return new EnginePerformer(_operationRepository, directory, mode);
         }
     }
 }

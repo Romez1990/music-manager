@@ -18,7 +18,7 @@ namespace Core.CoreEngine
         public Either<DirectoryNotFoundException, IEngineScanner> SetDirectory(string path)
         {
             return _fsNodeElementFactory.CreateDirectoryElement(path)
-                .Map(directoryElement => _engineFactory.CreateEngineScanner(directoryElement));
+                .Map(directory => _engineFactory.CreateEngineScanner(directory));
         }
     }
 }
