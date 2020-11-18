@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Core.FileSystem;
+﻿using Core.FileSystem;
+using Core.FileSystem.Exceptions;
 using LanguageExt;
 
 namespace Core.CoreEngine

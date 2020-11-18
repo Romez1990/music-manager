@@ -1,8 +1,8 @@
-﻿using System.IO;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Core.CoreEngine;
 using Core.FileSystem;
+using Core.FileSystem.Exceptions;
 using LanguageExt.UnitTesting;
 using static LanguageExt.Prelude;
 
@@ -47,7 +47,7 @@ namespace Core.Test.CoreEngine
         public void Engine_SetDirectoryFails_WhenDirectoryDoesNotExist()
         {
             _fsNodeElementFactory.Setup(f => f.CreateDirectoryElement(It.IsAny<string>()))
-                .Returns(Left(new DirectoryNotFoundException()));
+                .Returns(Left(new DirectoryNotFoundException("some/path")));
 
             var result = _engine.SetDirectory("123");
 

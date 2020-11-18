@@ -1,5 +1,5 @@
-using System.IO;
 using System.IO.Abstractions;
+using Core.FileSystem.Exceptions;
 using LanguageExt;
 using static LanguageExt.Prelude;
 
@@ -19,7 +19,7 @@ namespace Core.FileSystem
             var info = _fsInfoFactory.CreateDirectoryInfo(path);
             if (!info.Exists)
             {
-                return Left(new DirectoryNotFoundException($"Directory {path} not found"));
+                return Left(new DirectoryNotFoundException(path));
             }
 
             return new Directory(_fsInfoFactory, this, info);
