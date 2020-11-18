@@ -59,7 +59,7 @@ namespace ConsoleApp.Application
                 })
                 .Left(e =>
                 {
-                    Console.WriteLine($"Error: Directory {options.Path} not found");
+                    Console.WriteLine($"Error: {e.Message}");
                     return 1;
                 });
         }

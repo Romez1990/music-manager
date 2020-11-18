@@ -6,6 +6,7 @@ using Core.FileSystem;
 using LanguageExt;
 using Moq;
 using Directory = System.IO.Directory;
+using DirectoryNotFoundException = Core.FileSystem.Exceptions.DirectoryNotFoundException;
 
 namespace Core.Test.FileSystem
 {

@@ -1,5 +1,5 @@
-using System.IO;
 using System.IO.Abstractions;
+using Core.FileSystem.Exceptions;
 using LanguageExt;
 
 namespace Core.FileSystem
