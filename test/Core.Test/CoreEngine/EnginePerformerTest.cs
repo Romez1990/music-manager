@@ -32,11 +32,12 @@ namespace Core.Test.CoreEngine
         {
             var operation1 = new Mock<IOperation>();
             var operation2 = new Mock<IOperation>();
-            _operationRepository.Setup(r => r.FindAllByNames(It.IsAny<IEnumerable<string>>())).Returns(new List<IOperation>
-            {
-                operation1.Object,
-                operation2.Object,
-            });
+            _operationRepository.Setup(r => r.FindAllByNames(It.IsAny<IEnumerable<string>>())).Returns(
+                new List<IOperation>
+                {
+                    operation1.Object,
+                    operation2.Object,
+                });
 
             _enginePerformer.PerformOperations(new ImmutableArray<string>());
 

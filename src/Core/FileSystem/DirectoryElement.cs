@@ -79,7 +79,8 @@ namespace Core.FileSystem
                     .Where(((IFsNode<object> fsNode, IFsNodeElement<object> fsNodeElement) t) => t.fsNode is IFile)
                     .Select(((IFsNode<object> fsNode, IFsNodeElement<object> fsNodeElement) t) =>
                         ((IFile)t.fsNode, (IFileElement)t.fsNodeElement))
-                    .Select(((IFile file, IFileElement fileElement) t) => new FileElement(t.file, t.fileElement.CheckState)))
+                    .Select(((IFile file, IFileElement fileElement) t) =>
+                        new FileElement(t.file, t.fileElement.CheckState)))
                 .ToImmutableArray();
         }
 
