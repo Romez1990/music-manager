@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Immutable;
 using System.Linq;
 using ConsoleApp.ArgumentParser;
@@ -12,13 +11,14 @@ namespace ConsoleApp.Application
     public class App : IApp
     {
         public App(IEngine engine, IArgParser parser, IOperationRepository operationRepository,
-            IFsTreePrinter fsTreePrinter, IConsole console, IGraphicalApp graphicalApp)
+            IFsTreePrinter fsTreePrinter, IConsole console, IEnvironment environment, IGraphicalApp graphicalApp)
         {
             _engine = engine;
             _parser = parser;
             _operationRepository = operationRepository;
             _fsTreePrinter = fsTreePrinter;
             _console = console;
+            _environment = environment;
             _graphicalApp = graphicalApp;
         }
 
@@ -27,6 +27,7 @@ namespace ConsoleApp.Application
         private readonly IOperationRepository _operationRepository;
         private readonly IFsTreePrinter _fsTreePrinter;
         private readonly IConsole _console;
+        private readonly IEnvironment _environment;
         private readonly IGraphicalApp _graphicalApp;
 
         public int Run(string[] args)
@@ -35,7 +36,7 @@ namespace ConsoleApp.Application
                 return RunGraphicalApp();
 
             var appOptionsDefault = new AppOptionsDefault(
-                () => Environment.CurrentDirectory,
+                () => _environment.CurrentDirectory,
                 Mode.Band,
                 () =>
                     _operationRepository
