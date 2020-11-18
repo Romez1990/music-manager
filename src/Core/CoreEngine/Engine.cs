@@ -15,10 +15,8 @@ namespace Core.CoreEngine
         private readonly IEngineFactory _engineFactory;
         private readonly IFsNodeElementFactory _fsNodeElementFactory;
 
-        public Either<DirectoryNotFoundException, IEngineScanner> SetDirectory(string path)
-        {
-            return _fsNodeElementFactory.CreateDirectoryElement(path)
+        public Either<DirectoryNotFoundException, IEngineScanner> SetDirectory(string path) =>
+            _fsNodeElementFactory.CreateDirectoryElement(path)
                 .Map(directory => _engineFactory.CreateEngineScanner(directory));
-        }
     }
 }

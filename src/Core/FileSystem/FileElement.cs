@@ -14,14 +14,10 @@ namespace Core.FileSystem
             return new FileElement(newFile, CheckState);
         }
 
-        public override IFileElement Uncheck()
-        {
-            return new FileElement(FsNode, CheckState.Unchecked);
-        }
+        public override IFileElement Uncheck() =>
+            new FileElement(FsNode, CheckState.Unchecked);
 
-        public override IFileElement Check()
-        {
-            return new FileElement(FsNode, CheckState.Checked);
-        }
+        public override IFileElement Check() =>
+            new FileElement(FsNode, CheckState.Checked);
     }
 }

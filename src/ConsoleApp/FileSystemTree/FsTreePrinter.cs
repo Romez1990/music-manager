@@ -15,10 +15,8 @@ namespace ConsoleApp.FileSystemTree
 
         private readonly bool _bold;
 
-        public string Print(IDirectoryElement directoryElement)
-        {
-            return PrintHelper(directoryElement, "", "");
-        }
+        public string Print(IDirectoryElement directoryElement) =>
+            PrintHelper(directoryElement, "", "");
 
         private string PrintHelper(IFsNodeElement<object> fsNodeElement, string directChildStart,
             string indirectChildStart)
@@ -48,10 +46,8 @@ namespace ConsoleApp.FileSystemTree
             {CheckState.Checked, "[*]"},
         };
 
-        private string GetCheckBox(CheckState checkState)
-        {
-            return _checkBoxes[checkState];
-        }
+        private string GetCheckBox(CheckState checkState) =>
+            _checkBoxes[checkState];
 
         private string GetStart(char head, char tail)
         {

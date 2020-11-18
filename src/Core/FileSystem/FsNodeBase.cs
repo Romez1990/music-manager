@@ -18,9 +18,6 @@ namespace Core.FileSystem
 
         public abstract TThis Rename(string newName);
 
-        public override string ToString()
-        {
-            return Info.Name;
-        }
+        public override string ToString() => Info.Name;
     }
 }

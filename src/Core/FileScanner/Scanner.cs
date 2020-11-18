@@ -7,16 +7,14 @@ namespace Core.FileScanner
 {
     public class Scanner : IScanner
     {
-        public IDirectoryElement Scan(IDirectoryElement directory, Mode mode)
-        {
-            return mode switch
+        public IDirectoryElement Scan(IDirectoryElement directory, Mode mode) =>
+            mode switch
             {
                 Mode.Compilation => ScanCompilationOrBand(directory, mode),
                 Mode.Band => ScanCompilationOrBand(directory, mode),
                 Mode.Album => ScanAlbum(directory),
                 _ => throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(Mode)),
             };
-        }
 
         private IDirectoryElement ScanCompilationOrBand(IDirectoryElement compilationDirectoryElement, Mode mode)
         {
@@ -30,9 +28,8 @@ namespace Core.FileScanner
                 });
         }
 
-        private IDirectoryElement ScanAlbum(IDirectoryElement directory)
-        {
-            return directory.SelectContent(fsNodeElement =>
+        private IDirectoryElement ScanAlbum(IDirectoryElement directory) =>
+            directory.SelectContent(fsNodeElement =>
                 fsNodeElement switch
                 {
                     IDirectoryElement _ => fsNodeElement,
@@ -41,11 +38,8 @@ namespace Core.FileScanner
                         : fsNodeElement,
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
                 });
-        }
 
-        private bool IsFileElementToSelect(IFileElement file)
-        {
-            return file.Extension == ".mp3";
-        }
+        private bool IsFileElementToSelect(IFileElement file) =>
+            file.Extension == ".mp3";
     }
 }

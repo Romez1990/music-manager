@@ -13,20 +13,17 @@ namespace Core.Operations.Rename
 
         public string Description { get; } = "Rename tracks and folders";
 
-        public IDirectoryElement Perform(IDirectoryElement directory, Mode mode)
-        {
-            return mode switch
+        public IDirectoryElement Perform(IDirectoryElement directory, Mode mode) =>
+            mode switch
             {
                 Mode.Compilation => RenameCompilation(directory),
                 Mode.Band => RenameBand(directory),
                 Mode.Album => RenameAlbumDirectorySingle(directory),
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
-        }
 
-        private IDirectoryElement RenameCompilation(IDirectoryElement compilationDirectoryElement)
-        {
-            return compilationDirectoryElement.SelectContent(fsNodeElement =>
+        private IDirectoryElement RenameCompilation(IDirectoryElement compilationDirectoryElement) =>
+            compilationDirectoryElement.SelectContent(fsNodeElement =>
                 fsNodeElement switch
                 {
                     IFileElement _ => fsNodeElement,
@@ -35,11 +32,9 @@ namespace Core.Operations.Rename
                         : fsNodeElement,
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
                 });
-        }
 
-        private IDirectoryElement RenameBand(IDirectoryElement bandDirectoryElement)
-        {
-            return bandDirectoryElement.SelectContent((fsNodeElement, index) =>
+        private IDirectoryElement RenameBand(IDirectoryElement bandDirectoryElement) =>
+            bandDirectoryElement.SelectContent((fsNodeElement, index) =>
                 fsNodeElement switch
                 {
                     IFileElement _ => fsNodeElement,
@@ -48,7 +43,6 @@ namespace Core.Operations.Rename
                         : fsNodeElement,
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
                 });
-        }
 
         private IDirectoryElement RenameAlbumDirectoryInsideBand(IDirectoryElement directory, int number)
         {

@@ -33,14 +33,10 @@ namespace Core.Test.FileSystem
 
         public IFileInfo FileInfo => CreateFileInfo(FilePath);
 
-        public IDirectoryInfo CreateDirectoryInfo(string path)
-        {
-            return new MockDirectoryInfo(_mockFileSystem, path);
-        }
+        public IDirectoryInfo CreateDirectoryInfo(string path) =>
+            new MockDirectoryInfo(_mockFileSystem, path);
 
-        public IFileInfo CreateFileInfo(string path)
-        {
-            return new MockFileInfo(_mockFileSystem, path);
-        }
+        public IFileInfo CreateFileInfo(string path) =>
+            new MockFileInfo(_mockFileSystem, path);
     }
 }

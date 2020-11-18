@@ -12,20 +12,14 @@ namespace Core.FileSystem
 
         private readonly IFsNodeFactory _fsNodeFactory;
 
-        public Either<DirectoryNotFoundException, IDirectoryElement> CreateDirectoryElement(string path)
-        {
-            return _fsNodeFactory.InstantiateDirectory(path)
+        public Either<DirectoryNotFoundException, IDirectoryElement> CreateDirectoryElement(string path) =>
+            _fsNodeFactory.InstantiateDirectory(path)
                 .Map(directory => (IDirectoryElement)new DirectoryElement(this, directory));
-        }
 
-        public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory)
-        {
-            return new DirectoryElement(this, directory);
-        }
+        public IDirectoryElement CreateDirectoryElementInsideDirectory(IDirectory directory) =>
+            new DirectoryElement(this, directory);
 
-        public IFileElement CreateFileElementInsideDirectory(IFile file)
-        {
-            return new FileElement(file);
-        }
+        public IFileElement CreateFileElementInsideDirectory(IFile file) =>
+            new FileElement(file);
     }
 }

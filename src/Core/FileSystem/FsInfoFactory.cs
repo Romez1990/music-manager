@@ -5,14 +5,10 @@ namespace Core.FileSystem
 {
     public class FsInfoFactory : IFsInfoFactory
     {
-        public IFileInfo CreateFileInfo(string path)
-        {
-            return (FileInfoBase)new FileInfo(path);
-        }
+        public IFileInfo CreateFileInfo(string path) =>
+            (FileInfoBase)new FileInfo(path);
 
-        public IDirectoryInfo CreateDirectoryInfo(string path)
-        {
-            return (DirectoryInfoBase)new DirectoryInfo(path);
-        }
+        public IDirectoryInfo CreateDirectoryInfo(string path) =>
+            (DirectoryInfoBase)new DirectoryInfo(path);
     }
 }

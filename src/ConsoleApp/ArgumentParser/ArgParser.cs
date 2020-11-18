@@ -48,10 +48,8 @@ namespace ConsoleApp.ArgumentParser
             return ReflectionHelper.GetField<OptionsBase>(parserResult, "value");
         }
 
-        private string ResolvePath(OptionsBase parserResult, Lazy<string> defaultPath)
-        {
-            return parserResult.Path ?? defaultPath.Value;
-        }
+        private string ResolvePath(OptionsBase parserResult, Lazy<string> defaultPath) =>
+            parserResult.Path ?? defaultPath.Value;
 
         private Mode ResolveMode(OptionsBase options, Mode defaultMode)
         {
