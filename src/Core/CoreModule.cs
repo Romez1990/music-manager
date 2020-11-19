@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Core.Configuration;
 using Core.CoreEngine;
 using Core.FileScanner;
 using Core.FileSystem;
@@ -19,6 +20,7 @@ namespace Core
             builder.RegisterType<FsNodeElementFactory>().As<IFsNodeElementFactory>();
             builder.RegisterType<FsNodeFactory>().As<IFsNodeFactory>();
             builder.RegisterType<FsInfoFactory>().As<IFsInfoFactory>();
+            builder.RegisterType<Config>().As<IConfig>();
             builder.RegisterType<Http>().As<IHttp>();
             builder.RegisterType<JsonSerializer>().As<IJsonSerializer>();
         }
