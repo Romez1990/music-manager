@@ -1,17 +1,19 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Core.Operations.Lyrics;
 using Core.Operations.Rename;
 
 namespace Core.Operations.Operation
 {
     public class OperationRepository : IOperationRepository
     {
-        public OperationRepository(RenameOperation rename)
+        public OperationRepository(RenameOperation rename, LyricsOperation lyricsOperation)
         {
             _operations = ImmutableArray.Create(new IOperation[]
             {
                 rename,
+                lyricsOperation,
             });
         }
 
