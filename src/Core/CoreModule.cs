@@ -22,6 +22,8 @@ namespace Core
             builder.RegisterType<OperationRepository>().As<IOperationRepository>();
             builder.RegisterType<RenameOperation>().AsSelf();
             builder.RegisterType<LyricsOperation>().AsSelf();
+            builder.RegisterType<LyricsFiller>().As<ILyricsFiller>();
+            builder.RegisterType<SongFactory>().As<ISongFactory>();
             builder.RegisterType<LyricsSearcher>().As<ILyricsSearcher>();
             builder.RegisterType<LyricsScraper>().As<ILyricsScraper>();
             builder.RegisterType<Scanner>().As<IScanner>();
