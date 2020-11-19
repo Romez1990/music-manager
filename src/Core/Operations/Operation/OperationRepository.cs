@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Core.Operations.FileRename;
+using Core.Operations.Rename;
 
 namespace Core.Operations.Operation
 {
@@ -9,7 +9,7 @@ namespace Core.Operations.Operation
     {
         private readonly ImmutableArray<IOperation> _operations = ImmutableArray.Create(new IOperation[]
         {
-            new Rename(),
+            new RenameOperation(),
         });
 
         public IEnumerable<IOperation> FindAll()
