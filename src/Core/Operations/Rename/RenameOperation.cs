@@ -5,9 +5,9 @@ using Core.CoreEngine;
 using Core.FileSystem;
 using Core.Operations.Operation;
 
-namespace Core.Operations.FileRename
+namespace Core.Operations.Rename
 {
-    public class Rename : IOperation
+    public class RenameOperation : IOperation
     {
         public string Name { get; } = "Rename";
 
