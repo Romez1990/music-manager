@@ -5,6 +5,7 @@ using Core.FileScanner;
 using Core.FileSystem;
 using Core.HttpClient;
 using Core.Operations.Lyrics;
+using Core.Operations.Lyrics.Scraper;
 using Core.Operations.Lyrics.Searcher;
 using Core.Operations.Operation;
 using Core.Operations.Rename;
@@ -22,6 +23,7 @@ namespace Core
             builder.RegisterType<RenameOperation>().AsSelf();
             builder.RegisterType<LyricsOperation>().AsSelf();
             builder.RegisterType<LyricsSearcher>().As<ILyricsSearcher>();
+            builder.RegisterType<LyricsScraper>().As<ILyricsScraper>();
             builder.RegisterType<Scanner>().As<IScanner>();
             builder.RegisterType<FsNodeElementFactory>().As<IFsNodeElementFactory>();
             builder.RegisterType<FsNodeFactory>().As<IFsNodeFactory>();
