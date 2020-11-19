@@ -7,10 +7,15 @@ namespace Core.Operations.Operation
 {
     public class OperationRepository : IOperationRepository
     {
-        private readonly ImmutableArray<IOperation> _operations = ImmutableArray.Create(new IOperation[]
+        public OperationRepository(RenameOperation rename)
         {
-            new RenameOperation(),
-        });
+            _operations = ImmutableArray.Create(new IOperation[]
+            {
+                rename,
+            });
+        }
+
+        private readonly ImmutableArray<IOperation> _operations;
 
         public IEnumerable<IOperation> FindAll()
         {
