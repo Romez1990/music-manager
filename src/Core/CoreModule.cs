@@ -2,6 +2,7 @@
 using Core.CoreEngine;
 using Core.FileScanner;
 using Core.FileSystem;
+using Core.HttpClient;
 using Core.Operations.Operation;
 using Core.Serializers;
 
@@ -18,6 +19,7 @@ namespace Core
             builder.RegisterType<FsNodeElementFactory>().As<IFsNodeElementFactory>();
             builder.RegisterType<FsNodeFactory>().As<IFsNodeFactory>();
             builder.RegisterType<FsInfoFactory>().As<IFsInfoFactory>();
+            builder.RegisterType<Http>().As<IHttp>();
             builder.RegisterType<JsonSerializer>().As<IJsonSerializer>();
         }
     }
