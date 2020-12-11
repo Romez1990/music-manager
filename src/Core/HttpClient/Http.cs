@@ -1,8 +1,8 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Web;
 using Core.Serializers;
 using LanguageExt;
 
@@ -37,15 +37,9 @@ namespace Core.HttpClient
         {
             if (parameters == null) return baseUrl;
 
-            var builder = new UriBuilder(baseUrl)
-            {
-                Port = -1,
-            };
-            var query = HttpUtility.ParseQueryString(builder.Query);
-            foreach (var (key, value) in parameters)
-                query[key] = value;
-            builder.Query = query.ToString();
-            return builder.ToString();
+            var keyValues = parameters.Map(pair => $"{pair.Key}={WebUtility.UrlEncode(pair.Value)}");
+            var stringParameters = string.Join('&', keyValues.ToArray());
+            return $"{baseUrl}?{stringParameters}";
         }
 
         private Either<RequestException, HttpResponseMessage> CatchException(HttpResponseMessage response) =>
