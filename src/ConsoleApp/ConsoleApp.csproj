@@ -43,6 +43,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\App.cs" />
+    <Compile Include="Application\AppOptions.cs" />
+    <Compile Include="Application\AppOptionsDefault.cs" />
+    <Compile Include="Application\Console.cs" />
+    <Compile Include="Application\Environment.cs" />
+    <Compile Include="Application\GraphicalApp.cs" />
+    <Compile Include="Application\IApp.cs" />
+    <Compile Include="Application\IConsole.cs" />
+    <Compile Include="Application\IEnvironment.cs" />
+    <Compile Include="Application\IGraphicalApp.cs" />
+    <Compile Include="AppModule.cs" />
+    <Compile Include="ArgumentParser\ArgParser.cs" />
+    <Compile Include="ArgumentParser\ArgumentParserException.cs" />
+    <Compile Include="ArgumentParser\IArgParser.cs" />
+    <Compile Include="ArgumentParser\IOptionsBuilder.cs" />
+    <Compile Include="ArgumentParser\OperationAttribute.cs" />
+    <Compile Include="ArgumentParser\OptionsBase.cs" />
+    <Compile Include="ArgumentParser\OptionsBuilder.cs" />
+    <Compile Include="FileSystemTree\FsTreePrinter.cs" />
+    <Compile Include="FileSystemTree\IFsTreePrinter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
