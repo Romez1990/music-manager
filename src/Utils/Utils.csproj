@@ -42,6 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\ConstructionNotFountException.cs" />
+    <Compile Include="Reflection\FieldNotFoundException.cs" />
+    <Compile Include="Reflection\MethodNotFoundException.cs" />
+    <Compile Include="Reflection\PropertyNotFoundException.cs" />
+    <Compile Include="Reflection\ReflectionHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
