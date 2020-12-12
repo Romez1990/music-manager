@@ -38,7 +38,7 @@ namespace Core.HttpClient
             if (parameters == null) return baseUrl;
 
             var keyValues = parameters.Map(pair => $"{pair.Key}={WebUtility.UrlEncode(pair.Value)}");
-            var stringParameters = string.Join('&', keyValues.ToArray());
+            var stringParameters = string.Join("&", keyValues.ToArray());
             return $"{baseUrl}?{stringParameters}";
         }
 
