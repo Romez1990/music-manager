@@ -28,7 +28,7 @@ namespace ConsoleApp.FileSystemTree
             if (!(fsNodeElement is IDirectoryElement directoryElement)) return directoryElementString;
 
             var lastChildFsNodeElement = directoryElement.Content.Last();
-            var directoryElementContent = string.Join('\n', directoryElement.Content
+            var directoryElementContent = string.Join("\n", directoryElement.Content
                 .Select(childFsNodeElement =>
                 {
                     var isLast = childFsNodeElement == lastChildFsNodeElement;
