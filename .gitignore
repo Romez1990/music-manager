@@ -5,5 +5,8 @@
 bin/
 obj/
 
+# dependencies
+/packages/
+
 # Rider
 /.idea/
