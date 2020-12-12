@@ -1,5 +1,7 @@
 # Visual Studio
 /.vs/
+
+# build
 bin/
 obj/
 
