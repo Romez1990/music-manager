@@ -14,7 +14,7 @@ namespace Core.Operations.Lyrics
         private readonly File _file;
 
         public Option<string> Artist =>
-            _file.Tag.AlbumArtists == null ? Option<string>.None : _file.Tag.AlbumArtists[0];
+            _file.Tag.AlbumArtists is null ? Option<string>.None : _file.Tag.AlbumArtists[0];
 
         public Option<string> Title => _file.Tag.Title;
 

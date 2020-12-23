@@ -98,7 +98,7 @@ namespace ConsoleApp.ArgumentParser
         {
             var args = new object[] {name};
             var constructorInfo = typeof(OperationAttribute).GetConstructor(args.GetTypes());
-            if (constructorInfo == null)
+            if (constructorInfo is null)
                 throw new ConstructionNotFountException();
             return new CustomAttributeBuilder(constructorInfo, args);
         }
@@ -109,7 +109,7 @@ namespace ConsoleApp.ArgumentParser
 
             var args = GetOptionArgs(name);
             var constructorInfo = type.GetConstructor(args.GetTypes());
-            if (constructorInfo == null)
+            if (constructorInfo is null)
                 throw new ConstructionNotFountException();
 
             var helperTextProperty = type.GetProperty("HelpText");

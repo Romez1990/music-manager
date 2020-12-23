@@ -19,7 +19,7 @@ namespace Core.Test.Utils
                 return directoryInfo;
 
             var parent = directoryInfo.Parent;
-            if (parent == null)
+            if (parent is null)
                 throw new NullReferenceException("Put assembly inside the solution directory");
             return GetSolutionDirectoryHelper(parent);
         }

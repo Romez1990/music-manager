@@ -35,7 +35,7 @@ namespace Core.HttpClient
 
         private string GetUrl(string baseUrl, IDictionary<string, string>? parameters)
         {
-            if (parameters == null) return baseUrl;
+            if (parameters is null) return baseUrl;
 
             var keyValues = parameters.Map(pair => $"{pair.Key}={WebUtility.UrlEncode(pair.Value)}");
             var stringParameters = string.Join('&', keyValues.ToArray());

@@ -12,7 +12,7 @@ namespace Utils.Reflection
             const BindingFlags bindingAttributes = BindingFlags.NonPublic |
                                                    BindingFlags.Instance;
             var constructorInfo = type.GetConstructor(bindingAttributes, null, argTypes, null);
-            if (constructorInfo == null)
+            if (constructorInfo is null)
                 throw new ConstructionNotFountException();
             return constructorInfo;
         }
@@ -22,7 +22,7 @@ namespace Utils.Reflection
             const BindingFlags bindingAttributes = BindingFlags.NonPublic |
                                                    BindingFlags.Instance;
             var fieldInfo = type.GetField(name, bindingAttributes);
-            if (fieldInfo == null)
+            if (fieldInfo is null)
                 throw new FieldNotFoundException();
             return fieldInfo;
         }
@@ -30,7 +30,7 @@ namespace Utils.Reflection
         public static PropertyInfo GetProperty(Type type, string name)
         {
             var propertyInfo = type.GetProperty(name);
-            if (propertyInfo == null)
+            if (propertyInfo is null)
                 throw new PropertyNotFoundException();
             return propertyInfo;
         }
@@ -38,7 +38,7 @@ namespace Utils.Reflection
         public static MethodInfo GetMethod(Type type, string name, Type[] argTypes)
         {
             var methodInfo = type.GetMethod(name, argTypes);
-            if (methodInfo == null)
+            if (methodInfo is null)
                 throw new MethodNotFoundException();
             return methodInfo;
         }

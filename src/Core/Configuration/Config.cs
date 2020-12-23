@@ -7,7 +7,7 @@ namespace Core.Configuration
         public string GetString(string key)
         {
             var value = ConfigurationManager.AppSettings.Get(key);
-            if (value == null)
+            if (value is null)
                 throw new ConfigurationKeyNotFoundException(key);
             return value;
         }
