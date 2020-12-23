@@ -47,7 +47,7 @@ namespace ConsoleApp.Application
 
             return _parser.Parse(args.ToImmutableArray(), appOptionsDefault)
                 .Right(RunConsoleApp)
-                .Left(e => 0);
+                .Left(_ => 0);
         }
 
         private int RunConsoleApp(AppOptions options) =>
