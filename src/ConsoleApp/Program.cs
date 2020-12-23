@@ -13,7 +13,8 @@ namespace ConsoleApp
 
             var app = container.Resolve<IApp>();
 
-            return app.Run(args);
+            var exitCode = app.Run(args);
+            return exitCode;
         }
     }
 }
