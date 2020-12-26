@@ -31,6 +31,7 @@ namespace Core
             builder.RegisterType<FsNodeFactory>().As<IFsNodeFactory>();
             builder.RegisterType<FsInfoFactory>().As<IFsInfoFactory>();
             builder.RegisterType<Config>().As<IConfig>();
+            builder.RegisterType<ConfigDriver>().As<IConfigDriver>();
             builder.RegisterType<Http>().As<IHttp>();
             builder.RegisterType<JsonSerializer>().As<IJsonSerializer>();
         }
