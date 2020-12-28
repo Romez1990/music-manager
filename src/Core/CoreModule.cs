@@ -9,6 +9,7 @@ using Core.Operations.Lyrics.Scraper;
 using Core.Operations.Lyrics.Searcher;
 using Core.Operations.Operation;
 using Core.Operations.Rename;
+using Core.Renaming;
 using Core.Serializers;
 
 namespace Core
@@ -22,6 +23,9 @@ namespace Core
             builder.RegisterType<OperationRepository>().As<IOperationRepository>();
             builder.RegisterType<RenameOperation>().AsSelf();
             builder.RegisterType<LyricsOperation>().AsSelf();
+            builder.RegisterType<Renamer>().As<IRenamer>();
+            builder.RegisterType<AlbumRenamer>().As<IAlbumRenamer>();
+            builder.RegisterType<TrackRenamer>().As<ITrackRenamer>();
             builder.RegisterType<LyricsFiller>().As<ILyricsFiller>();
             builder.RegisterType<SongFactory>().As<ISongFactory>();
             builder.RegisterType<LyricsSearcher>().As<ILyricsSearcher>();
