@@ -41,12 +41,12 @@ namespace ConsoleApp.ArgumentParser
             return genericParseArguments.Invoke(Parser.Default, methodArgs);
         }
 
-        private Either<ArgumentParserException, OptionsBase> ExtractOptions(object parserResult)
-        {
-            if (parserResult.GetType().Name.StartsWith("NotParsed"))
-                return Left(new ArgumentParserException());
-            return ReflectionHelper.GetField<OptionsBase>(parserResult, "value");
-        }
+        private Either<ArgumentParserException, OptionsBase> ExtractOptions(object parserResult) =>
+            parserResult.GetType().Name.StartsWith("NotParsed") switch
+            {
+                true => Left(new ArgumentParserException()),
+                false => ReflectionHelper.GetField<OptionsBase>(parserResult, "value"),
+            };
 
         private string ResolvePath(OptionsBase parserResult, Lazy<string> defaultPath) =>
             parserResult.Path ?? defaultPath.Value;
