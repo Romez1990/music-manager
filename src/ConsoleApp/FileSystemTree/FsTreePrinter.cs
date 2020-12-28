@@ -39,7 +39,7 @@ namespace ConsoleApp.FileSystemTree
             return directoryElementString + '\n' + directoryElementContent;
         }
 
-        private readonly Dictionary<CheckState, string> _checkBoxes = new Dictionary<CheckState, string>
+        private readonly Dictionary<CheckState, string> _checkBoxes = new()
         {
             {CheckState.Unchecked, "[ ]"},
             {CheckState.CheckedPartially, "[-]"},
