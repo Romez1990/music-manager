@@ -44,7 +44,7 @@ namespace Core.Operations.Lyrics
                 Mode.Album => FillAlbum(parentDirectory),
                 _ => parentDirectory.Content.Map(fsNode => fsNode switch
                     {
-                        IFileElement _ => Enumerable.Empty<EitherAsync<LyricsException, Unit>>(),
+                        IFileElement => Enumerable.Empty<EitherAsync<LyricsException, Unit>>(),
                         IDirectoryElement directory => fsNode.CheckState != CheckState.Unchecked
                             ? PerformHelper(directory, DecreaseMode(mode))
                             : Enumerable.Empty<EitherAsync<LyricsException, Unit>>(),
@@ -64,7 +64,7 @@ namespace Core.Operations.Lyrics
             albumDirectory.Content.Map(fsNode =>
                 fsNode switch
                 {
-                    IDirectoryElement _ => unit.AsTask(),
+                    IDirectoryElement => unit.AsTask(),
                     IFileElement file => fsNode.CheckState == CheckState.Checked
                         ? _lyricsFiller.FillLyrics(file)
                         : unit.AsTask(),
