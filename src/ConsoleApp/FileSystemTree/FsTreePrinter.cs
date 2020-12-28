@@ -25,7 +25,7 @@ namespace ConsoleApp.FileSystemTree
             var name = fsNodeElement.Name;
             var directoryElementString = $"{directChildStart}{checkBox} {name}";
 
-            if (!(fsNodeElement is IDirectoryElement directoryElement)) return directoryElementString;
+            if (fsNodeElement is not IDirectoryElement directoryElement) return directoryElementString;
 
             var lastChildFsNodeElement = directoryElement.Content.Last();
             var directoryElementContent = string.Join('\n', directoryElement.Content
