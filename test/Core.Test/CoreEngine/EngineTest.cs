@@ -1,9 +1,9 @@
-﻿using Moq;
-using NUnit.Framework;
-using Core.CoreEngine;
+﻿using Core.CoreEngine;
 using Core.FileSystem;
 using Core.FileSystem.Exceptions;
 using LanguageExt.UnitTesting;
+using Moq;
+using NUnit.Framework;
 using static LanguageExt.Prelude;
 
 namespace Core.Test.CoreEngine
