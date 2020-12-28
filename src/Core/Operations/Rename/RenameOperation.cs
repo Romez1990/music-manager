@@ -53,7 +53,7 @@ namespace Core.Operations.Rename
                 .Content
                 .Count(fsNode =>
                     fsNode is IDirectoryElement && fsNode.CheckState == CheckState.Checked);
-            var numberLength = albumsCount.ToString().Count();
+            var numberLength = albumsCount.ToString().Length;
             var renamedDirectory = RenameAlbumDirectoryWithNumber(directory, numberLength, number);
             return RenameAlbumContent(renamedDirectory);
         }
