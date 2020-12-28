@@ -55,14 +55,14 @@ namespace Core.Test.FileSystem
             fileElement3.Setup(f => f.CheckState).Returns(fileElement3CheckState);
             var fileElement4 = new Mock<IFileElement>(MockBehavior.Strict);
             fileElement4.Setup(f => f.CheckState).Returns(fileElement4CheckState);
-            var selector = new Mock<Func<IFsNodeElement<object>, IFsNodeElement<object>>>(MockBehavior.Strict);
-            selector.SetupSequence(f => f(It.IsAny<IFsNodeElement<object>>()))
+            var function = new Mock<Func<IFsNodeElement<object>, IFsNodeElement<object>>>(MockBehavior.Strict);
+            function.SetupSequence(f => f(It.IsAny<IFsNodeElement<object>>()))
                 .Returns(fileElement1.Object)
                 .Returns(fileElement2.Object)
                 .Returns(fileElement3.Object)
                 .Returns(fileElement4.Object);
 
-            var newDirectoryElement = _directoryElement.SelectContent(selector.Object);
+            var newDirectoryElement = _directoryElement.MapContent(function.Object);
 
             Assert.That(newDirectoryElement.CheckState, Is.EqualTo(resultCheckState));
             Assert.That(newDirectoryElement.Content[0], Is.EqualTo(fileElement1.Object));

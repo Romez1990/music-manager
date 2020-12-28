@@ -58,7 +58,7 @@ namespace Utils.Reflection
 
         public static Type[] GetTypes(this IEnumerable<object> args)
         {
-            return args.Select(arg => arg.GetType()).ToArray();
+            return args.Map(arg => arg.GetType()).ToArray();
         }
     }
 }

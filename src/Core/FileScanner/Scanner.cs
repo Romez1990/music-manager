@@ -19,7 +19,7 @@ namespace Core.FileScanner
         private IDirectoryElement ScanCompilationOrBand(IDirectoryElement compilationDirectory, Mode mode)
         {
             var nextMode = (Mode)((int)mode - 1);
-            return compilationDirectory.SelectContent(fsNode =>
+            return compilationDirectory.MapContent(fsNode =>
                 fsNode switch
                 {
                     IFileElement _ => fsNode,
@@ -29,7 +29,7 @@ namespace Core.FileScanner
         }
 
         private IDirectoryElement ScanAlbum(IDirectoryElement directory) =>
-            directory.SelectContent(fsNode =>
+            directory.MapContent(fsNode =>
                 fsNode switch
                 {
                     IDirectoryElement _ => fsNode,

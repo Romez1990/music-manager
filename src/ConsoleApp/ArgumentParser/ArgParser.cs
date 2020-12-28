@@ -69,8 +69,8 @@ namespace ConsoleApp.ArgumentParser
             var attributeType = typeof(OperationAttribute);
             var operations = type.GetProperties()
                 .Where(p => p.IsDefined(attributeType, false) && (bool)p.GetValue(options, null))
-                .Select(p => (OperationAttribute)p.GetCustomAttributes(attributeType, false).First())
-                .Select(a => a.Name)
+                .Map(p => (OperationAttribute)p.GetCustomAttributes(attributeType, false).First())
+                .Map(a => a.Name)
                 .ToImmutableArray();
             if (operations.Length == 0)
                 return defaultOperations.Value;

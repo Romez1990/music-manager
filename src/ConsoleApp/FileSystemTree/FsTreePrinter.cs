@@ -29,7 +29,7 @@ namespace ConsoleApp.FileSystemTree
 
             var lastChildFsNodeElement = directoryElement.Content.Last();
             var directoryElementContent = string.Join('\n', directoryElement.Content
-                .Select(childFsNodeElement =>
+                .Map(childFsNodeElement =>
                 {
                     var isLast = childFsNodeElement == lastChildFsNodeElement;
                     return PrintHelper(childFsNodeElement,

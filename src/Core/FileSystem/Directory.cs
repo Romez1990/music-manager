@@ -22,12 +22,12 @@ namespace Core.FileSystem
         {
             var directories = Info
                 .GetDirectories()
-                .Select(info => _fsNodeFactory.InstantiateDirectory(info))
+                .Map(info => _fsNodeFactory.InstantiateDirectory(info))
                 .Cast<IFsNode<object>>()
                 .OrderBy(fsNode => fsNode.Name);
             var files = Info
                 .GetFiles()
-                .Select(info => _fsNodeFactory.InstantiateFile(info))
+                .Map(info => _fsNodeFactory.InstantiateFile(info))
                 .OrderBy(fsNode => fsNode.Name);
             return directories
                 .Concat(files)

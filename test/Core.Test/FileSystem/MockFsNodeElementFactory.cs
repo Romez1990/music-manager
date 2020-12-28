@@ -93,7 +93,7 @@ namespace Core.Test.FileSystem
             mockCompilationDirectory.Setup(d => d.ToString()).Returns(() => name);
             mockCompilationDirectory.Setup(d => d.Content).Returns(
                 bandDirectoriesInfo
-                    .Select(ScanBand)
+                    .Map(ScanBand)
                     .Cast<IFsNode<object>>()
                     .OrderBy(fsNode => fsNode.Name)
                     .ToImmutableArray()
@@ -111,7 +111,7 @@ namespace Core.Test.FileSystem
             mockBandDirectory.Setup(d => d.ToString()).Returns(() => name);
             mockBandDirectory.Setup(d => d.Content).Returns(
                 albumDirectoriesInfo
-                    .Select(ScanAlbum)
+                    .Map(ScanAlbum)
                     .Cast<IFsNode<object>>()
                     .OrderBy(fsNode => fsNode.Name)
                     .ToImmutableArray()
@@ -130,7 +130,7 @@ namespace Core.Test.FileSystem
                 .Callback<string>(newName => name = newName);
             mockAlbumDirectory.Setup(d => d.Content).Returns(
                 tracksInfo
-                    .Select(ScanTrack)
+                    .Map(ScanTrack)
                     .Cast<IFsNode<object>>()
                     .OrderBy(fsNode => fsNode.Name)
                     .ToImmutableArray()

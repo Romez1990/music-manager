@@ -53,37 +53,37 @@ namespace Core.FileSystem
             FsNode.Content
                 .Where(fsNode => fsNode is IDirectory)
                 .Cast<IDirectory>()
-                .Select(directory => new DirectoryElement(_fsNodeElementFactory, directory))
+                .Map(directory => new DirectoryElement(_fsNodeElementFactory, directory))
                 .Cast<IFsNodeElement<object>>()
                 .Concat(FsNode.Content
                     .Where(fsNode => fsNode is IFile)
                     .Cast<IFile>()
-                    .Select(file => new FileElement(file)))
+                    .Map(file => new FileElement(file)))
                 .ToImmutableArray();
 
         private ImmutableArray<IFsNodeElement<object>> GetContent(ImmutableArray<IFsNodeElement<object>> content) =>
             FsNode.Content
                 .Zip(content)
                 .Where(((IFsNode<object> fsNode, IFsNodeElement<object> fsNodeElement) t) => t.fsNode is IDirectory)
-                .Select(((IFsNode<object> fsNode, IFsNodeElement<object> fsNodeElement) t) =>
+                .Map(((IFsNode<object> fsNode, IFsNodeElement<object> fsNodeElement) t) =>
                     ((IDirectory)t.fsNode, (IDirectoryElement)t.fsNodeElement))
-                .Select(((IDirectory directory, IDirectoryElement directoryElement) t) =>
+                .Map(((IDirectory directory, IDirectoryElement directoryElement) t) =>
                     new DirectoryElement(_fsNodeElementFactory, t.directory, t.directoryElement.CheckState,
                         t.directoryElement.Content, ContentAction.SetStateOnly))
                 .Cast<IFsNodeElement<object>>()
                 .Concat(FsNode.Content
                     .Zip(content)
                     .Where(((IFsNode<object> fsNode, IFsNodeElement<object> fsNodeElement) t) => t.fsNode is IFile)
-                    .Select(((IFsNode<object> fsNode, IFsNodeElement<object> fsNodeElement) t) =>
+                    .Map(((IFsNode<object> fsNode, IFsNodeElement<object> fsNodeElement) t) =>
                         ((IFile)t.fsNode, (IFileElement)t.fsNodeElement))
-                    .Select(((IFile file, IFileElement fileElement) t) =>
+                    .Map(((IFile file, IFileElement fileElement) t) =>
                         new FileElement(t.file, t.fileElement.CheckState)))
                 .ToImmutableArray();
 
         public override IDirectoryElement Uncheck()
         {
             var newContent = Content
-                .Select(fsNodeElement => (IFsNodeElement<object>)fsNodeElement.Uncheck())
+                .Map(fsNodeElement => (IFsNodeElement<object>)fsNodeElement.Uncheck())
                 .ToImmutableArray();
             return new DirectoryElement(_fsNodeElementFactory, FsNode, CheckState.Unchecked, newContent,
                 ContentAction.Set);
@@ -92,23 +92,27 @@ namespace Core.FileSystem
         public override IDirectoryElement Check()
         {
             var newContent = Content
-                .Select(fsNodeElement => (IFsNodeElement<object>)fsNodeElement.Check())
+                .Map(fsNodeElement => (IFsNodeElement<object>)fsNodeElement.Check())
                 .ToImmutableArray();
             return new DirectoryElement(_fsNodeElementFactory, FsNode, CheckState.Checked, newContent,
                 ContentAction.Set);
         }
 
-        public IDirectoryElement SelectContent(Func<IFsNodeElement<object>, IFsNodeElement<object>> selector)
+        public IDirectoryElement MapContent(Func<IFsNodeElement<object>, IFsNodeElement<object>> function)
         {
-            var newContent = Content.Select(selector).ToImmutableArray();
+            var newContent = Content
+                .Map(function)
+                .ToImmutableArray();
 
             var checkState = DefineCheckState(newContent);
             return new DirectoryElement(_fsNodeElementFactory, FsNode, checkState, newContent, ContentAction.Set);
         }
 
-        public IDirectoryElement SelectContent(Func<IFsNodeElement<object>, int, IFsNodeElement<object>> selector)
+        public IDirectoryElement MapContent(Func<int, IFsNodeElement<object>, IFsNodeElement<object>> function)
         {
-            var newContent = Content.Select(selector).ToImmutableArray();
+            var newContent = Content
+                .Map(function)
+                .ToImmutableArray();
 
             var checkState = DefineCheckState(newContent);
             return new DirectoryElement(_fsNodeElementFactory, FsNode, checkState, newContent, ContentAction.Set);

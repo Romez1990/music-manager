@@ -26,7 +26,7 @@ namespace Core.Operations.Rename
         }
 
         private IDirectoryElement RenameCompilation(IDirectoryElement compilationDirectoryElement) =>
-            compilationDirectoryElement.SelectContent(fsNode =>
+            compilationDirectoryElement.MapContent(fsNode =>
                 fsNode switch
                 {
                     IFileElement _ => fsNode,
@@ -37,7 +37,7 @@ namespace Core.Operations.Rename
                 });
 
         private IDirectoryElement RenameBand(IDirectoryElement bandDirectory) =>
-            bandDirectory.SelectContent((fsNode, index) =>
+            bandDirectory.MapContent((index, fsNode) =>
                 fsNode switch
                 {
                     IFileElement _ => fsNode,
@@ -96,7 +96,7 @@ namespace Core.Operations.Rename
                 .Content
                 .Count(fsNodeElement => fsNodeElement.CheckState == CheckState.Checked);
             var isTrackNumberOneDigit = tracksCount < 10;
-            return directory.SelectContent(fsNodeElement =>
+            return directory.MapContent(fsNodeElement =>
                 fsNodeElement switch
                 {
                     IDirectoryElement _ => fsNodeElement,
