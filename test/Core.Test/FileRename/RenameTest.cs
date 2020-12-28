@@ -1,7 +1,6 @@
 ﻿using Core.CoreEngine;
 using Core.FileScanner;
 using Core.FileSystem;
-using Core.Operations.Operation;
 using Core.Operations.Rename;
 using Core.Test.FileSystem;
 using NUnit.Framework;
@@ -19,7 +18,7 @@ namespace Core.Test.FileRename
             _scanner = new Scanner();
         }
 
-        private IOperation _rename;
+        private RenameOperation _rename;
         private MockFsNodeElementFactory _fsNodeElementFactory;
         private IScanner _scanner;
 
