@@ -8,7 +8,7 @@ namespace Core.CoreEngine
 {
     public class EnginePerformer : IEnginePerformer
     {
-        internal EnginePerformer(IOperationRepository operationRepository, IDirectoryElement directory,
+        public EnginePerformer(IOperationRepository operationRepository, IDirectoryElement directory,
             Mode mode)
         {
             _operationRepository = operationRepository;

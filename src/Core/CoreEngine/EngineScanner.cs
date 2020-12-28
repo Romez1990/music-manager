@@ -5,7 +5,7 @@ namespace Core.CoreEngine
 {
     public class EngineScanner : IEngineScanner
     {
-        internal EngineScanner(IEngineFactory engineFactory, IScanner scanner, IDirectoryElement directory)
+        public EngineScanner(IEngineFactory engineFactory, IScanner scanner, IDirectoryElement directory)
         {
             _engineFactory = engineFactory;
             _scanner = scanner;
