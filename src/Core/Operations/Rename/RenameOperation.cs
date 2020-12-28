@@ -64,7 +64,7 @@ namespace Core.Operations.Rename
             return RenameAlbum(renamedDirectoryElement);
         }
 
-        private readonly Regex _albumRegex = new Regex(@"(?<year>\d{4}) - (?:.+ - )?(?<name>.+)");
+        private readonly Regex _albumRegex = new(@"(?<year>\d{4}) - (?:.+ - )?(?<name>.+)");
 
         private IDirectoryElement RenameAlbumDirectoryWithNumber(IDirectoryElement directory, int numberLength,
             int number)
