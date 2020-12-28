@@ -19,8 +19,8 @@ namespace Core.Test.FileRename
             _scanner = new Scanner();
         }
 
-        private MockFsNodeElementFactory _fsNodeElementFactory;
         private IOperation _rename;
+        private MockFsNodeElementFactory _fsNodeElementFactory;
         private IScanner _scanner;
 
         [Test]
