@@ -15,17 +15,17 @@ namespace ConsoleApp.FileSystemTree
 
         private readonly bool _bold;
 
-        public string Print(IDirectoryElement directoryElement) =>
-            PrintHelper(directoryElement, "", "");
+        public string Print(IDirectoryElement directory) =>
+            PrintHelper(directory, "", "");
 
-        private string PrintHelper(IFsNodeElement<object> fsNodeElement, string directChildStart,
+        private string PrintHelper(IFsNodeElement<object> fsNode, string directChildStart,
             string indirectChildStart)
         {
-            var checkBox = GetCheckBox(fsNodeElement.CheckState);
-            var name = fsNodeElement.Name;
-            var directoryElementString = $"{directChildStart}{checkBox} {name}";
+            var checkBox = GetCheckBox(fsNode.CheckState);
+            var name = fsNode.Name;
+            var directoryString = $"{directChildStart}{checkBox} {name}";
 
-            if (fsNodeElement is not IDirectoryElement directoryElement) return directoryElementString;
+            if (fsNode is not IDirectoryElement directoryElement) return directoryString;
 
             var lastChildFsNodeElement = directoryElement.Content.Last();
             var directoryElementContent = string.Join('\n', directoryElement.Content
@@ -36,7 +36,7 @@ namespace ConsoleApp.FileSystemTree
                         indirectChildStart + GetStart(GetHead(true, isLast), GetTail(true)),
                         indirectChildStart + GetStart(GetHead(false, isLast), GetTail(false)));
                 }));
-            return directoryElementString + '\n' + directoryElementContent;
+            return directoryString + '\n' + directoryElementContent;
         }
 
         private readonly Dictionary<CheckState, string> _checkBoxes = new()

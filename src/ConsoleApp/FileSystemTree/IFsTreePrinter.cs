@@ -4,6 +4,6 @@ namespace ConsoleApp.FileSystemTree
 {
     public interface IFsTreePrinter
     {
-        string Print(IDirectoryElement directoryElement);
+        string Print(IDirectoryElement directory);
     }
 }
