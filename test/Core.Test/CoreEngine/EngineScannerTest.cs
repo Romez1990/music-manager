@@ -3,7 +3,6 @@ using Core.FileScanner;
 using Core.FileSystem;
 using Moq;
 using NUnit.Framework;
-using Utils.Reflection;
 
 namespace Core.Test.CoreEngine
 {
@@ -16,8 +15,7 @@ namespace Core.Test.CoreEngine
             _engineFactory = new Mock<IEngineFactory>(MockBehavior.Strict);
             _scanner = new Mock<IScanner>();
             _directoryElement = new Mock<IDirectoryElement>().Object;
-            _engineScanner =
-                ReflectionHelper.Construct<EngineScanner>(_engineFactory.Object, _scanner.Object, _directoryElement);
+            _engineScanner = new EngineScanner(_engineFactory.Object, _scanner.Object, _directoryElement);
         }
 
         private Mock<IEngineFactory> _engineFactory;

@@ -5,7 +5,6 @@ using Core.FileSystem;
 using Core.Operations.Operation;
 using Moq;
 using NUnit.Framework;
-using Utils.Reflection;
 
 namespace Core.Test.CoreEngine
 {
@@ -17,8 +16,7 @@ namespace Core.Test.CoreEngine
         {
             _operationRepository = new Mock<IOperationRepository>(MockBehavior.Strict);
             _directoryElement = new Mock<IDirectoryElement>().Object;
-            _enginePerformer =
-                ReflectionHelper.Construct<EnginePerformer>(_operationRepository.Object, _directoryElement, Mode.Band);
+            _enginePerformer = new EnginePerformer(_operationRepository.Object, _directoryElement, Mode.Band);
         }
 
         private Mock<IOperationRepository> _operationRepository;
