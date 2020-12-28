@@ -16,30 +16,30 @@ namespace Core.FileScanner
                 _ => throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(Mode)),
             };
 
-        private IDirectoryElement ScanCompilationOrBand(IDirectoryElement compilationDirectoryElement, Mode mode)
+        private IDirectoryElement ScanCompilationOrBand(IDirectoryElement compilationDirectory, Mode mode)
         {
             var nextMode = (Mode)((int)mode - 1);
-            return compilationDirectoryElement.SelectContent(fsNodeElement =>
-                fsNodeElement switch
+            return compilationDirectory.SelectContent(fsNode =>
+                fsNode switch
                 {
-                    IFileElement _ => fsNodeElement,
+                    IFileElement _ => fsNode,
                     IDirectoryElement directory => Scan(directory, nextMode),
-                    _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
+                    _ => throw new ArgumentOutOfRangeException(nameof(fsNode)),
                 });
         }
 
         private IDirectoryElement ScanAlbum(IDirectoryElement directory) =>
-            directory.SelectContent(fsNodeElement =>
-                fsNodeElement switch
+            directory.SelectContent(fsNode =>
+                fsNode switch
                 {
-                    IDirectoryElement _ => fsNodeElement,
-                    IFileElement file => IsFileElementToSelect(file)
+                    IDirectoryElement _ => fsNode,
+                    IFileElement file => IsFileToSelect(file)
                         ? file.Check()
-                        : fsNodeElement,
-                    _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
+                        : fsNode,
+                    _ => throw new ArgumentOutOfRangeException(nameof(fsNode)),
                 });
 
-        private bool IsFileElementToSelect(IFileElement file) =>
+        private bool IsFileToSelect(IFileElement file) =>
             file.Extension == ".mp3";
     }
 }
