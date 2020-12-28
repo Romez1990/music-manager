@@ -29,7 +29,7 @@ namespace Core.Operations.Rename
             compilationDirectoryElement.MapContent(fsNode =>
                 fsNode switch
                 {
-                    IFileElement _ => fsNode,
+                    IFileElement => fsNode,
                     IDirectoryElement directory => fsNode.CheckState != CheckState.Unchecked
                         ? RenameBand(directory)
                         : fsNode,
@@ -40,7 +40,7 @@ namespace Core.Operations.Rename
             bandDirectory.MapContent((index, fsNode) =>
                 fsNode switch
                 {
-                    IFileElement _ => fsNode,
+                    IFileElement => fsNode,
                     IDirectoryElement directory => fsNode.CheckState != CheckState.Unchecked
                         ? RenameAlbumDirectoryInsideBand(directory, index + 1)
                         : fsNode,
@@ -99,7 +99,7 @@ namespace Core.Operations.Rename
             return directory.MapContent(fsNodeElement =>
                 fsNodeElement switch
                 {
-                    IDirectoryElement _ => fsNodeElement,
+                    IDirectoryElement => fsNodeElement,
                     IFileElement file => fsNodeElement.CheckState == CheckState.Checked
                         ? RenameTrack(file, isTrackNumberOneDigit)
                         : fsNodeElement,
