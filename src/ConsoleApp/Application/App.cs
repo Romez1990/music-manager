@@ -55,7 +55,7 @@ namespace ConsoleApp.Application
                 .Right(engineScanner =>
                 {
                     var enginePerformer = engineScanner.Scan(options.Mode);
-                    PrintFileSystem(enginePerformer.DirectoryElement);
+                    PrintFileSystem(enginePerformer.Directory);
                     var operationResult = enginePerformer.PerformOperations(options.Operations);
                     foreach (var e in operationResult.Exceptions)
                         _console.Error(e);
@@ -67,9 +67,9 @@ namespace ConsoleApp.Application
                     return 1;
                 });
 
-        private void PrintFileSystem(IDirectoryElement directoryElement)
+        private void PrintFileSystem(IDirectoryElement directory)
         {
-            var fsTree = _fsTreePrinter.Print(directoryElement);
+            var fsTree = _fsTreePrinter.Print(directory);
             _console.Print(fsTree);
         }
 
