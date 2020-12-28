@@ -19,11 +19,9 @@ namespace Core.Test.CoreEngine
             _engine = new Engine(_engineFactory.Object, _fsNodeElementFactory.Object);
         }
 
-        private Mock<IEngineFactory> _engineFactory;
-
-        private Mock<IFsNodeElementFactory> _fsNodeElementFactory;
-
         private IEngine _engine;
+        private Mock<IEngineFactory> _engineFactory;
+        private Mock<IFsNodeElementFactory> _fsNodeElementFactory;
 
         [Test]
         public void SetDirectory_WhenDirectoryExists_ReturnsRight()

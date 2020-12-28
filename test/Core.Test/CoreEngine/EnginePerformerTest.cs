@@ -19,11 +19,9 @@ namespace Core.Test.CoreEngine
             _enginePerformer = new EnginePerformer(_operationRepository.Object, _directoryElement, Mode.Band);
         }
 
-        private Mock<IOperationRepository> _operationRepository;
-
-        private IDirectoryElement _directoryElement;
-
         private IEnginePerformer _enginePerformer;
+        private Mock<IOperationRepository> _operationRepository;
+        private IDirectoryElement _directoryElement;
 
         [Test]
         public void PerformOperations_CallsOperations()

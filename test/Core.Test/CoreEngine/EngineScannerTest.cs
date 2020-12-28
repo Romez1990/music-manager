@@ -18,13 +18,10 @@ namespace Core.Test.CoreEngine
             _engineScanner = new EngineScanner(_engineFactory.Object, _scanner.Object, _directoryElement);
         }
 
-        private Mock<IEngineFactory> _engineFactory;
-
-        private Mock<IScanner> _scanner;
-
-        private IDirectoryElement _directoryElement;
-
         private IEngineScanner _engineScanner;
+        private Mock<IEngineFactory> _engineFactory;
+        private Mock<IScanner> _scanner;
+        private IDirectoryElement _directoryElement;
 
         [Test]
         public void ScanAlbum_CallsScanner()
