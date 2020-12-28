@@ -26,7 +26,7 @@ namespace Core.Test.CoreEngine
         private IEngine _engine;
 
         [Test]
-        public void Engine_SetsDirectory_Correctly()
+        public void SetDirectory_WhenDirectoryExists_ReturnsRight()
         {
             var directoryElement = new Mock<IDirectoryElement>().Object;
             var engineScanner = new Mock<IEngineScanner>().Object;
@@ -44,7 +44,7 @@ namespace Core.Test.CoreEngine
         }
 
         [Test]
-        public void Engine_SetDirectoryFails_WhenDirectoryDoesNotExist()
+        public void SetDirectory_WhenDirectoryNotExists_ReturnsLeft()
         {
             _fsNodeElementFactory.Setup(f => f.CreateDirectoryElement(It.IsAny<string>()))
                 .Returns(Left(new DirectoryNotFoundException("some/path")));

@@ -26,7 +26,7 @@ namespace Core.Test.CoreEngine
         private IEnginePerformer _enginePerformer;
 
         [Test]
-        public void Engine_PerformsOperationsWhere_Correctly()
+        public void PerformOperations_CallsOperations()
         {
             var operation1 = new Mock<IOperation>();
             var operation2 = new Mock<IOperation>();

@@ -27,7 +27,7 @@ namespace Core.Test.CoreEngine
         private IEngineScanner _engineScanner;
 
         [Test]
-        public void Engine_ScansAlbum_Correctly()
+        public void ScanAlbum_CallsScanner()
         {
             var enginePerformer = new Mock<IEnginePerformer>().Object;
             _engineFactory.Setup(f => f.CreateEnginePerformer(_directoryElement, Mode.Band)).Returns(enginePerformer);
