@@ -6,7 +6,7 @@ namespace Core.CoreEngine
 {
     public interface IEnginePerformer
     {
-        IDirectoryElement DirectoryElement { get; }
+        IDirectoryElement Directory { get; }
         OperationResult PerformOperations(ImmutableArray<string> operations);
     }
 }

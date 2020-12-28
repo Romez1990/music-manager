@@ -18,8 +18,8 @@ namespace Core.CoreEngine
 
         public IEnginePerformer Scan(Mode mode)
         {
-            var newDirectoryElement = _scanner.Scan(_directory, mode);
-            return _engineFactory.CreateEnginePerformer(newDirectoryElement, mode);
+            var newDirectory = _scanner.Scan(_directory, mode);
+            return _engineFactory.CreateEnginePerformer(newDirectory, mode);
         }
     }
 }

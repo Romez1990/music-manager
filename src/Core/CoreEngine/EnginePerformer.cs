@@ -12,13 +12,13 @@ namespace Core.CoreEngine
             Mode mode)
         {
             _operationRepository = operationRepository;
-            DirectoryElement = directory;
+            Directory = directory;
             _mode = mode;
         }
 
         private readonly IOperationRepository _operationRepository;
 
-        public IDirectoryElement DirectoryElement { get; }
+        public IDirectoryElement Directory { get; }
 
         private readonly Mode _mode;
 
@@ -26,7 +26,7 @@ namespace Core.CoreEngine
             PerformOperations(_operationRepository.FindAllByNames(operations));
 
         private OperationResult PerformOperations(IEnumerable<IOperation> operations) =>
-            operations.Aggregate(new OperationResult(DirectoryElement, Enumerable.Empty<OperationException>()),
+            operations.Aggregate(new OperationResult(Directory, Enumerable.Empty<OperationException>()),
                 (resultAccumulator, operation) =>
                 {
                     var result = operation.Perform(resultAccumulator.Directory, _mode);
