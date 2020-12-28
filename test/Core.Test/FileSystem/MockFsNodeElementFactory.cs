@@ -21,7 +21,7 @@ namespace Core.Test.FileSystem
 
         private readonly TestFilesLoader _testFilesLoader;
 
-        private readonly Dictionary<string, IFsNode<object>> _fsNodes = new Dictionary<string, IFsNode<object>>();
+        private readonly Dictionary<string, IFsNode<object>> _fsNodes = new();
 
         private readonly string _fileSystemRoot;
 
