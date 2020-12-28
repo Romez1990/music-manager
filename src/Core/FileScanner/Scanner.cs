@@ -22,7 +22,7 @@ namespace Core.FileScanner
             return compilationDirectory.MapContent(fsNode =>
                 fsNode switch
                 {
-                    IFileElement _ => fsNode,
+                    IFileElement => fsNode,
                     IDirectoryElement directory => Scan(directory, nextMode),
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNode)),
                 });
@@ -32,7 +32,7 @@ namespace Core.FileScanner
             directory.MapContent(fsNode =>
                 fsNode switch
                 {
-                    IDirectoryElement _ => fsNode,
+                    IDirectoryElement => fsNode,
                     IFileElement file => IsFileToSelect(file)
                         ? file.Check()
                         : fsNode,
