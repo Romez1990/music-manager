@@ -15,7 +15,7 @@ namespace Core.FileSystem
         }
 
         public override IFileElement Uncheck() =>
-            new FileElement(FsNode, CheckState.Unchecked);
+            new FileElement(FsNode);
 
         public override IFileElement Check() =>
             new FileElement(FsNode, CheckState.Checked);
