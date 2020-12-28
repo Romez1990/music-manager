@@ -17,12 +17,11 @@ namespace Core.FileSystem
         public Either<DirectoryNotFoundException, IDirectory> InstantiateDirectory(string path)
         {
             var info = _fsInfoFactory.CreateDirectoryInfo(path);
-            if (!info.Exists)
+            return info.Exists switch
             {
-                return Left(new DirectoryNotFoundException(path));
-            }
-
-            return new Directory(_fsInfoFactory, this, info);
+                false => Left(new DirectoryNotFoundException(path)),
+                true => new Directory(_fsInfoFactory, this, info),
+            };
         }
 
         public IDirectory InstantiateDirectory(IDirectoryInfo info) =>
