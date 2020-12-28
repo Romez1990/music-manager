@@ -19,7 +19,7 @@ namespace Core.Test.CoreEngine
             _enginePerformer = new EnginePerformer(_operationRepository.Object, _directoryElement, Mode.Band);
         }
 
-        private IEnginePerformer _enginePerformer;
+        private EnginePerformer _enginePerformer;
         private Mock<IOperationRepository> _operationRepository;
         private IDirectoryElement _directoryElement;
 

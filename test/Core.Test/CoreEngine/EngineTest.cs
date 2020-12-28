@@ -19,7 +19,7 @@ namespace Core.Test.CoreEngine
             _engine = new Engine(_engineFactory.Object, _fsNodeElementFactory.Object);
         }
 
-        private IEngine _engine;
+        private Engine _engine;
         private Mock<IEngineFactory> _engineFactory;
         private Mock<IFsNodeElementFactory> _fsNodeElementFactory;
 
