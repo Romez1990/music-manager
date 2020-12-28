@@ -22,15 +22,19 @@ namespace Core.Test.CoreEngine
         private Mock<IEngineFactory> _engineFactory;
         private Mock<IScanner> _scanner;
         private IDirectoryElement _directoryElement;
+        private const Mode ScanMode = Mode.Band;
 
         [Test]
         public void ScanAlbum_CallsScanner()
         {
+            var newDirectory = new Mock<IDirectoryElement>().Object;
+            _scanner.Setup(s => s.Scan(_directoryElement, ScanMode)).Returns(newDirectory);
             var enginePerformer = new Mock<IEnginePerformer>().Object;
-            _engineFactory.Setup(f => f.CreateEnginePerformer(_directoryElement, Mode.Band)).Returns(enginePerformer);
-            var enginePerformerResult = _engineScanner.Scan(Mode.Band);
+            _engineFactory.Setup(f => f.CreateEnginePerformer(newDirectory, ScanMode)).Returns(enginePerformer);
 
-            _scanner.Verify(s => s.Scan(_directoryElement, Mode.Band), Times.Once());
+            var enginePerformerResult = _engineScanner.Scan(ScanMode);
+
+            _scanner.Verify(s => s.Scan(_directoryElement, ScanMode), Times.Once());
             Assert.That(enginePerformer, Is.EqualTo(enginePerformerResult));
         }
     }

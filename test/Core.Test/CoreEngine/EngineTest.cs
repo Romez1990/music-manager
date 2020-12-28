@@ -22,6 +22,7 @@ namespace Core.Test.CoreEngine
         private Engine _engine;
         private Mock<IEngineFactory> _engineFactory;
         private Mock<IFsNodeElementFactory> _fsNodeElementFactory;
+        private const string DirectoryPath = "123";
 
         [Test]
         public void SetDirectory_WhenDirectoryExists_ReturnsRight()
@@ -29,10 +30,10 @@ namespace Core.Test.CoreEngine
             var directoryElement = new Mock<IDirectoryElement>().Object;
             var engineScanner = new Mock<IEngineScanner>().Object;
             _engineFactory.Setup(f => f.CreateEngineScanner(directoryElement)).Returns(engineScanner);
-            _fsNodeElementFactory.Setup(f => f.CreateDirectoryElement("123"))
+            _fsNodeElementFactory.Setup(f => f.CreateDirectoryElement(DirectoryPath))
                 .Returns(Right(directoryElement));
 
-            var result = _engine.SetDirectory("123");
+            var result = _engine.SetDirectory(DirectoryPath);
 
             result.ShouldBeRight(engineScannerResult =>
             {
@@ -45,9 +46,9 @@ namespace Core.Test.CoreEngine
         public void SetDirectory_WhenDirectoryNotExists_ReturnsLeft()
         {
             _fsNodeElementFactory.Setup(f => f.CreateDirectoryElement(It.IsAny<string>()))
-                .Returns(Left(new DirectoryNotFoundException("some/path")));
+                .Returns(Left(new DirectoryNotFoundException(DirectoryPath)));
 
-            var result = _engine.SetDirectory("123");
+            var result = _engine.SetDirectory(DirectoryPath);
 
             result.ShouldBeLeft();
         }
