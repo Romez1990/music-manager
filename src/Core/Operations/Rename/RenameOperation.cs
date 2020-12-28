@@ -19,7 +19,7 @@ namespace Core.Operations.Rename
             {
                 Mode.Compilation => RenameCompilation(directory),
                 Mode.Band => RenameBand(directory),
-                Mode.Album => RenameAlbumDirectorySingle(directory),
+                Mode.Album => RenameAlbumSingly(directory),
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
             return new OperationResult(resultDirectory, Enumerable.Empty<OperationException>());
@@ -42,12 +42,12 @@ namespace Core.Operations.Rename
                 {
                     IFileElement => fsNode,
                     IDirectoryElement directory => fsNode.CheckState != CheckState.Unchecked
-                        ? RenameAlbumDirectoryInsideBand(directory, index + 1)
+                        ? RenameAlbumInsideBand(directory, index + 1)
                         : fsNode,
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNode)),
                 });
 
-        private IDirectoryElement RenameAlbumDirectoryInsideBand(IDirectoryElement directory, int number)
+        private IDirectoryElement RenameAlbumInsideBand(IDirectoryElement directory, int number)
         {
             var albumsCount = directory
                 .Content
@@ -55,13 +55,13 @@ namespace Core.Operations.Rename
                     fsNode is IDirectoryElement && fsNode.CheckState == CheckState.Checked);
             var numberLength = albumsCount.ToString().Count();
             var renamedDirectory = RenameAlbumDirectoryWithNumber(directory, numberLength, number);
-            return RenameAlbum(renamedDirectory);
+            return RenameAlbumContent(renamedDirectory);
         }
 
-        private IDirectoryElement RenameAlbumDirectorySingle(IDirectoryElement directory)
+        private IDirectoryElement RenameAlbumSingly(IDirectoryElement directory)
         {
             var renamedDirectoryElement = RenameAlbumDirectoryWithoutNumber(directory);
-            return RenameAlbum(renamedDirectoryElement);
+            return RenameAlbumContent(renamedDirectoryElement);
         }
 
         private readonly Regex _albumRegex = new(@"(?<year>\d{4}) - (?:.+ - )?(?<name>.+)");
@@ -90,7 +90,7 @@ namespace Core.Operations.Rename
             return directory.Rename(newName);
         }
 
-        private IDirectoryElement RenameAlbum(IDirectoryElement directory)
+        private IDirectoryElement RenameAlbumContent(IDirectoryElement directory)
         {
             var tracksCount = directory
                 .Content
