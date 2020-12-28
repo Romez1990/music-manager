@@ -11,7 +11,7 @@ namespace Core.Operations.Rename
     {
         public string Name { get; } = "Rename";
 
-        public string Description { get; } = "Rename tracks and folders";
+        public string Description { get; } = "Rename tracks and album folders";
 
         public OperationResult Perform(IDirectoryElement directory, Mode mode)
         {
