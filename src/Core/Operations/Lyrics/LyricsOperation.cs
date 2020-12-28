@@ -37,18 +37,18 @@ namespace Core.Operations.Lyrics
             return new OperationResult(directory, exceptions);
         }
 
-        private IEnumerable<EitherAsync<LyricsException, Unit>> PerformHelper(IDirectoryElement parentDirectoryElement,
+        private IEnumerable<EitherAsync<LyricsException, Unit>> PerformHelper(IDirectoryElement parentDirectory,
             Mode mode) =>
             mode switch
             {
-                Mode.Album => FillAlbum(parentDirectoryElement),
-                _ => parentDirectoryElement.Content.Map(fsNodeElement => fsNodeElement switch
+                Mode.Album => FillAlbum(parentDirectory),
+                _ => parentDirectory.Content.Map(fsNode => fsNode switch
                     {
                         IFileElement _ => Enumerable.Empty<EitherAsync<LyricsException, Unit>>(),
-                        IDirectoryElement directory => fsNodeElement.CheckState != CheckState.Unchecked
+                        IDirectoryElement directory => fsNode.CheckState != CheckState.Unchecked
                             ? PerformHelper(directory, DecreaseMode(mode))
                             : Enumerable.Empty<EitherAsync<LyricsException, Unit>>(),
-                        _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
+                        _ => throw new ArgumentOutOfRangeException(nameof(fsNode)),
                     })
                     .Flatten(),
             };
@@ -60,15 +60,15 @@ namespace Core.Operations.Lyrics
             return (Mode)newNumber;
         }
 
-        private IEnumerable<EitherAsync<LyricsException, Unit>> FillAlbum(IDirectoryElement albumDirectoryElement) =>
-            albumDirectoryElement.Content.Map(fsNodeElement =>
-                fsNodeElement switch
+        private IEnumerable<EitherAsync<LyricsException, Unit>> FillAlbum(IDirectoryElement albumDirectory) =>
+            albumDirectory.Content.Map(fsNode =>
+                fsNode switch
                 {
                     IDirectoryElement _ => unit.AsTask(),
-                    IFileElement file => fsNodeElement.CheckState == CheckState.Checked
+                    IFileElement file => fsNode.CheckState == CheckState.Checked
                         ? _lyricsFiller.FillLyrics(file)
                         : unit.AsTask(),
-                    _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
+                    _ => throw new ArgumentOutOfRangeException(nameof(fsNode)),
                 });
     }
 }

@@ -6,9 +6,9 @@ namespace Core.Operations.Lyrics.Exceptions
     {
         public MissingTagsException(IFileElement file) : base($"Missing tags in file {file.Name}")
         {
-            FileElement = file;
+            File = file;
         }
 
-        public IFileElement FileElement { get; }
+        public IFileElement File { get; }
     }
 }

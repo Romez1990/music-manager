@@ -26,36 +26,36 @@ namespace Core.Operations.Rename
         }
 
         private IDirectoryElement RenameCompilation(IDirectoryElement compilationDirectoryElement) =>
-            compilationDirectoryElement.SelectContent(fsNodeElement =>
-                fsNodeElement switch
+            compilationDirectoryElement.SelectContent(fsNode =>
+                fsNode switch
                 {
-                    IFileElement _ => fsNodeElement,
-                    IDirectoryElement directory => fsNodeElement.CheckState != CheckState.Unchecked
+                    IFileElement _ => fsNode,
+                    IDirectoryElement directory => fsNode.CheckState != CheckState.Unchecked
                         ? RenameBand(directory)
-                        : fsNodeElement,
-                    _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
+                        : fsNode,
+                    _ => throw new ArgumentOutOfRangeException(nameof(fsNode)),
                 });
 
-        private IDirectoryElement RenameBand(IDirectoryElement bandDirectoryElement) =>
-            bandDirectoryElement.SelectContent((fsNodeElement, index) =>
-                fsNodeElement switch
+        private IDirectoryElement RenameBand(IDirectoryElement bandDirectory) =>
+            bandDirectory.SelectContent((fsNode, index) =>
+                fsNode switch
                 {
-                    IFileElement _ => fsNodeElement,
-                    IDirectoryElement directory => fsNodeElement.CheckState != CheckState.Unchecked
+                    IFileElement _ => fsNode,
+                    IDirectoryElement directory => fsNode.CheckState != CheckState.Unchecked
                         ? RenameAlbumDirectoryInsideBand(directory, index + 1)
-                        : fsNodeElement,
-                    _ => throw new ArgumentOutOfRangeException(nameof(fsNodeElement)),
+                        : fsNode,
+                    _ => throw new ArgumentOutOfRangeException(nameof(fsNode)),
                 });
 
         private IDirectoryElement RenameAlbumDirectoryInsideBand(IDirectoryElement directory, int number)
         {
             var albumsCount = directory
                 .Content
-                .Count(fsNodeElement =>
-                    fsNodeElement is IDirectoryElement && fsNodeElement.CheckState == CheckState.Checked);
+                .Count(fsNode =>
+                    fsNode is IDirectoryElement && fsNode.CheckState == CheckState.Checked);
             var numberLength = albumsCount.ToString().Count();
-            var renamedDirectoryElement = RenameAlbumDirectoryWithNumber(directory, numberLength, number);
-            return RenameAlbum(renamedDirectoryElement);
+            var renamedDirectory = RenameAlbumDirectoryWithNumber(directory, numberLength, number);
+            return RenameAlbum(renamedDirectory);
         }
 
         private IDirectoryElement RenameAlbumDirectorySingle(IDirectoryElement directory)
