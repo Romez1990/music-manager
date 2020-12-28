@@ -1,8 +1,8 @@
 using Autofac;
-using Core;
 using ConsoleApp.Application;
 using ConsoleApp.ArgumentParser;
 using ConsoleApp.FileSystemTree;
+using Core;
 
 namespace ConsoleApp
 {
