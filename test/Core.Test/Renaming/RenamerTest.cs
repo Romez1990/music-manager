@@ -61,7 +61,7 @@ namespace Core.Test.Renaming
             var result = _renamer.Rename(album.Object, Mode.Album);
 
             Assert.That(result, Is.EqualTo(renamedAlbum.Object));
-            _albumRenamer.Verify(r => r.RenameAlbumWithoutNumber("album"), Times.Once());
+            _albumRenamer.Verify(r => r.RenameAlbumWithoutNumber("album"), Times.Once);
         }
     }
 }
