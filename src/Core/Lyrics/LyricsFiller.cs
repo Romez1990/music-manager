@@ -41,19 +41,12 @@ namespace Core.Lyrics
                     {
                         IFileElement => Enumerable.Empty<EitherAsync<LyricsException, Unit>>(),
                         IDirectoryElement directory => fsNode.CheckState != CheckState.Unchecked
-                            ? PerformHelper(directory, DecreaseMode(mode))
+                            ? PerformHelper(directory, mode.Decrease())
                             : Enumerable.Empty<EitherAsync<LyricsException, Unit>>(),
                         _ => throw new ArgumentOutOfRangeException(nameof(fsNode)),
                     })
                     .Flatten(),
             };
-
-        private Mode DecreaseMode(Mode mode)
-        {
-            var modeNumber = (int)mode;
-            var newNumber = modeNumber - 1;
-            return (Mode)newNumber;
-        }
 
         private IEnumerable<EitherAsync<LyricsException, Unit>> FillAlbum(IDirectoryElement albumDirectory) =>
             albumDirectory.Content.Map(fsNode =>
