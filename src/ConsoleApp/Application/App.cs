@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Linq;
 using ConsoleApp.ArgumentParser;
 using ConsoleApp.FileSystemTree;
 using Core.CoreEngine;
@@ -31,7 +32,7 @@ namespace ConsoleApp.Application
 
         public int Run(string[] args)
         {
-            if (args.Length == 0)
+            if (!args.Any())
                 return RunGraphicalApp();
 
             var appOptionsDefault = new AppOptionsDefault(
