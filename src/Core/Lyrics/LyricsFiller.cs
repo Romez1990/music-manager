@@ -29,7 +29,7 @@ namespace Core.Lyrics
             var exceptions = tasks
                 .Map(task => task.Result)
                 .Filter(either => either.IsLeft)
-                .Map(either => either.IfRight(unit2 => throw new Exception("Unexpected right value")))
+                .Map(either => either.IfRight(_ => throw new Exception("Unexpected right value")))
                 .ToImmutableArray();
             return exceptions;
         }
