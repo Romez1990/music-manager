@@ -1,8 +1,7 @@
-﻿#nullable enable
-namespace Core.Configuration
+﻿namespace Core.Configuration
 {
     public interface IConfigDriver
     {
-        string? GetString(string key);
+        string GetValueOrNull(string key);
     }
 }

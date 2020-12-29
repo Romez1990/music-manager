@@ -1,5 +1,4 @@
-﻿#nullable enable
-namespace Core.Configuration
+﻿namespace Core.Configuration
 {
     public class Config : IConfig
     {
@@ -12,7 +11,7 @@ namespace Core.Configuration
 
         public string GetString(string key)
         {
-            var value = _configDriver.GetString(key);
+            var value = _configDriver.GetValueOrNull(key);
             if (value is null)
                 throw new ConfigurationKeyNotFoundException(key);
             return value;

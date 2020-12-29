@@ -1,11 +1,10 @@
-﻿#nullable enable
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Core.Configuration
 {
     public class ConfigDriver : IConfigDriver
     {
-        public string? GetString(string key)
+        public string GetValueOrNull(string key)
         {
             return ConfigurationManager.AppSettings.Get(key);
         }
