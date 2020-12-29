@@ -4,7 +4,7 @@ namespace Core.Operations
 {
     public class OperationException : Exception
     {
-        public OperationException(string message) : base(message)
+        protected OperationException(string message) : base(message)
         {
         }
     }
