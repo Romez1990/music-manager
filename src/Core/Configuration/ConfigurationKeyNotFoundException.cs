@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Core.Configuration
+﻿namespace Core.Configuration
 {
-    public class ConfigurationKeyNotFoundException : Exception
+    public class ConfigurationKeyNotFoundException : ConfigurationException
     {
         public ConfigurationKeyNotFoundException(string key) : base($"Key {key} not found")
         {
