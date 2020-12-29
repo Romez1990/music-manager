@@ -7,16 +7,6 @@ namespace Utils.Reflection
 {
     public static class ReflectionHelper
     {
-        public static ConstructorInfo GetConstructor(Type type, Type[] argTypes)
-        {
-            const BindingFlags bindingAttributes = BindingFlags.NonPublic |
-                                                   BindingFlags.Instance;
-            var constructorInfo = type.GetConstructor(bindingAttributes, null, argTypes, null);
-            if (constructorInfo is null)
-                throw new ConstructionNotFountException();
-            return constructorInfo;
-        }
-
         public static FieldInfo GetField(Type type, string name)
         {
             const BindingFlags bindingAttributes = BindingFlags.NonPublic |
@@ -41,13 +31,6 @@ namespace Utils.Reflection
             if (methodInfo is null)
                 throw new MethodNotFoundException();
             return methodInfo;
-        }
-
-        public static T Construct<T>(params object[] args)
-        {
-            var type = typeof(T);
-            var constructorInfo = GetConstructor(type, args.GetTypes());
-            return (T)constructorInfo.Invoke(args);
         }
 
         public static TValue GetField<TValue>(object obj, string name)
