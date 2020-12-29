@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Reflection;
 using CommandLine;
 using ConsoleApp.Application;
 using Core.CoreEngine;
@@ -66,15 +67,28 @@ namespace ConsoleApp.ArgumentParser
             Lazy<ImmutableArray<string>> defaultOperations)
         {
             var type = options.GetType();
-            var attributeType = typeof(OperationAttribute);
             var operations = type.GetProperties()
-                .Where(p => p.IsDefined(attributeType, false) && (bool)p.GetValue(options, null))
-                .Map(p => (OperationAttribute)p.GetCustomAttributes(attributeType, false).First())
+                .Where(p => IsOperationProperty(p) && IsOperationSelected(p, options))
+                .Map(GetOperationAttribute)
                 .Map(a => a.Name)
                 .ToImmutableArray();
             if (operations.Length == 0)
                 return defaultOperations.Value;
             return operations;
         }
+
+        private bool IsOperationProperty(PropertyInfo property) =>
+            property.IsDefined(typeof(OperationAttribute), false);
+
+        private bool IsOperationSelected(PropertyInfo property, OptionsBase options)
+        {
+            var value = property.GetValue(options);
+            if (value is not bool boolValue)
+                throw new Exception("Operation must be bool type");
+            return boolValue;
+        }
+
+        private OperationAttribute GetOperationAttribute(PropertyInfo property) =>
+            (OperationAttribute)property.GetCustomAttributes(typeof(OperationAttribute), false).First();
     }
 }
