@@ -15,11 +15,5 @@ namespace ConsoleApp.ArgumentParser
 
         [Option('c', "compilation", SetName = "compilation", HelpText = "Compilation directory mode")]
         public bool Compilation { get; set; }
-
-        [Option('r', "rename", HelpText = "Rename tracks and folders")]
-        public bool Rename { get; set; }
-
-        [Option('l', "lyrics", HelpText = "Add lyrics to tracks")]
-        public bool Lyrics { get; set; }
     }
 }
