@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,22 +21,22 @@ namespace Core.HttpClient
         public EitherAsync<RequestException, string> Html(string url) =>
             GetText(url);
 
-        public EitherAsync<RequestException, T> Get<T>(string url, IDictionary<string, string>? parameters = null) =>
+        public EitherAsync<RequestException, T> Get<T>(string url, IDictionary<string, string> parameters = null) =>
             GetText(url, parameters)
                 .Map(_jsonSerializer.Deserialize<T>);
 
         private EitherAsync<RequestException, string> GetText(string url,
-            IDictionary<string, string>? parameters = null) =>
-            _httpClient.GetAsync(GetUrl(url, parameters))
+            IDictionary<string, string> parametersOrNull = null) =>
+            _httpClient.GetAsync(GetUrl(url, parametersOrNull))
                 .Map(CatchException)
                 .ToAsync()
                 .MapAsync(response => response.Content.ReadAsStringAsync());
 
-        private string GetUrl(string baseUrl, IDictionary<string, string>? parameters)
+        private string GetUrl(string baseUrl, IDictionary<string, string> parametersOrNull)
         {
-            if (parameters is null) return baseUrl;
+            if (parametersOrNull is null) return baseUrl;
 
-            var keyValues = parameters.Map(pair => $"{pair.Key}={WebUtility.UrlEncode(pair.Value)}");
+            var keyValues = parametersOrNull.Map(pair => $"{pair.Key}={WebUtility.UrlEncode(pair.Value)}");
             var stringParameters = string.Join('&', keyValues.ToArray());
             return $"{baseUrl}?{stringParameters}";
         }
