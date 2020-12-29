@@ -20,14 +20,12 @@ namespace Core.Lyrics
 
         private readonly ISongLyricsFiller _songLyricsFiller;
 
-        public ImmutableArray<LyricsException> FillLyrics(IDirectoryElement directory, Mode mode)
+        public async Task<ImmutableArray<LyricsException>> FillLyrics(IDirectoryElement directory, Mode mode)
         {
             var tasks = PerformHelper(directory, mode)
-                .Map(eitherAsync => eitherAsync.ToEither())
-                .ToArray();
-            Task.WaitAll(tasks);
-            var exceptions = tasks
-                .Map(task => task.Result)
+                .Map(eitherAsync => eitherAsync.ToEither());
+            var results = await Task.WhenAll(tasks);
+            var exceptions = results
                 .Filter(either => either.IsLeft)
                 .Map(either => either.IfRight(_ => throw new Exception("Unexpected right value")))
                 .ToImmutableArray();

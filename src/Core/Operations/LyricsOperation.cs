@@ -19,7 +19,9 @@ namespace Core.Operations
 
         public OperationResult Perform(IDirectoryElement directory, Mode mode)
         {
-            var exceptions = _lyricsFiller.FillLyrics(directory, mode);
+            var task = _lyricsFiller.FillLyrics(directory, mode);
+            task.Wait();
+            var exceptions = task.Result;
             return new OperationResult(directory, exceptions);
         }
     }
