@@ -1,11 +1,11 @@
 ﻿using Core.FileSystem;
-using Core.Operations.Lyrics.Exceptions;
-using Core.Operations.Lyrics.Scraper;
-using Core.Operations.Lyrics.Searcher;
+using Core.Lyrics.Exceptions;
+using Core.Lyrics.Scraper;
+using Core.Lyrics.Searcher;
 using LanguageExt;
 using static LanguageExt.Prelude;
 
-namespace Core.Operations.Lyrics
+namespace Core.Lyrics
 {
     public class SongLyricsFiller : ISongLyricsFiller
     {

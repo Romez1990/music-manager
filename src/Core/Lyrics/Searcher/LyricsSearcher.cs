@@ -3,11 +3,11 @@ using System.Linq;
 using Core.Configuration;
 using Core.FileSystem;
 using Core.HttpClient;
-using Core.Operations.Lyrics.Exceptions;
-using Core.Operations.Lyrics.Searcher.HttpResponses;
+using Core.Lyrics.Exceptions;
+using Core.Lyrics.Searcher.HttpResponses;
 using LanguageExt;
 
-namespace Core.Operations.Lyrics.Searcher
+namespace Core.Lyrics.Searcher
 {
     public class LyricsSearcher : ILyricsSearcher
     {

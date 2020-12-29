@@ -1,6 +1,6 @@
 ﻿using Core.FileSystem;
 
-namespace Core.Operations.Lyrics.Exceptions
+namespace Core.Lyrics.Exceptions
 {
     public class LyricsNotFoundException : LyricsException
     {

@@ -1,6 +1,6 @@
 ﻿using Core.Operations.Operation;
 
-namespace Core.Operations.Lyrics.Exceptions
+namespace Core.Lyrics.Exceptions
 {
     public class LyricsException : OperationException
     {

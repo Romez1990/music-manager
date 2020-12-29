@@ -2,7 +2,7 @@
 using LanguageExt;
 using TagLib;
 
-namespace Core.Operations.Lyrics
+namespace Core.Lyrics
 {
     public class Song : ISong
     {

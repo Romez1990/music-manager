@@ -1,6 +1,6 @@
 ﻿using LanguageExt;
 
-namespace Core.Operations.Lyrics
+namespace Core.Lyrics
 {
     public interface ISong
     {

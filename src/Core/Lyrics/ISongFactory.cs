@@ -1,6 +1,6 @@
 ﻿using Core.FileSystem;
 
-namespace Core.Operations.Lyrics
+namespace Core.Lyrics
 {
     public interface ISongFactory
     {

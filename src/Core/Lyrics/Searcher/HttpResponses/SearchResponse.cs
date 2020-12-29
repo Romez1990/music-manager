@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace Core.Operations.Lyrics.Searcher.HttpResponses
+namespace Core.Lyrics.Searcher.HttpResponses
 {
     public class SearchResponse
     {

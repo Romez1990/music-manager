@@ -2,11 +2,11 @@
 using AngleSharp.Html.Parser;
 using Core.FileSystem;
 using Core.HttpClient;
-using Core.Operations.Lyrics.Exceptions;
+using Core.Lyrics.Exceptions;
 using LanguageExt;
 using static LanguageExt.Prelude;
 
-namespace Core.Operations.Lyrics.Scraper
+namespace Core.Lyrics.Scraper
 {
     public class LyricsScraper : ILyricsScraper
     {

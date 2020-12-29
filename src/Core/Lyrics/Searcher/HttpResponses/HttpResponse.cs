@@ -1,4 +1,4 @@
-﻿namespace Core.Operations.Lyrics.Searcher.HttpResponses
+﻿namespace Core.Lyrics.Searcher.HttpResponses
 {
     public class HttpResponse<T> where T : class
     {

@@ -1,8 +1,8 @@
 ﻿using Core.FileSystem;
-using Core.Operations.Lyrics.Exceptions;
+using Core.Lyrics.Exceptions;
 using LanguageExt;
 
-namespace Core.Operations.Lyrics
+namespace Core.Lyrics
 {
     public interface ISongLyricsFiller
     {
