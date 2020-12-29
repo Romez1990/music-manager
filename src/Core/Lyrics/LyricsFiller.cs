@@ -27,7 +27,7 @@ namespace Core.Lyrics
             var results = await Task.WhenAll(tasks);
             var exceptions = results
                 .Filter(either => either.IsLeft)
-                .Map(either => either.IfRight(_ => throw new Exception("Unexpected right value")))
+                .Map(either => either.IfRight(_ => throw new Exception()))
                 .ToImmutableArray();
             return exceptions;
         }
