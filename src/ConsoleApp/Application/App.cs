@@ -3,7 +3,7 @@ using ConsoleApp.ArgumentParser;
 using ConsoleApp.FileSystemTree;
 using Core.CoreEngine;
 using Core.FileSystem;
-using Core.Operations.Operation;
+using Core.Operations;
 
 namespace ConsoleApp.Application
 {

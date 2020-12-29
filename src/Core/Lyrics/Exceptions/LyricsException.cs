@@ -1,4 +1,4 @@
-﻿using Core.Operations.Operation;
+﻿using Core.Operations;
 
 namespace Core.Lyrics.Exceptions
 {

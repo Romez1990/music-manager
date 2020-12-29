@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 using Core.FileSystem;
-using Core.Operations.Operation;
+using Core.Operations;
 
 namespace Core.CoreEngine
 {

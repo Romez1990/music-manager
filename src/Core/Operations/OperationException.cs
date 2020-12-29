@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Operations.Operation
+namespace Core.Operations
 {
     public class OperationException : Exception
     {

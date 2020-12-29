@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using Core.CoreEngine;
 using Core.FileSystem;
-using Core.Operations.Operation;
 using Core.Renaming;
 
-namespace Core.Operations.Rename
+namespace Core.Operations
 {
     public class RenameOperation : IOperation
     {

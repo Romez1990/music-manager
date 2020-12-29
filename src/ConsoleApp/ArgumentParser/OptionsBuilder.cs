@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 using CommandLine;
-using Core.Operations.Operation;
+using Core.Operations;
 using Utils.Reflection;
 
 namespace ConsoleApp.ArgumentParser

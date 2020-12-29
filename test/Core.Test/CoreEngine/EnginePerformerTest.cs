@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Core.CoreEngine;
 using Core.FileSystem;
-using Core.Operations.Operation;
+using Core.Operations;
 using Moq;
 using NUnit.Framework;
 

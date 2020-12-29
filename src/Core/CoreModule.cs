@@ -7,9 +7,7 @@ using Core.HttpClient;
 using Core.Lyrics;
 using Core.Lyrics.Scraper;
 using Core.Lyrics.Searcher;
-using Core.Operations.Lyrics;
-using Core.Operations.Operation;
-using Core.Operations.Rename;
+using Core.Operations;
 using Core.Renaming;
 using Core.Serializers;
 

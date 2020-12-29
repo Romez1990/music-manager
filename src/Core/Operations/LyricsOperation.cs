@@ -1,9 +1,8 @@
 using Core.CoreEngine;
 using Core.FileSystem;
 using Core.Lyrics;
-using Core.Operations.Operation;
 
-namespace Core.Operations.Lyrics
+namespace Core.Operations
 {
     public class LyricsOperation : IOperation
     {

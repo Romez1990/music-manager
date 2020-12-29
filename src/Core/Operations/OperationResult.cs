@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core.FileSystem;
 
-namespace Core.Operations.Operation
+namespace Core.Operations
 {
     public class OperationResult
     {
