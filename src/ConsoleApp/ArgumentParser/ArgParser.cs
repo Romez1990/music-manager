@@ -72,7 +72,7 @@ namespace ConsoleApp.ArgumentParser
                 .Map(GetOperationAttribute)
                 .Map(a => a.Name)
                 .ToImmutableArray();
-            if (operations.Length == 0)
+            if (!operations.Any())
                 return defaultOperations.Value;
             return operations;
         }
