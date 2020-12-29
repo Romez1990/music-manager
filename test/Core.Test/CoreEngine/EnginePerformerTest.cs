@@ -46,9 +46,9 @@ namespace Core.Test.CoreEngine
 
             var result = _enginePerformer.PerformOperations(operationNames);
 
-            _operationRepository.Verify(r => r.FindAllByNames(operationNames), Times.Once());
-            operation1.Verify(o => o.Perform(_directoryElement, PerformingMode), Times.Once());
-            operation2.Verify(o => o.Perform(directory1, PerformingMode), Times.Once());
+            _operationRepository.Verify(r => r.FindAllByNames(operationNames), Times.Once);
+            operation1.Verify(o => o.Perform(_directoryElement, PerformingMode), Times.Once);
+            operation2.Verify(o => o.Perform(directory1, PerformingMode), Times.Once);
             Assert.That(result.Directory, Is.EqualTo(directory2));
             Assert.That(result.Exceptions.Any(), Is.False);
         }

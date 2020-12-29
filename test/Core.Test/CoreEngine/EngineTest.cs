@@ -37,7 +37,7 @@ namespace Core.Test.CoreEngine
 
             result.ShouldBeRight(engineScannerResult =>
             {
-                _engineFactory.Verify(f => f.CreateEngineScanner(directoryElement), Times.Once());
+                _engineFactory.Verify(f => f.CreateEngineScanner(directoryElement), Times.Once);
                 Assert.That(engineScannerResult, Is.EqualTo(engineScanner));
             });
         }

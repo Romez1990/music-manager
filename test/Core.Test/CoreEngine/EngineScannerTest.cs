@@ -34,7 +34,7 @@ namespace Core.Test.CoreEngine
 
             var enginePerformerResult = _engineScanner.Scan(ScanMode);
 
-            _scanner.Verify(s => s.Scan(_directoryElement, ScanMode), Times.Once());
+            _scanner.Verify(s => s.Scan(_directoryElement, ScanMode), Times.Once);
             Assert.That(enginePerformer, Is.EqualTo(enginePerformerResult));
         }
     }
