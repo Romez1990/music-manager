@@ -4,7 +4,7 @@ using LanguageExt;
 
 namespace Core.Operations.Lyrics
 {
-    public interface ILyricsFiller
+    public interface ISongLyricsFiller
     {
         EitherAsync<LyricsException, Unit> FillLyrics(IFileElement file);
     }

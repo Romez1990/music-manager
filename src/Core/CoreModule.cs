@@ -26,7 +26,7 @@ namespace Core
             builder.RegisterType<Renamer>().As<IRenamer>();
             builder.RegisterType<AlbumRenamer>().As<IAlbumRenamer>();
             builder.RegisterType<TrackRenamer>().As<ITrackRenamer>();
-            builder.RegisterType<LyricsFiller>().As<ILyricsFiller>();
+            builder.RegisterType<SongLyricsFiller>().As<ISongLyricsFiller>();
             builder.RegisterType<SongFactory>().As<ISongFactory>();
             builder.RegisterType<LyricsSearcher>().As<ILyricsSearcher>();
             builder.RegisterType<LyricsScraper>().As<ILyricsScraper>();

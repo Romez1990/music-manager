@@ -13,12 +13,12 @@ namespace Core.Operations.Lyrics
 {
     public class LyricsOperation : IOperation
     {
-        public LyricsOperation(ILyricsFiller lyricsFiller)
+        public LyricsOperation(ISongLyricsFiller songLyricsFiller)
         {
-            _lyricsFiller = lyricsFiller;
+            _songLyricsFiller = songLyricsFiller;
         }
 
-        private readonly ILyricsFiller _lyricsFiller;
+        private readonly ISongLyricsFiller _songLyricsFiller;
 
         public string Name => "Lyrics";
 
@@ -66,7 +66,7 @@ namespace Core.Operations.Lyrics
                 {
                     IDirectoryElement => unit.AsTask(),
                     IFileElement file => fsNode.CheckState == CheckState.Checked
-                        ? _lyricsFiller.FillLyrics(file)
+                        ? _songLyricsFiller.FillLyrics(file)
                         : unit.AsTask(),
                     _ => throw new ArgumentOutOfRangeException(nameof(fsNode)),
                 });

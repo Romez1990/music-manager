@@ -7,9 +7,9 @@ using static LanguageExt.Prelude;
 
 namespace Core.Operations.Lyrics
 {
-    public class LyricsFiller : ILyricsFiller
+    public class SongLyricsFiller : ISongLyricsFiller
     {
-        public LyricsFiller(ISongFactory songFactory, ILyricsSearcher searcher, ILyricsScraper scraper)
+        public SongLyricsFiller(ISongFactory songFactory, ILyricsSearcher searcher, ILyricsScraper scraper)
         {
             _songFactory = songFactory;
             _searcher = searcher;
