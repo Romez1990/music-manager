@@ -16,5 +16,13 @@
                 throw new ConfigurationKeyNotFoundException(key);
             return value;
         }
+
+        public bool GetBool(string key) =>
+            GetString(key) switch
+            {
+                "true" => true,
+                "false" => false,
+                _ => throw new BoolConfigurationKeyException(key),
+            };
     }
 }
