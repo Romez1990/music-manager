@@ -15,16 +15,15 @@ namespace ConsoleApp.ArgumentParser
     {
         public ArgParser(IOptionsBuilder optionsBuilder)
         {
-            _optionsBuilder = optionsBuilder;
+            _optionsType = optionsBuilder.CreateOptionsType();
         }
 
-        private readonly IOptionsBuilder _optionsBuilder;
+        private readonly Type _optionsType;
 
         public Either<ArgumentParserException, AppOptions> Parse(ImmutableArray<string> args,
             AppOptionsDefault appOptionsDefault)
         {
-            var optionsType = _optionsBuilder.CreateOptionsType();
-            var parserResult = InvokeParser(args, optionsType);
+            var parserResult = InvokeParser(args);
             return ExtractOptions(parserResult)
                 .Map(options => new AppOptions(
                     ResolvePath(options, appOptionsDefault.Path),
@@ -33,12 +32,12 @@ namespace ConsoleApp.ArgumentParser
                 ));
         }
 
-        private object InvokeParser(ImmutableArray<string> args, Type optionsType)
+        private object InvokeParser(ImmutableArray<string> args)
         {
             var type = Parser.Default.GetType();
             var methodArgs = new object[] {args};
             var parseArguments = ReflectionHelper.GetMethod(type, "ParseArguments", methodArgs.GetTypes());
-            var genericParseArguments = parseArguments.MakeGenericMethod(optionsType);
+            var genericParseArguments = parseArguments.MakeGenericMethod(_optionsType);
             return genericParseArguments.Invoke(Parser.Default, methodArgs);
         }
 
@@ -66,8 +65,7 @@ namespace ConsoleApp.ArgumentParser
         private ImmutableArray<string> ResolveOperations(OptionsBase options,
             Lazy<ImmutableArray<string>> defaultOperations)
         {
-            var operations = options
-                .GetType()
+            var operations = _optionsType
                 .GetProperties()
                 .Where(p => IsOperationProperty(p) && IsOperationSelected(p, options))
                 .Map(GetOperationAttribute)
