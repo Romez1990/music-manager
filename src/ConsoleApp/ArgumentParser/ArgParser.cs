@@ -66,8 +66,9 @@ namespace ConsoleApp.ArgumentParser
         private ImmutableArray<string> ResolveOperations(OptionsBase options,
             Lazy<ImmutableArray<string>> defaultOperations)
         {
-            var type = options.GetType();
-            var operations = type.GetProperties()
+            var operations = options
+                .GetType()
+                .GetProperties()
                 .Where(p => IsOperationProperty(p) && IsOperationSelected(p, options))
                 .Map(GetOperationAttribute)
                 .Map(a => a.Name)
