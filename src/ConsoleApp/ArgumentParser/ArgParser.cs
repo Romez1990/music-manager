@@ -96,6 +96,6 @@ namespace ConsoleApp.ArgumentParser
         }
 
         private OperationAttribute GetOperationAttribute(PropertyInfo property) =>
-            (OperationAttribute)property.GetCustomAttributes(typeof(OperationAttribute), false).First();
+            (OperationAttribute)property.GetCustomAttributes(typeof(OperationAttribute)).First();
     }
 }
