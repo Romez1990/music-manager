@@ -16,9 +16,18 @@ namespace ConsoleApp.ArgumentParser
         public ArgParser(IOptionsBuilder optionsBuilder)
         {
             _optionsType = optionsBuilder.CreateOptionsType();
+            _operationProperties = GetOperationProperties();
         }
 
         private readonly Type _optionsType;
+
+        private readonly ImmutableArray<PropertyInfo> _operationProperties;
+
+        private ImmutableArray<PropertyInfo> GetOperationProperties() =>
+            _optionsType
+                .GetProperties()
+                .Where(IsOperationProperty)
+                .ToImmutableArray();
 
         public Either<ArgumentParserException, AppOptions> Parse(ImmutableArray<string> args,
             AppOptionsDefault appOptionsDefault)
@@ -65,9 +74,8 @@ namespace ConsoleApp.ArgumentParser
         private ImmutableArray<string> ResolveOperations(OptionsBase options,
             Lazy<ImmutableArray<string>> defaultOperations)
         {
-            var operations = _optionsType
-                .GetProperties()
-                .Where(p => IsOperationProperty(p) && IsOperationSelected(p, options))
+            var operations = _operationProperties
+                .Where(p => IsOperationSelected(p, options))
                 .Map(GetOperationAttribute)
                 .Map(a => a.Name)
                 .ToImmutableArray();
