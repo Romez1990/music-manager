@@ -5,6 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <AssemblyName>Music Manager</AssemblyName>
+    <OutputPath>..\..\bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
 </Project>
