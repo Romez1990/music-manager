@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using static LanguageExt.Prelude;
 
 namespace Core.FileSystem {
     public abstract class FsNodeBase<T> : IFsNode where T : FileSystemInfo {
@@ -21,5 +22,18 @@ namespace Core.FileSystem {
 
         public void Unsubscribe() =>
             Changed = null;
+
+        public T1 Match<T1>(Func<IDirectory, T1> onDirectory, Func<IFile, T1> onFile) =>
+            this switch {
+                IDirectory directory => onDirectory(directory),
+                IFile file => onFile(file),
+                _ => throw new NotSupportedException($"Type {GetType()} is not supported"),
+            };
+
+        public IFsNode MatchDirectory(Func<IDirectory, IFsNode> onDirectory) =>
+            Match(onDirectory, identity);
+
+        public IFsNode MatchFile(Func<IFile, IFsNode> onFile) =>
+            Match(identity, onFile);
     }
 }
