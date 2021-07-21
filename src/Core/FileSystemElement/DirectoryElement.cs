@@ -61,6 +61,48 @@ namespace Core.FileSystemElement {
             );
         }
 
+        public IDirectoryElement MapChildren(Func<IFsNodeElement, IFsNodeElement> mapper) =>
+            MapChildren(children => children.Map(mapper));
+
+        public IDirectoryElement MapChildren(Func<int, IFsNodeElement, IFsNodeElement> mapper) =>
+            MapChildren(children => children.Map(mapper));
+
+        public IDirectoryElement MapDirectories(Func<IDirectoryElement, IDirectoryElement> mapper) =>
+            MapChildren(children => children.Map(fsNode => fsNode.MatchDirectory(mapper)));
+
+        public IDirectoryElement MapDirectories(Func<int, IDirectoryElement, IDirectoryElement> mapper) =>
+            MapChildren(children => children.Map((index, fsNode) =>
+                fsNode.MatchDirectory(directory => mapper(index, directory))));
+
+        public IDirectoryElement MapFiles(Func<IFileElement, IFileElement> mapper) =>
+            MapChildren(children => children.Map(fsNode => fsNode.MatchFile(mapper)));
+
+        public IDirectoryElement MapFiles(Func<int, IFileElement, IFileElement> mapper) =>
+            MapChildren(children => children.Map((index, fsNode) =>
+                fsNode.MatchFile(directory => mapper(index, directory))));
+
+        private IDirectoryElement MapChildren(Func<IEnumerable<IFsNodeElement>, IEnumerable<IFsNodeElement>> mapper) {
+            _ignoreChildrenChanged = true;
+            var oldChildren = Children.Map(UnsubscribeChild);
+            var newChildren = mapper(oldChildren)
+                .Map(SubscribeChild)
+                .ToArray();
+            _ignoreChildrenChanged = false;
+            var newCheckState = GetCheckStateByChildren(newChildren);
+            var newDirectory = _fsNodeElementFactory.CreateDirectoryElementFromDirectory(FsNode, newCheckState,
+                IsExpanded, ChildrenRetrieval<IFsNodeElement>.Take(newChildren));
+            InvokeAllChanged(newDirectory);
+            return newDirectory;
+        }
+
+        private CheckState GetCheckStateByChildren(IReadOnlyCollection<IFsNodeElement> children) {
+            if (children.All(fsNodeElement => fsNodeElement.CheckState is CheckState.Unchecked))
+                return CheckState.Unchecked;
+            if (children.All(fsNodeElement => fsNodeElement.CheckState is CheckState.Checked))
+                return CheckState.Checked;
+            return CheckState.CheckedPartially;
+        }
+
         private IFsNodeElement SubscribeChild(IFsNodeElement fsNodeElement) {
             fsNodeElement.Changed += OnChildChanged;
             return fsNodeElement;
