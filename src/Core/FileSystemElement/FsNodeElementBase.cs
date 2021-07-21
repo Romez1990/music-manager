@@ -1,5 +1,6 @@
 using System;
 using Core.FileSystem;
+using static LanguageExt.Prelude;
 
 namespace Core.FileSystemElement {
     public abstract class FsNodeElementBase<T> : IFsNodeElement where T : IFsNode {
@@ -24,5 +25,18 @@ namespace Core.FileSystemElement {
 
         public void Unsubscribe() =>
             Changed = null;
+
+        public T1 Match<T1>(Func<IDirectoryElement, T1> onDirectory, Func<IFileElement, T1> onFile) =>
+            this switch {
+                IDirectoryElement directory => onDirectory(directory),
+                IFileElement file => onFile(file),
+                _ => throw new NotSupportedException(),
+            };
+
+        public IFsNodeElement MatchDirectory(Func<IDirectoryElement, IFsNodeElement> onDirectory) =>
+            Match(onDirectory, identity);
+
+        public IFsNodeElement MatchFile(Func<IFileElement, IFsNodeElement> onFile) =>
+            Match(identity, onFile);
     }
 }
