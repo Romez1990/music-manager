@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Core\Core.csproj" />
+    <ProjectReference Include="..\..\src\Utils\Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
