@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Core.FileSystem.Exceptions;
 using LanguageExt;
@@ -12,5 +13,7 @@ namespace Core.FileSystemElement {
         bool IsExpanded { get; }
         IDirectoryElement Expand();
         IDirectoryElement Collapse();
+        event EventHandler<RootDirectoryElementChangedEventArgs> RootChanged;
+        void UnsubscribeRoot();
     }
 }
