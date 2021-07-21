@@ -2,5 +2,6 @@
     public enum ChildrenRetrievalType {
         Create,
         Take,
+        TakeStateOnly,
     }
 }

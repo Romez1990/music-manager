@@ -25,7 +25,7 @@ namespace Core.FileSystem {
         public IReadOnlyList<IFsNode> Children => _children.Value;
 
         private IReadOnlyList<IFsNode> GetChildren(ChildrenRetrieval<IFsNode> childrenRetrieval) =>
-            childrenRetrieval.Retrieve(CreateChildren, TakeChildren);
+            childrenRetrieval.Retrieve(CreateChildren, TakeChildren, _ => throw new NotSupportedException());
 
         private readonly IComparer<string> _naturalStringComparer;
 
