@@ -89,7 +89,7 @@ namespace Core.FileSystemElement {
                 : CheckState;
             var newDirectory = _fsNodeElementFactory.CreateDirectoryElementFromDirectory(FsNode, newCheckState,
                 IsExpanded, ChildrenRetrieval<IFsNodeElement>.Take(newChildren));
-            InvokeChanged(newDirectory);
+            InvokeAllChanged(newDirectory);
         }
 
         private CheckState ChangeCheckState(IReadOnlyCollection<IFsNodeElement> newChildren) =>
@@ -116,7 +116,7 @@ namespace Core.FileSystemElement {
                 .Map(newDirectory => {
                     var newDirectoryElement = _fsNodeElementFactory.CreateDirectoryElementFromDirectory(newDirectory,
                         CheckState, IsExpanded, ChildrenRetrieval<IFsNodeElement>.TakeStateOnly(Children));
-                    InvokeChanged(newDirectoryElement);
+                    InvokeAllChanged(newDirectoryElement);
                     return newDirectoryElement;
                 });
 
@@ -140,7 +140,7 @@ namespace Core.FileSystemElement {
             _ignoreChildrenChanged = false;
             var newDirectory = _fsNodeElementFactory.CreateDirectoryElementFromDirectory(FsNode, checkState, IsExpanded,
                 ChildrenRetrieval<IFsNodeElement>.Take(newChildren));
-            InvokeChanged(newDirectory);
+            InvokeAllChanged(newDirectory);
             return newDirectory;
         }
 
@@ -168,7 +168,7 @@ namespace Core.FileSystemElement {
             _ignoreChildrenChanged = false;
             var newDirectory = _fsNodeElementFactory.CreateDirectoryElementFromDirectory(FsNode, CheckState, isExpanded,
                 ChildrenRetrieval<IFsNodeElement>.Take(newChildren));
-            InvokeChanged(newDirectory);
+            InvokeAllChanged(newDirectory);
             return newDirectory;
         }
 
@@ -176,6 +176,18 @@ namespace Core.FileSystemElement {
             children
                 .Map(fsNode => fsNode.MatchDirectory(directory => directory.Expand()))
                 .ToArray();
+
+        public event EventHandler<RootDirectoryElementChangedEventArgs> RootChanged;
+
+        private void InvokeAllChanged(IDirectoryElement directoryElement) {
+            InvokeChanged(directoryElement);
+            directoryElement.RootChanged += RootChanged;
+            RootChanged?.Invoke(this, new RootDirectoryElementChangedEventArgs(directoryElement));
+            UnsubscribeRoot();
+        }
+
+        public void UnsubscribeRoot() =>
+            RootChanged = null;
 
         public override string ToString() =>
             $"DirectoryElement {{ Name = {Name}, CheckState = {CheckState}, IsExpanded = {IsExpanded} }}";
