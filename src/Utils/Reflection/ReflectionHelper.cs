@@ -1,9 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Utils.Reflection.Exceptions;
 
 namespace Utils.Reflection {
     public static class ReflectionHelper {
+        public static MethodInfo GetMethodInfo(this Type type, string methodName, IEnumerable<object> args) {
+            var argTypes = args.GetTypes();
+            var methodInfo = type.GetMethod(methodName, argTypes);
+            if (methodInfo is null)
+                throw new MethodNotFoundException(type, methodName, argTypes);
+            return methodInfo;
+        }
+
+        public static T Invoke<T>(this MethodInfo methodInfo, object @object, object[] args) =>
+            (T)methodInfo.Invoke(@object, args);
+
+        public static T Invoke<T>(this object @object, string methodName, object[] args) =>
+            @object.GetType().GetMethodInfo(methodName, args).Invoke<T>(@object, args);
+
+        public static T InvokeGeneric<T>(this object @object, string methodName, Type[] typeArgs, object[] args) =>
+            @object.GetType().GetMethodInfo(methodName, args).MakeGenericMethod(typeArgs).Invoke<T>(@object, args);
+
         private const BindingFlags DefaultLookup = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
         public static PropertyInfo GetPropertyInfo(this Type type, string propertyName) {
@@ -37,5 +56,8 @@ namespace Utils.Reflection {
 
         public static void SetFieldValue(this object @object, string fieldName, object value) =>
             @object.GetType().GetFieldInfo(fieldName).SetValue(@object, value);
+
+        private static Type[] GetTypes(this IEnumerable<object> args) =>
+            args.Map(arg => arg.GetType()).ToArray();
     }
 }
