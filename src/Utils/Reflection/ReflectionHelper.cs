@@ -6,6 +6,20 @@ using Utils.Reflection.Exceptions;
 
 namespace Utils.Reflection {
     public static class ReflectionHelper {
+        public static ConstructorInfo GetConstructorInfo(this Type type, IEnumerable<object> args) {
+            var argTypes = args.GetTypes();
+            var constructorInfo = type.GetConstructor(argTypes);
+            if (constructorInfo is null)
+                throw new ConstructionNotFountException(type, argTypes);
+            return constructorInfo;
+        }
+
+        public static T Invoke<T>(this ConstructorInfo constructorInfo, object[] args) where T : class =>
+            (T)constructorInfo.Invoke(args);
+
+        public static T Construct<T>(this Type type, object[] args) where T : class =>
+            type.GetConstructorInfo(args).Invoke<T>(args);
+
         public static MethodInfo GetMethodInfo(this Type type, string methodName, IEnumerable<object> args) {
             var argTypes = args.GetTypes();
             var methodInfo = type.GetMethod(methodName, argTypes);
