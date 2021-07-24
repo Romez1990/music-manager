@@ -1,3 +1,5 @@
 namespace Core.OperationEngine {
-    public interface IEngineScanner { }
+    public interface IEngineScanner {
+        IEnginePerformer Scan(DirectoryMode directoryMode);
+    }
 }
