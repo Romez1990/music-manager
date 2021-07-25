@@ -1,8 +1,10 @@
-﻿using System;
 using System.Reflection;
+using ConsoleApp.App;
 using Core.IocContainer;
 
 var container = new Container();
 container.ScanAssemblies(Assembly.GetExecutingAssembly().FullName, "Core");
 
-Console.WriteLine("Hello, world!");
+var app = container.Get<IApp>();
+
+return app.Run(args);
