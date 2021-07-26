@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Autofac;
 using Utils.Enumerable;
+using Utils.Reflection;
 using IAutofacContainer = Autofac.IContainer;
 
 namespace Core.IocContainer {
@@ -52,6 +53,11 @@ namespace Core.IocContainer {
 
         private Type GetInterface(Type type) =>
             type.GetInterfaces().First();
+
+        public void RegisterModule<T>() where T : class, IModule {
+            var module = typeof(T).Construct<T>(Array.Empty<object>());
+            module.Load(this);
+        }
 
         public IRegistrationBuilder Register<T>() where T : class =>
             new RegistrationBuilder((toSelf, serviceInterface) => {
