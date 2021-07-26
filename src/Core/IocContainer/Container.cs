@@ -53,6 +53,16 @@ namespace Core.IocContainer {
         private Type GetInterface(Type type) =>
             type.GetInterfaces().First();
 
+        public IRegistrationBuilder Register<T>() where T : class =>
+            new RegistrationBuilder((toSelf, serviceInterface) => {
+                var registrationBuilder = _containerBuilder.RegisterType<T>();
+                if (toSelf) {
+                    registrationBuilder.AsSelf();
+                } else {
+                    registrationBuilder.As(serviceInterface);
+                }
+            });
+
         public T Get<T>() where T : class =>
             _container.Value.Resolve<T>();
     }
