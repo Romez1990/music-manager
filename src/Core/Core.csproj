@@ -13,6 +13,7 @@
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="LanguageExt.Core" Version="3.4.15" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="YamlDotNet" Version="11.2.1" />
   </ItemGroup>
 
 </Project>
