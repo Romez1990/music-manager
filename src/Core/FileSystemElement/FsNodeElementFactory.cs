@@ -4,10 +4,12 @@ using Core.IocContainer;
 namespace Core.FileSystemElement {
     [Service]
     public class FsNodeElementFactory : IFsNodeElementFactory {
+        private const CheckState StartingCheckState = CheckState.Unchecked;
+
         public IFileElement CreateFileElementFromFile(IFile file) =>
-            throw new System.NotImplementedException();
+            CreateFileElementFromFile(file, StartingCheckState);
 
         public IFileElement CreateFileElementFromFile(IFile file, CheckState checkState) =>
-            throw new System.NotImplementedException();
+            new FileElement(this, file, checkState);
     }
 }
