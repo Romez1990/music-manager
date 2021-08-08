@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core.HttpClient.Exceptions;
 using LanguageExt;
 
 namespace Core.HttpClient {

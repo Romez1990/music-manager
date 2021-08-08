@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using Core.HttpClient.Exceptions;
 using Core.IocContainer;
 using Core.Serializers;
 using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace Core.HttpClient {
     [Service]
@@ -18,16 +22,26 @@ namespace Core.HttpClient {
         private readonly ISerializer _serializer;
 
         public EitherAsync<RequestException, string> GetText(string url,
-            IReadOnlyDictionary<string, string> parameters = null) =>
-            _httpClient.GetAsync(GetUrl(url, parameters))
-                .Map(ResponseToEither)
+            IReadOnlyDictionary<string, string> parameters = null) {
+            var castException = new Func<RequestException, RequestException>(identity);
+            return SendRequest(GetUrl(url, parameters))
                 .ToAsync()
+                .Bind(response => ResponseToEither(response).MapLeft(castException).ToAsync())
                 .MapAsync(response => response.Content.ReadAsStringAsync());
+        }
 
         public EitherAsync<RequestException, T> Get<T>(string url,
             IReadOnlyDictionary<string, string> parameters = null) =>
             GetText(url, parameters)
                 .Map(_serializer.Deserialize<T>);
+
+        private async Task<Either<RequestException, HttpResponseMessage>> SendRequest(string url) {
+            try {
+                return await _httpClient.GetAsync(url);
+            } catch (HttpRequestException exception) {
+                return new UnknownRequestException(exception);
+            }
+        }
 
         private string GetUrl(string baseUrl, IReadOnlyDictionary<string, string> parametersOrNull) {
             if (parametersOrNull is null || !parametersOrNull.Any())
@@ -38,9 +52,12 @@ namespace Core.HttpClient {
             return $"{baseUrl}?{stringParameters}";
         }
 
-        private Either<RequestException, HttpResponseMessage> ResponseToEither(HttpResponseMessage response) =>
-            response.IsSuccessStatusCode
-                ? response
-                : new RequestException(response);
+        private Either<FailedRequestException, HttpResponseMessage> ResponseToEither(HttpResponseMessage response) {
+            if (response.IsSuccessStatusCode)
+                return response;
+            return (int)response.StatusCode >= 500
+                ? new ServerRequestException(response)
+                : new ClientRequestException(response);
+        }
     }
 }
