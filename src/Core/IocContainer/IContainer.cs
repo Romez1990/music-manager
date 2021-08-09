@@ -1,3 +1,5 @@
 ﻿namespace Core.IocContainer {
-    public interface IContainer { }
+    public interface IContainer {
+        T Get<T>() where T : class;
+    }
 }

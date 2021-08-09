@@ -11,5 +11,8 @@ namespace Core.IocContainer {
 
         private readonly ContainerBuilder _containerBuilder;
         private readonly Lazy<IAutofacContainer> _container;
+
+        public T Get<T>() where T : class =>
+            _container.Value.Resolve<T>();
     }
 }
