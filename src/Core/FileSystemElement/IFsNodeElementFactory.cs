@@ -1,7 +1,11 @@
-﻿using Core.FileSystem;
+using Core.FileSystem;
+using Core.FileSystem.Exceptions;
+using LanguageExt;
 
 namespace Core.FileSystemElement {
     public interface IFsNodeElementFactory {
+        Either<DirectoryNotFoundException, IDirectoryElement> CreateDirectoryElement(string path);
+        Either<FileNotFoundException, IFileElement> CreateFileElement(string path);
         IDirectoryElement CreateDirectoryElementFromDirectory(IDirectory directory);
 
         IDirectoryElement CreateDirectoryElementFromDirectory(IDirectory directory, CheckState checkState,

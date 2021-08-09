@@ -12,7 +12,7 @@ namespace Core.Test.FileSystemElement {
     public class FileElementTest {
         [OneTimeSetUp]
         public void OneTimeSetUp() {
-            _fsNodeElementFactory = new FsNodeElementFactory();
+            _fsNodeElementFactory = new FsNodeElementFactory(null);
         }
 
         [SetUp]
