@@ -1,3 +1,4 @@
+using System;
 using Core.FileSystem;
 using Core.FileSystem.Exceptions;
 using Core.FileSystemElement.Exceptions;
@@ -39,6 +40,12 @@ namespace Core.FileSystemElement {
             InvokeChanged(newFile);
             return newFile;
         }
+
+        public IFileElement IfChecked(Func<IFileElement> onChecked) =>
+            CheckState switch {
+                CheckState.Unchecked => this,
+                _ => onChecked(),
+            };
 
         public override string ToString() =>
             $"FileElement {{ Name = {Name}, CheckState = {CheckState} }}";

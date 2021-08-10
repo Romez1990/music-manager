@@ -192,6 +192,12 @@ namespace Core.FileSystemElement {
                 file => file.SetCheckState(checkState, true)
             );
 
+        public IDirectoryElement IfChecked(Func<IDirectoryElement> onChecked) =>
+            CheckState switch {
+                CheckState.Unchecked => this,
+                _ => onChecked(),
+            };
+
         public bool IsExpanded { get; }
 
         public IDirectoryElement Expand() =>

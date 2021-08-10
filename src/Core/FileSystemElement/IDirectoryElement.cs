@@ -16,6 +16,7 @@ namespace Core.FileSystemElement {
         IDirectoryElement Uncheck(bool ignoreIfUnchecked = false);
         IDirectoryElement Check(bool ignoreIfChecked = false);
         IDirectoryElement SetCheckState(CheckState checkState, bool ignoreIfSameState = false);
+        IDirectoryElement IfChecked(Func<IDirectoryElement> onChecked);
         bool IsExpanded { get; }
         IDirectoryElement Expand();
         IDirectoryElement Collapse();
