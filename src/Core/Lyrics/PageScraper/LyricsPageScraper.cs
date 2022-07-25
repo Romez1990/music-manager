@@ -35,9 +35,15 @@ namespace Core.Lyrics.PageScraper {
                 .ToEitherAsync(() => new IncorrectPageException())
                 .Map(GetLyricsText);
 
-        private Option<ITagElement> GetLyricsElement(IDocument document) =>
-            GetLyricsElementPrimaryMethod(document)
-                .Match(Some, () => GetLyricsElementSecondaryMethod(document));
+        private Option<ITagElement> GetLyricsElement(IDocument document) {
+            var methods = new Func<IDocument, Option<ITagElement>>[] {
+                GetLyricsElementPrimaryMethod,
+                GetLyricsElementSecondaryMethod,
+            };
+            return methods.Tail()
+                .Fold(methods.Head()(document),
+                    (result, method) => result.Match(Some, () => method(document)));
+        }
 
         private Option<ITagElement> GetLyricsElementPrimaryMethod(IElementContainer document) =>
             document.Select(".lyrics");
