@@ -56,7 +56,9 @@ namespace ConsoleApp.ArgumentParser {
             };
 
         private string GetPath(OptionsBase parsedOptions, IAppOptions defaults) =>
-            parsedOptions.Path ?? defaults.Path;
+            parsedOptions.Path is null
+                ? defaults.Path
+                : parsedOptions.Path.TrimEnd('"');
 
         private DirectoryMode GetDirectoryMode(OptionsBase parsedOptions, IAppOptions defaults) {
             if (parsedOptions.Album)
