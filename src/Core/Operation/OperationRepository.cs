@@ -6,10 +6,12 @@ namespace Core.Operation {
     [Service]
     public class OperationRepository : IOperationRepository {
         public OperationRepository(
-            RenameOperation rename
+            RenameOperation rename,
+            LyricsOperation lyrics
         ) {
             _operations = new IOperation[] {
                 rename,
+                lyrics,
             };
         }
 
