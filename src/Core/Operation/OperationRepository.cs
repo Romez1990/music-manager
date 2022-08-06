@@ -7,13 +7,11 @@ namespace Core.Operation {
     public class OperationRepository : IOperationRepository {
         public OperationRepository(
             RenameOperation rename,
-            LyricsOperation lyrics,
-            TagsOperation tags
+            LyricsOperation lyrics
         ) {
             _operations = new IOperation[] {
                 rename,
                 lyrics,
-                tags,
             };
         }
 
