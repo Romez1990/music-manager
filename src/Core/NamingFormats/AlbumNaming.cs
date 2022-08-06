@@ -35,9 +35,15 @@ namespace Core.NamingFormats {
                 return name.ToString();
             });
 
-        private Option<string> Match(string albumName, Func<string, Option<string>, string> onMatch) =>
-            MatchRawName(albumName, onMatch)
-                .Match(Some, () => MatchNormalizedName(albumName, onMatch));
+        private Option<string> Match(string albumName, Func<string, Option<string>, string> onMatch) {
+            var methods = new Func<string, Func<string, Option<string>, string>, Option<string>>[] {
+                MatchRawName,
+                MatchNormalizedName,
+            };
+            return methods.Tail()
+                .Fold(methods.Head()(albumName, onMatch),
+                    (result, method) => result.Match(Some, () => method(albumName, onMatch)));
+        }
 
         private Option<string> MatchRawName(string albumName, Func<string, Option<string>, string> onMatch) =>
             _regexMatcher.Rename(_rawNameRegex, albumName, match => {
